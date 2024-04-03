@@ -1,6 +1,6 @@
 <template>
   <div>
-    AkEx - Kargo
+    AkEx - Kargo test
   </div>
 </template>
 
