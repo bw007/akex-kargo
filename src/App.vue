@@ -1,13 +1,3 @@
 <template>
-  <div>
-    AkEx - Kargo test
-  </div>
+  <RouterView />
 </template>
-
-<script setup>
-
-</script>
-
-<style lang="css">
-  
-</style>
