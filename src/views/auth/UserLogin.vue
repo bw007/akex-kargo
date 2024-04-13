@@ -9,7 +9,7 @@
       <el-input v-model="user.password" show />
     </el-form-item>
     <el-form-item>
-      <el-checkbox v-model="user.remember">Not disabled</el-checkbox>
+      <el-checkbox v-model="user.remember">Remember me</el-checkbox>
     </el-form-item>
   </el-form>
 </template>
@@ -22,7 +22,7 @@ const user = ref({});
 
 <style lang="css" scoped>
 .el-form {
-
+  width: 380px;
 }
 .title {
   font-size: 24px;
