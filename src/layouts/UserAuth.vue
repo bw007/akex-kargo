@@ -1,8 +1,12 @@
 <template>
   <div class="auth">
     <header class="auth__header">
-      <router-link class="auth__link" to="/auth/login">sign in</router-link>
-      <router-link class="auth__logo" to="/auth/login">
+      <router-link class="auth__link" to="/">
+        <el-icon color="#000000" size="24">
+          <Back />
+        </el-icon>  
+      </router-link>
+      <router-link class="auth__logo" to="/">
         <img src="@/assets/imgs/logo.svg" />
       </router-link>
     </header>
@@ -35,7 +39,9 @@
 }
 .auth__form {
   padding: 12px 28px;
+  height: calc(100vh - 65px);
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 </style>
