@@ -23,15 +23,13 @@
       </el-text>
       <el-button size="large" type="primary" round>Log in</el-button>
     </el-form-item>
-    <el-form-item class="forget-password">
+    <div class="form__links">
       <router-link to="/auth/forget">Forget your password</router-link>
-    </el-form-item>
-    <el-form-item>
       <el-text>
         Don't have an acount?
         <router-link to="/auth/reg">Sign up</router-link>
       </el-text>
-    </el-form-item>
+    </div>
   </el-form>
 </template>
 
@@ -65,11 +63,19 @@ const user = ref({
 .el-form-item {
   margin-bottom: 14px;
 }
+.form__links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+} 
 .el-button {
   font-weight: 500;
   display: inline-block;
   width: 100%;
   font-size: 15px;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>
