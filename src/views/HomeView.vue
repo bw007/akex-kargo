@@ -1,7 +1,10 @@
 <template>
   <div class="wrapper">
     Dashboard
-    <router-link to="/auth/login">Log In</router-link>
+    <div class="auth__block">
+      <router-link to="/auth/signin">Sign In</router-link>
+      <router-link to="/auth/signup">Sign Up</router-link>
+    </div>
   </div>
 </template>
 
@@ -13,5 +16,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .auth__block {
+    display: flex;
+    gap: 10px;
   }
 </style>
