@@ -12,9 +12,14 @@ const routes = [
     component: () => import("@/layouts/UserAuth.vue"),
     children: [
       {
-        path: "/auth/login",
-        name: "login",
+        path: "/auth/signin",
+        name: "signin",
         component: () => import("@/views/auth/UserLogin.vue")
+      },
+      {
+        path: "/auth/signup",
+        name: "signup",
+        component: () => import("@/views/auth/UserReg.vue")
       }
     ]
   }
