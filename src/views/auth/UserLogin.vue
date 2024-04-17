@@ -37,7 +37,7 @@
       </el-text>
       <el-text>
         Hisobingiz yo'qmi?
-        <router-link to="/auth/reg">Ro'yxatdan o'ting</router-link>
+        <router-link to="/auth/signup">Ro'yxatdan o'ting</router-link>
       </el-text>
     </div>
   </el-form>
