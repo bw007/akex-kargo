@@ -1,13 +1,18 @@
 <template>
-  <el-form label-position="top">
+  <el-form 
+    ref="ruleFormRef"
+    :model="user"
+    :rules="rules"
+    label-position="top"
+    >
     <el-text class="title">Tizimga kirish</el-text>
-    <el-form-item label="Email yoki foydalanuvchi nomi">
+    <el-form-item label="Email" prop="email">
       <el-input 
         v-model="user.email"
         size="large"
       />
     </el-form-item>
-    <el-form-item label="Mahfiy kalit">
+    <el-form-item label="Parol" prop="password">
       <el-input 
         v-model="user.password" 
         show-password
@@ -22,18 +27,11 @@
       />
     </el-form-item>
     <el-form-item>
-      <!-- <el-text class="policy">
-        Davom etish orqali
-        <router-link to="/terms">Foydalanish shartlari</router-link>
-        va
-        <router-link to="/policy">Maxfiylik siyosatiga</router-link>
-        rozilik bildirasiz
-      </el-text> -->
-      <el-button size="large" type="primary" round>Kirish</el-button>
+      <el-button size="large" type="primary" plain @click="submitForm(ruleFormRef)" round>Kirish</el-button>
     </el-form-item>
     <div class="form__links">
       <el-text>
-        <router-link to="/auth/forget">Mahfiy kalitingizni unutdingizmi?</router-link>
+        <router-link to="/auth/forgot">Parolingizni unutdingizmi?</router-link>
       </el-text>
       <el-text>
         Hisobingiz yo'qmi?
@@ -46,11 +44,37 @@
 <script setup>
 import { ref } from 'vue';
 
+const ruleFormRef = ref()
+
 const user = ref({
-  email: "",
-  password: "",
-  remember: false,
-});
+  email: '',
+  password: '',
+})
+
+const rules = ref({
+  password: [
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
+    { min: 8, max: 10, message: 'Belgilar soni 8 tadan 10 tagacha', trigger: 'blur' },
+  ],
+  email: [
+    {
+      required: true,
+      message: "Iltimos maydonni to'ldiring",
+      trigger: 'blur',
+    },
+  ],
+})
+
+const submitForm = async (formEl) => {
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      console.log('submit!')
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
+}
 
 </script>
 
@@ -58,12 +82,13 @@ const user = ref({
 .el-form {
   width: 380px;
   min-width: 220px;
+  display: flex;
+  flex-direction: column;
 }
 .el-text.title {
   font-size: 24px;
   display: inline-block;
   margin-bottom: 24px;
-  font-weight: 500;
   color: #333333;
 }
 /* .el-text.policy {
