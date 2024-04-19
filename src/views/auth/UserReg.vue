@@ -4,9 +4,9 @@
     <el-text class="title">Ro'yxatdan o'tish</el-text>
     
     <el-steps :active="active" finish-status="success">
-      <el-step @click="backForm(0)" :title="active == 0 ? 'Faol' : 'Bajarildi'" />
-      <el-step @click="backForm(1)" :title="active == 1 ? 'Faol' : active > 1 ? 'Bajarildi' : '2-qadam'" />
-      <el-step @click="backForm(2)" :title="active == 2 ? 'Faol' : active > 2 ? 'Bajarildi' : '3-qadam'" />
+      <el-step @click="backForm(0)" />
+      <el-step @click="backForm(1)" />
+      <el-step @click="backForm(2)" />
     </el-steps>
 
     <el-form-item v-if="active == 0" label="Ism" prop="firstName">
@@ -75,11 +75,11 @@ const user = ref({
 
 const checkPass = (rule, value, callback) => {
   if (value === '') {
-    callback("Iltimos maydonni to'ldiring")
+    callback("Iltimos maydonni to'ldiring");
   } else if (value !== user.value.password) {
-    callback(new Error("Parollar mos kelmayapti"))
+    callback(new Error("Parollar mos kelmayapti"));
   } else {
-    callback()
+    callback();
   }
 }
 
@@ -103,7 +103,7 @@ const rules = ref({
   ],
   password: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
-    { min: 8, max: 10, message: 'Uzunligi 8 dan 10 gacha', trigger: 'blur' },
+    { min: 8, max: 10, message: 'Belgilar soni 8 dan 10 gacha', trigger: 'blur' },
   ],
   checkPassword: [
     { validator: checkPass, trigger: 'blur' }
@@ -151,7 +151,8 @@ const submitForm = async (formEl) => {
   color: #333333;
 }
 .el-steps {
-  margin-bottom: 36px;
+  margin-bottom: 42px;
+  opacity: 0.85;
 }
 .form__links {
   display: flex;
