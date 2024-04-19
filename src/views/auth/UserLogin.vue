@@ -42,6 +42,7 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { ref } from 'vue';
 
 const ruleFormRef = ref()
@@ -70,6 +71,7 @@ const submitForm = async (formEl) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       console.log('submit!')
+      router.push("/");
     } else {
       console.log('error submit!', fields)
     }
@@ -80,9 +82,10 @@ const submitForm = async (formEl) => {
 
 <style lang="css" scoped>
 .el-form {
-  width: 380px;
+  width: 392px;
   min-width: 220px;
   display: flex;
+  padding: 4px 12px;
   flex-direction: column;
 }
 .el-text.title {
@@ -91,11 +94,6 @@ const submitForm = async (formEl) => {
   margin-bottom: 24px;
   color: #333333;
 }
-/* .el-text.policy {
-  font-size: 13px;
-  line-height: 18px;
-  text-align: center;
-} */
 .el-form-item {
   margin-bottom: 16px;
 }
@@ -103,12 +101,14 @@ const submitForm = async (formEl) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .form__links a {
   color: #333333;
 }
 .form__links .el-text {
   margin-bottom: 10px;
+  text-align: center;
 }
 .el-button {
   font-weight: 500;
