@@ -1,82 +1,53 @@
 <template>
-  <el-form 
-    label-position="top"
-    ref="ruleFormRef"
-    :model="user"
-    :rules="rules"
-  >
+  <el-form label-position="top" ref="ruleFormRef" size="large" :model="user" :rules="rules">
+    
     <el-text class="title">Ro'yxatdan o'tish</el-text>
-    <el-steps
-      :active="active"
-      finish-status="success"
-    >
-      <el-step :title="active == 0 ? 'Faol' : 'Bajarildi'" />
-      <el-step :title="active == 1 ? 'Faol' : active > 1 ? 'Bajarildi' : '2-qadam'" />
-      <el-step :title="active == 2 ? 'Faol' : active > 2 ? 'Bajarildi' : '3-qadam'" />
+    
+    <el-steps :active="active" finish-status="success">
+      <el-step @click="backForm(0)" :title="active == 0 ? 'Faol' : 'Bajarildi'" />
+      <el-step @click="backForm(1)" :title="active == 1 ? 'Faol' : active > 1 ? 'Bajarildi' : '2-qadam'" />
+      <el-step @click="backForm(2)" :title="active == 2 ? 'Faol' : active > 2 ? 'Bajarildi' : '3-qadam'" />
     </el-steps>
 
     <el-form-item v-if="active == 0" label="Ism" prop="firstName">
-      <el-input 
-        v-model="user.firstName"
-        size="large"
-      />
+      <el-input v-model="user.firstName" />
     </el-form-item>
 
     <el-form-item v-if="active == 0" label="Familiya" prop="lastName">
-      <el-input 
-        v-model="user.lastName"
-        size="large"
-      />
+      <el-input v-model="user.lastName" />
     </el-form-item>
 
     <el-form-item v-if="active == 1" label="Jins" prop="gender">
       <el-radio-group v-model="user.gender">
-        <el-radio value="Ayol">Ayol</el-radio>
-        <el-radio value="Erkak">Erkak</el-radio>
+        <el-radio border value="Ayol">Ayol</el-radio>
+        <el-radio border value="Erkak">Erkak</el-radio>
       </el-radio-group>
     </el-form-item>
 
     <el-form-item v-if="active == 1" label="Tug'ilgan sana" prop="birth">
-      <el-date-picker
-        v-model="user.birth"
-        placeholder="Sanani tanlang"
-        size="large"
-      />
+      <el-date-picker input-style="" v-model="user.birth" placeholder="Sanani tanlang" />
     </el-form-item>
 
     <el-form-item v-if="active > 1" label="Email" prop="email">
-      <el-input 
-        v-model="user.email"
-        size="large"
-      />
+      <el-input v-model="user.email" />
     </el-form-item>
     
     <el-row v-if="active > 1" :gutter="12">
       <el-col :span="12">
         <el-form-item label="Parol" prop="password">
-          <el-input 
-            v-model="user.password"
-            type="password"
-            show-password
-            size="large"
-          />
+          <el-input v-model="user.password" type="password" show-password />
         </el-form-item>
       </el-col>
 
       <el-col :span="12">
-        <el-form-item label="Parolni tasdiqlang">
-          <el-input 
-          
-            type="password"
-            show-password
-            size="large"
-          />
+        <el-form-item label="Parolni tasdiqlang" prop="checkPassword">
+          <el-input v-model="user.checkPassword" type="password" show-password />
         </el-form-item>
       </el-col>
     </el-row>
 
     <el-form-item class="form__btn">
-      <el-button size="large" type="primary" plain @click="submitForm(ruleFormRef)" round>{{ active > 2 ? 'Yakunlash' : 'Keyingi' }}</el-button>
+      <el-button type="primary" plain @click="submitForm(ruleFormRef)" round>{{ active > 2 ? 'Yakunlash' : 'Keyingi' }}</el-button>
     </el-form-item>
 
     <div class="form__links">
@@ -89,6 +60,7 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { ref } from 'vue';
 
 const user = ref({
@@ -98,7 +70,18 @@ const user = ref({
   birth: '',
   email: '',
   password: '',
+  checkPassword: '',
 })
+
+const checkPass = (rule, value, callback) => {
+  if (value === '') {
+    callback("Iltimos maydonni to'ldiring")
+  } else if (value !== user.value.password) {
+    callback(new Error("Parollar mos kelmayapti"))
+  } else {
+    callback()
+  }
+}
 
 const ruleFormRef = ref();
 
@@ -121,20 +104,30 @@ const rules = ref({
   password: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
     { min: 8, max: 10, message: 'Uzunligi 8 dan 10 gacha', trigger: 'blur' },
+  ],
+  checkPassword: [
+    { validator: checkPass, trigger: 'blur' }
   ]
 })
 
 const active = ref(0)
 
 const next = () => {
-  if (active.value++ > 2) active.value = 0
+  if (active.value++ > 3) active.value = 0
+}
+
+const backForm = (step) => {
+  if (step == 0 && user.value.firstName) active.value = 0;
+  if (step == 1 && user.value.birth) active.value = 1;
+  if (step == 2 && user.value.email) active.value = 2;
 }
 
 const submitForm = async (formEl) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      next()
+      if (active.value < 3) next();
+      else router.push("/auth/signin");
     } else {
       console.log('error submit!', fields)
     }
@@ -144,12 +137,9 @@ const submitForm = async (formEl) => {
 </script>
 
 <style lang="css" scoped>
-
 .el-form {
   width: 392px;
   min-width: 220px;
-  height: 480px;
-  /* background: #00000010; */
   padding: 4px 12px;
   display: flex;
   flex-direction: column;
@@ -160,32 +150,20 @@ const submitForm = async (formEl) => {
   margin-bottom: 24px;
   color: #333333;
 }
-
 .el-steps {
   margin-bottom: 36px;
-}
-/* .el-text.policy {
-  font-size: 13px;
-  line-height: 18px;
-  text-align: center;
-} */
-.el-form-item {
-  /* margin-bottom: 16px; */
 }
 .form__links {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* margin-top: auto; */
-}
-.el-form-item.form__btn {
-  margin-top: auto;
 }
 .form__links a {
   color: #333333;
 }
 .form__links .el-text {
   margin-bottom: 10px;
+  text-align: center;
 }
 .el-button {
   font-weight: 500;
