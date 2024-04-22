@@ -12,18 +12,18 @@ export const menu = [
   {
     path: 'workers',
     name: 'workers',
-    icon: 'Setting',
+    icon: 'Service',
     meta: {
-      title: 'Hodimlar',
+      title: 'Xodimlar',
       secure: false
     },
-    // component: () => import("@/views/SettingView.vue")
+    component: () => import("@/views/WorkersView.vue")
   },
   {
     path: 'orders',
     name: 'orders',
     title: 'Buyurtmalar',
-    icon: 'Setting',
+    icon: 'Goods',
     meta: {
       title: 'Buyurtmalar',
       secure: false
