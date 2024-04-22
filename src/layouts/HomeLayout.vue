@@ -18,11 +18,10 @@
       <el-container class="layout-main">
         <el-aside width="fit-content">
           <el-menu
-            default-active="auth"
+            :default-active="$route.name"
             class="el-menu-vertical-demo"
             :collapse="isCollapse"
-            @open="handleOpen"
-            @close="handleClose"
+            @select="handleSelect"
           >
             <el-button @click="isCollapse = !isCollapse" text>
               <el-icon>
@@ -31,7 +30,14 @@
               </el-icon>
             </el-button>
 
-            <el-menu-item v-for="item in menu" :index="item.name" :key="item.name" :route="{name: item.name}">
+            <el-menu-item 
+              v-for="item in menu" 
+              :index="item.name" 
+              :key="item.name" 
+              :route="{name: item.name}"
+              :class="$route.name == item.name"
+            >
+              <el-divider direction="vertical" />
               <el-icon>
                 <component :is="item.icon" />
               </el-icon>
@@ -56,16 +62,15 @@ import { RouterView } from 'vue-router';
 import { ref } from 'vue';
 import { menu } from "@/stores/utils/menu";
 import { UserCircleIcon } from '@heroicons/vue/24/outline'
+import router from '@/router';
 
 
 const isCollapse = ref(false);
 
-const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath)
+const handleSelect = (index) => {
+  router.push({ name: index })
 }
-const handleClose = (key, keyPath) => {
-  console.log(key, keyPath)
-}
+
 </script>
 
 <style lang="css" scoped>
@@ -106,14 +111,31 @@ const handleClose = (key, keyPath) => {
   color: #000000;
 }
 .el-aside {
-  
+  /* padding: 10px; */
 }
 .el-menu {
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 10px;
   background-color: transparent;
   border: none;
+  box-shadow: var(--el-box-shadow-lighter);
+}
+.el-menu-item.is-active {
+  background-color: #f2f6fc;
+}
+.el-menu-item.is-active .el-divider {
+  background: #79bbff;
+}
+.el-menu-item .el-divider {
+  margin: 0;
+  width: 6px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
 }
 .el-menu .el-button {
   margin-left: auto;
@@ -128,6 +150,6 @@ const handleClose = (key, keyPath) => {
   background-color: #f2f6fc90;
 }
 .el-main .el-scrollbar {
-  background-color: #ffffff;
+  
 }
 </style>
