@@ -103,10 +103,10 @@ const rules = ref({
   ],
   password: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
-    { min: 8, max: 10, message: 'Belgilar soni 8 dan 10 gacha', trigger: 'blur' },
+    { min: 8, max: 10, message: 'Belgilar soni 8 dan 10 gacha', trigger: 'change' },
   ],
   checkPassword: [
-    { validator: checkPass, trigger: 'blur' }
+    { validator: checkPass, trigger: 'change' }
   ]
 })
 
