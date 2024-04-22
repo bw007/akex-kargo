@@ -1,15 +1,20 @@
+import { menu } from "@/stores/utils/menu";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
     path: "/",
-    name: "dashboard",
-    component: () => import("@/views/HomeView.vue")
+    name: "home-layout",
+    title: "Bosh sahifa",
+    component: () => import("@/layouts/HomeLayout.vue"),
+    children: [
+      ...menu
+    ]
   },
   {
     path: "/auth",
     name: "auth",
-    component: () => import("@/layouts/UserAuth.vue"),
+    component: () => import("@/layouts/AuthLayout.vue"),
     children: [
       {
         path: "/auth/signin",
