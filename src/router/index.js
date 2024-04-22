@@ -5,10 +5,18 @@ const routes = [
   {
     path: "/",
     name: "home-layout",
-    title: "Bosh sahifa",
     component: () => import("@/layouts/HomeLayout.vue"),
     children: [
-      ...menu
+      ...menu,
+      {
+        path: '/:pathMatch(.*)*',
+        name: 'error',
+        meta: {
+          title: 'Sahifa topilmadi',
+          secure: false
+        },
+        component: () => import("@/views/ErrorView.vue")
+      }
     ]
   },
   {
