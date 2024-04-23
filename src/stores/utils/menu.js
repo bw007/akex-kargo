@@ -2,22 +2,24 @@ export const menu = [
   {
     path: '',
     name: 'home',
+    title: 'Bosh sahifa',
     icon: 'pie-chart',
     meta: {
-      title: 'Bosh sahifa',
+      title: 'Statistika',
       secure: false
     },
-    component: () => import("@/views/HomeView.vue")
+    component: () => import('@/views/HomeView.vue')
   },
   {
     path: 'workers',
     name: 'workers',
+    title: 'Xodimlar',
     icon: 'Service',
     meta: {
-      title: 'Xodimlar',
+      title: 'Ishchi xodimlar',
       secure: false
     },
-    component: () => import("@/views/WorkersView.vue")
+    component: () => import('@/views/WorkersView.vue')
   },
   {
     path: 'orders',
@@ -25,9 +27,20 @@ export const menu = [
     title: 'Buyurtmalar',
     icon: 'Goods',
     meta: {
-      title: 'Buyurtmalar',
+      title: 'Buyurtmalar ro`yxati',
       secure: false
-    },
+    }
+    // component: () => import("@/views/SettingView.vue")
+  },
+  {
+    path: 'transactions',
+    name: 'transactions',
+    title: 'Tranzaksiyalar',
+    icon: 'Money',
+    meta: {
+      title: 'Tranzaksiyalar ro`yxati',
+      secure: false
+    }
     // component: () => import("@/views/SettingView.vue")
   },
   {
@@ -36,9 +49,9 @@ export const menu = [
     title: 'Sozlamalar',
     icon: 'Setting',
     meta: {
-      title: "Sozlamalar",
+      title: 'Tizim sozlamalari',
       secure: false
-    },
+    }
     // component: () => import("@/views/SettingView.vue")
   }
 ]
