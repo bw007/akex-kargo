@@ -35,13 +35,13 @@
               :index="item.name" 
               :key="item.name" 
               :route="{name: item.name}"
-              :class="$route.name == item.name"
+              :class="$route.name == item.name ? 'active' : ''"
             >
               <el-divider direction="vertical" />
               <el-icon>
                 <component :is="item.icon" />
               </el-icon>
-              <template #title>{{ item.meta.title }}</template>
+              <template #title>{{ item.title }}</template>
             </el-menu-item>
 
           </el-menu>
@@ -49,6 +49,7 @@
         </el-aside>
         <el-main>
           <el-scrollbar>
+            <h2 class="main-title">{{ $route.meta.title }}</h2>
             <RouterView />
           </el-scrollbar>
         </el-main>
@@ -122,10 +123,10 @@ const handleSelect = (index) => {
   border: none;
   box-shadow: var(--el-box-shadow-lighter);
 }
-.el-menu-item.is-active {
+.el-menu-item.active {
   background-color: #f2f6fc;
 }
-.el-menu-item.is-active .el-divider {
+.el-menu-item.active .el-divider {
   background: #79bbff;
 }
 .el-menu-item .el-divider {
@@ -147,9 +148,11 @@ const handleSelect = (index) => {
   width: 240px;
 }
 .el-main {
-  background-color: #f2f6fc90;
+  background-color: #f2f6fc80;
 }
-.el-main .el-scrollbar {
-  
+.main-title {
+  padding: 10px;
+  font-size: 1.65rem;
+  color: var(--el-text-color-regular);
 }
 </style>
