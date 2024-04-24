@@ -1,7 +1,7 @@
 <template>
   <section>
     <el-row :gutter="12">
-      <el-col :lg="6" :sm="12" :xs="24">
+      <el-col :lg="6" :span="12">
         <el-card>
           <el-statistic :value="46">
             <template #title>
@@ -32,7 +32,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :lg="6" :sm="12" :xs="24">
+      <el-col :lg="6" :span="12">
         <el-card>
           <el-statistic :value="outputValue">
             <template #title>
@@ -63,7 +63,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :lg="6" :sm="12" :xs="24">
+      <el-col :lg="6" :span="12">
         <el-card>
           <el-statistic :value="821000" title="">
             <template #title>
@@ -99,7 +99,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :lg="6" :sm="12" :xs="24">
+      <el-col :lg="6" :span="12">
         <el-card>
           <el-statistic :value="28213000" title="New transactions today">
             <template #title>
