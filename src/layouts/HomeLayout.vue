@@ -1,9 +1,13 @@
 <template>
   <div class="home-layout">
+    <div class="overlay"></div>
     <el-container class="layout-inner">
       <el-header>
         <el-row justify="space-between" align="middle">
-          <el-col :span="2">
+          <el-col class="navbar-menu-icon" :span="2">
+          sasa
+          </el-col>
+          <el-col class="navbar-logo" :span="2">
             <router-link id="logo" to="/">
               <img src="@/assets/imgs/logo.svg" alt="">
             </router-link>
@@ -67,6 +71,7 @@ import router from '@/router';
 
 
 const isCollapse = ref(false);
+const sidebarToggle = ref(false);
 
 const handleSelect = (index) => {
   router.push({ name: index })
@@ -75,6 +80,17 @@ const handleSelect = (index) => {
 </script>
 
 <style lang="css" scoped>
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,.6);
+  transition: opacity .5s;
+  z-index: 7;
+  display: none;
+}
 .home-layout {
   height: 100vh;
 }
@@ -94,6 +110,9 @@ const handleSelect = (index) => {
   display: flex;
   align-items: center;
 }
+.navbar-menu-icon {
+  display: none !important;
+}
 #logo {
   display: inline-flex;
   align-items: center;
@@ -110,9 +129,6 @@ const handleSelect = (index) => {
 }
 #profile:hover svg {
   color: #000000;
-}
-.el-aside {
-  /* padding: 10px; */
 }
 .el-menu {
   height: 100%;
@@ -154,5 +170,23 @@ const handleSelect = (index) => {
   padding: 10px;
   font-size: 1.65rem;
   color: var(--el-text-color-regular);
+}
+
+@media only screen and (max-width: 767px) {
+  .el-aside {
+    background-color: #ffffff;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 99;
+    display: none;
+  }
+  .navbar-menu-icon {
+    display: block !important;
+  }
+  .navbar-logo {
+    display: none !important;
+  }
 }
 </style>
