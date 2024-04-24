@@ -1,33 +1,43 @@
 <template>
   <div class="home-layout">
-    <div class="overlay"></div>
+    <Transition>
+      <div v-if="sidebarToggle" @click="sidebarToggle = false" class="overlay"></div>
+    </Transition>
     <el-container class="layout-inner">
       <el-header>
         <el-row justify="space-between" align="middle">
-          <el-col class="navbar-menu-icon" :span="2">
-          sasa
+
+          <el-col @click="isCollapse = false, sidebarToggle = true" id="navbar-menu-icon" :span="2">
+            <el-icon :size="24" color="#00000095">
+              <Bars3BottomLeftIcon />            
+            </el-icon>
           </el-col>
-          <el-col class="navbar-logo" :span="2">
-            <router-link id="logo" to="/">
+
+          <el-col id="navbar-logo" :span="2">
+            <router-link to="/">
               <img src="@/assets/imgs/logo.svg" alt="">
             </router-link>
           </el-col>
-          <el-col id="profile" :span="2">
+
+          <el-col id="navbar-profile" :span="2">
             <router-link to="/auth/signin">
-              <UserCircleIcon />
+              <el-icon :size="24" color="#00000085">
+                <UserCircleIcon />
+              </el-icon>
             </router-link>
           </el-col>
+
         </el-row>
       </el-header>
       <el-container class="layout-main">
-        <el-aside width="fit-content">
+        <el-aside :class="sidebarToggle ? 'open' : ''" width="fit-content">
           <el-menu
             :default-active="$route.name"
             class="el-menu-vertical-demo"
             :collapse="isCollapse"
             @select="handleSelect"
           >
-            <el-button @click="isCollapse = !isCollapse" text>
+            <el-button @click="sidebarToggle ? sidebarToggle = false : isCollapse = !isCollapse" text>
               <el-icon>
                 <ArrowRight v-if="isCollapse" />
                 <ArrowLeft v-else />
@@ -66,15 +76,15 @@
 import { RouterView } from 'vue-router';
 import { ref } from 'vue';
 import { menu } from "@/stores/utils/menu";
-import { UserCircleIcon } from '@heroicons/vue/24/outline'
+import { UserCircleIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/outline'
 import router from '@/router';
-
 
 const isCollapse = ref(false);
 const sidebarToggle = ref(false);
 
 const handleSelect = (index) => {
-  router.push({ name: index })
+  router.push({ name: index });
+  sidebarToggle.value = false;
 }
 
 </script>
@@ -86,11 +96,21 @@ const handleSelect = (index) => {
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0,0,0,.6);
+  background: rgba(0,0,0,.5);
   transition: opacity .5s;
   z-index: 7;
   display: none;
 }
+.v-enter-active.overlay,
+.v-leave-active.overlay {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from.overlay,
+.v-leave-to.overlay {
+  opacity: 0;
+}
+
 .home-layout {
   height: 100vh;
 }
@@ -110,25 +130,30 @@ const handleSelect = (index) => {
   display: flex;
   align-items: center;
 }
-.navbar-menu-icon {
+#navbar-menu-icon {
   display: none !important;
 }
-#logo {
+#navbar-logo a, #navbar-profile a {
   display: inline-flex;
   align-items: center;
 }
-#profile {
-  display: flex;
-  align-items: center;
+#navbar-menu-icon,
+#navbar-profile {
+  cursor: pointer;
+}
+#navbar-menu-icon:active,
+#navbar-profile:active {
+  opacity: 0.8;
+}
+#navbar-profile {
   justify-content: flex-end;
 }
-#profile svg {
-  width: 24px;
-  height: 24px;
-  color: #00000075;
+.el-aside {
+  transition: background-color .2s, opacity .25s, transform .5s cubic-bezier(.19,1,.22,1);
 }
-#profile:hover svg {
-  color: #000000;
+.el-aside.open {
+  transform: translate(0);
+  opacity: 1;
 }
 .el-menu {
   height: 100%;
@@ -173,19 +198,24 @@ const handleSelect = (index) => {
 }
 
 @media only screen and (max-width: 767px) {
+  .overlay {
+    display: block;
+  }
   .el-aside {
     background-color: #ffffff;
     height: 100vh;
     position: fixed;
     top: 0;
     bottom: 0;
+    transform: translate(-100%);
+    opacity: 0;
     z-index: 99;
-    display: none;
   }
-  .navbar-menu-icon {
-    display: block !important;
+  #navbar-menu-icon {
+    display: flex !important;
+    align-items: center;
   }
-  .navbar-logo {
+  #navbar-logo {
     display: none !important;
   }
 }
