@@ -23,33 +23,51 @@
             </router-link>
           </el-col>
 
-          <el-col id="navbar-profile" :span="6">
-            <el-row align="middle" class="el-dropdown-link">
-                <el-col :span="20">
-                  <el-row>
-                    <el-text>Admin</el-text>
-                    <el-text>someone@example.com</el-text>
-                  </el-row>
-                </el-col>
-                <el-col :span="4">
-                  <el-dropdown trigger="click">
-                    <el-icon class="el-icon--right" :size="24" color="#00000085">
-                      <UserCircleIcon />
-                    </el-icon>
-                    <template #dropdown>
-                      <el-dropdown-menu>
-                        <el-dropdown-item>Profil</el-dropdown-item>
-                        <el-dropdown-item>
-                          <router-link to="/auth/signin">Chiqish</router-link>
-                        </el-dropdown-item>
-                      </el-dropdown-menu>
-                    </template>
-                  </el-dropdown>
-                </el-col>
-              </el-row>
-            
-
-            
+          <el-col id="navbar-profile" :span="12">
+            <el-popover
+              placement="bottom-end"
+              :width="280"
+              trigger="click"
+            >
+              <template #reference>
+                <el-avatar>L</el-avatar>
+              </template>
+              <template #default>
+                <el-row class="profil-items" :gutter="7">
+                  <el-col :span="5">
+                    <el-avatar>L</el-avatar>
+                  </el-col>
+                  <el-col :span="18">
+                    <el-row>
+                      <el-col>
+                        <el-text tag="b">Laziz Hasanov</el-text>
+                      </el-col>
+                      <el-col>
+                        <el-text size="small">mr.abdulaziz00791@gmail.com</el-text>
+                      </el-col>
+                    </el-row>
+                  </el-col>
+                </el-row>
+                <el-row class="profil-items">
+                  <el-col>
+                    <router-link class="profil-link" to="/setting">
+                      <el-icon :size="18" color="#303133">
+                        <Cog8ToothIcon />
+                      </el-icon>
+                      Profil
+                    </router-link>
+                  </el-col>
+                  <el-col>
+                    <router-link class="profil-link" to="/auth/signin">
+                      <el-icon :size="18" color="#303133">
+                        <ArrowRightStartOnRectangleIcon />
+                      </el-icon>
+                      Chiqish
+                    </router-link>
+                  </el-col>
+                </el-row>
+              </template>
+            </el-popover>          
           </el-col>
 
         </el-row>
@@ -104,7 +122,7 @@
 import { RouterView } from 'vue-router';
 import { ref } from 'vue';
 import { menu } from "@/stores/utils/menu";
-import { UserCircleIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/outline'
+import { Bars3BottomLeftIcon, ArrowRightStartOnRectangleIcon, Cog8ToothIcon } from '@heroicons/vue/24/outline'
 import router from '@/router';
 
 const isCollapse = ref(false);
@@ -175,6 +193,30 @@ const handleSelect = (index) => {
 }
 #navbar-profile {
   justify-content: flex-end;
+}
+.profil-items {
+  margin: 8px 0;
+}
+.profil-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px;
+  text-decoration: none;
+  width: 100%;
+  color: var(--el-menu-text-color);
+  transition: background-color .2s cubic-bezier(.19,1,.22,1);
+  border-radius: 4px;
+}
+.profil-link:hover {
+  background-color: #f2f6fc;
+}
+.profil-link:active{
+  background-color: #d9dce0;
+}
+.el-avatar {
+  background-color: #59656D;
+  font-size: 1.4rem;
 }
 .el-aside {
   transition: background-color .2s, opacity .25s, transform .5s cubic-bezier(.19,1,.22,1);
