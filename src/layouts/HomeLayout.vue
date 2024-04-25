@@ -1,13 +1,17 @@
 <template>
   <div class="home-layout">
     <Transition>
-      <div v-if="sidebarToggle" @click="sidebarToggle = false" class="overlay"></div>
+      <div v-if="isToggle" @click="isToggle = false" class="overlay"></div>
     </Transition>
     <el-container class="layout-inner">
       <el-header>
         <el-row justify="space-between" align="middle">
 
-          <el-col @click="isCollapse = false, sidebarToggle = true" id="navbar-menu-icon" :span="2">
+          <el-col 
+            @click="isCollapse = false, isToggle = true" 
+            id="navbar-menu-icon" 
+            :span="2"
+          >
             <el-icon :size="24" color="#00000095">
               <Bars3BottomLeftIcon />            
             </el-icon>
@@ -19,25 +23,49 @@
             </router-link>
           </el-col>
 
-          <el-col id="navbar-profile" :span="2">
-            <router-link to="/auth/signin">
-              <el-icon :size="24" color="#00000085">
-                <UserCircleIcon />
-              </el-icon>
-            </router-link>
+          <el-col id="navbar-profile" :span="6">
+            <el-row align="middle" class="el-dropdown-link">
+                <el-col :span="20">
+                  <el-row>
+                    <el-text>Admin</el-text>
+                    <el-text>someone@example.com</el-text>
+                  </el-row>
+                </el-col>
+                <el-col :span="4">
+                  <el-dropdown trigger="click">
+                    <el-icon class="el-icon--right" :size="24" color="#00000085">
+                      <UserCircleIcon />
+                    </el-icon>
+                    <template #dropdown>
+                      <el-dropdown-menu>
+                        <el-dropdown-item>Profil</el-dropdown-item>
+                        <el-dropdown-item>
+                          <router-link to="/auth/signin">Chiqish</router-link>
+                        </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+                </el-col>
+              </el-row>
+            
+
+            
           </el-col>
 
         </el-row>
       </el-header>
       <el-container class="layout-main">
-        <el-aside :class="sidebarToggle ? 'open' : ''" width="fit-content">
+        <el-aside :class="isToggle ? 'open' : ''" width="fit-content">
           <el-menu
             :default-active="$route.name"
             class="el-menu-vertical-demo"
             :collapse="isCollapse"
             @select="handleSelect"
           >
-            <el-button @click="sidebarToggle ? sidebarToggle = false : isCollapse = !isCollapse" text>
+            <el-button 
+              @click="isToggle ? isToggle = false : isCollapse = !isCollapse" 
+              text
+            >
               <el-icon>
                 <ArrowRight v-if="isCollapse" />
                 <ArrowLeft v-else />
@@ -80,11 +108,11 @@ import { UserCircleIcon, Bars3BottomLeftIcon } from '@heroicons/vue/24/outline'
 import router from '@/router';
 
 const isCollapse = ref(false);
-const sidebarToggle = ref(false);
+const isToggle = ref(false);
 
 const handleSelect = (index) => {
   router.push({ name: index });
-  sidebarToggle.value = false;
+  isToggle.value = false;
 }
 
 </script>
