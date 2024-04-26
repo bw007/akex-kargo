@@ -272,7 +272,7 @@ const handleSelect = (index) => {
 
 .main-title {
   padding: 10px;
-  font-size: 1.65rem;
+  font-size: 1.45rem;
   color: var(--el-text-color-regular);
 }
 
