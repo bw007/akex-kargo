@@ -1,7 +1,7 @@
 <template>
   <div class="home-layout">
     <Transition>
-      <div v-if="isToggle" @click="isToggle = false" class="overlay"></div>
+      <div v-if="isToggle" @click="isToggle = false" class="el-overlay"></div>
     </Transition>
     <el-container class="layout-inner">
       <el-header>
@@ -110,25 +110,13 @@ const handleSelect = (index) => {
 </script>
 
 <style lang="css" scoped>
-.overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, .5);
-  transition: opacity .5s;
-  z-index: 7;
-  display: none;
+.v-enter-active.el-overlay,
+.v-leave-active.el-overlay {
+  transition: opacity 0.3s ease;
 }
 
-.v-enter-active.overlay,
-.v-leave-active.overlay {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from.overlay,
-.v-leave-to.overlay {
+.v-enter-from.el-overlay,
+.v-leave-to.el-overlay {
   opacity: 0;
 }
 
@@ -277,10 +265,6 @@ const handleSelect = (index) => {
 }
 
 @media only screen and (max-width: 767px) {
-  .overlay {
-    display: block;
-  }
-
   .el-aside {
     background-color: #ffffff;
     height: 100vh;
@@ -289,7 +273,7 @@ const handleSelect = (index) => {
     bottom: 0;
     transform: translate(-100%);
     opacity: 0;
-    z-index: 99;
+    z-index: 3000;
   }
 
   #navbar-menu-icon {
