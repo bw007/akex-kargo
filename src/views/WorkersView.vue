@@ -7,7 +7,7 @@
     </el-row>
     <el-table :data="filterTableData" style="width: 100%; height: calc(100vh - 200px);">
       <el-table-column fixed type="index" align="center" />
-      <el-table-column fixed label="Ism, Familiya" min-width="180" prop="name">
+      <el-table-column label="Ism, Familiya" min-width="180" prop="name">
         <template #default="list">
           <el-text tag="b">{{ list.row.name }}</el-text>
         </template>
