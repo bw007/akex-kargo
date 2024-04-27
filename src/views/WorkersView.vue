@@ -5,7 +5,7 @@
       <el-text size="large">{{ $route.meta.title }} ro'yxati</el-text>
       <el-button @click="dialog.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
-    <el-table :data="filterTableData" style="width: 100%; height: calc(100vh - 200px);">
+    <el-table :data="filterTableData" style="width: 100%; height: calc(100vh - 180px);">
       <el-table-column fixed type="index" align="center" />
       <el-table-column label="Ism, Familiya" min-width="180" prop="name">
         <template #default="list">
@@ -156,6 +156,6 @@ section {
   padding: 10px;
 }
 .add-worker {
-  margin: 10px 0;
+  padding-bottom: 10px;
 }
 </style>
