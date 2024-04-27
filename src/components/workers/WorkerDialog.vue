@@ -2,17 +2,12 @@
   <el-dialog
     v-model="toggle"
     title="Yangi xodim"
-    width="500"
+    width="740"
+    class="modal"
     :before-close="handleClose"
   >
-    <span>This is a message</span>
-    <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="dialog.setToggle(false)">Cancel</el-button>
-        <el-button type="primary" @click="dialog.setToggle(false)">
-          Confirm
-        </el-button>
-      </div>
+    <template #default>
+      <FormComp />
     </template>
   </el-dialog>
 </template>
@@ -20,6 +15,7 @@
 <script setup>
 import { dialogStore } from '@/stores/utils/dialog';
 import { storeToRefs } from 'pinia';
+import FormComp from '@/components/workers/FormComp.vue';
 
 const dialog = dialogStore();
 const { toggle } = storeToRefs(dialog);
@@ -29,6 +25,11 @@ const handleClose = () => {
 }
 </script>
 
-<style lang="css" scoped>
-  
+<style lang="css">
+@media only screen and (max-width: 767px) {
+  .modal {
+    width: 80%;
+    min-width: 280px;
+  }
+}
 </style>
