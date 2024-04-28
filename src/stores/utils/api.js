@@ -1,12 +1,12 @@
 import axios from "axios";
 import { defineStore, storeToRefs } from "pinia";
 import { url } from "./env";
-import { authStore } from "../auth/auth"
+import { tokenStore } from "../auth/token";
 
 export const apiStore = defineStore("apiStore", () => {
 
-  const auth_store = authStore();
-  const { token } = storeToRefs(auth_store);
+  const token_store = tokenStore();
+  const { token } = storeToRefs(token_store);
 
   // GET
   const get = async (payload) => {
@@ -22,9 +22,10 @@ export const apiStore = defineStore("apiStore", () => {
 
   // POST
   const post = async (payload) => {
+    console.log(payload);
     return await axios.post(`${url}/${payload.url}`, payload.data, {
       headers: {
-        "Authorization": `Bearer ${token.value}`
+        "Authorization": `Bearer ${token?.value}`
       }
     }).catch(e => {
       console.log(e);
@@ -35,7 +36,7 @@ export const apiStore = defineStore("apiStore", () => {
   const put = async (payload) => {
     return await axios.put(`${url}/${payload.url}`, payload.data, {
       headers: {
-        "Authorization": `Bearer ${token.value}`
+        "authorization": `Bearer ${token?.value}`
       }
     }).catch(e => {
       console.log(e);
@@ -46,7 +47,7 @@ export const apiStore = defineStore("apiStore", () => {
   const del = async (payload) => {
     return await axios.delete(`${url}/${payload.url}`, {
       headers: {
-        "Authorization": `Bearer ${token.value}`
+        "Authorization": `Bearer ${token?.value}`
       }
     }).catch(e => {
       console.log(e);
