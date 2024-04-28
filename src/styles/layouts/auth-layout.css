@@ -1,0 +1,32 @@
+.el-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.el-divider {
+  margin: 0;
+}
+.el-main {
+  height: calc(100vh - 65px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.link {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+@media screen and (max-height: 540px) {
+  .el-main {
+    padding-top: 10px;
+    align-items: normal;
+  }
+}
