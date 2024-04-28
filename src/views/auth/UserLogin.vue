@@ -1,6 +1,6 @@
 <template>
   <el-form 
-    ref="ruleFormRef"
+    ref="form"
     :model="user"
     :rules="rules"
     label-position="top"
@@ -27,7 +27,7 @@
       />
     </el-form-item>
     <el-form-item>
-      <el-button size="large" type="primary" plain @click="submitForm(ruleFormRef)" round>Kirish</el-button>
+      <el-button size="large" type="primary" :loading="loading" @click="handleLogin(form)" round>Kirish</el-button>
     </el-form-item>
     <div class="form__links">
       <el-text>
@@ -42,13 +42,16 @@
 </template>
 
 <script setup>
-import router from '@/router';
-// import { authStore } from '@/stores/auth/auth';
+import { authStore } from '@/stores/auth/auth';
+import { loadingStore } from '@/stores/utils/loading';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
-// const store = authStore()
+const store = authStore()
+const loading_store = loadingStore()
+const { loading } = storeToRefs(loading_store);
 
-const ruleFormRef = ref()
+const form = ref()
 
 const user = ref({
   email: '',
@@ -61,25 +64,17 @@ const rules = ref({
     { min: 8, max: 10, message: 'Belgilar soni 8 tadan 10 tagacha', trigger: 'blur' },
   ],
   email: [
-    {
-      required: true,
-      message: "Iltimos maydonni to'ldiring",
-      trigger: 'blur',
-    },
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
+    { type: 'email', message: "Iltimos, emailni kiriting", trigger: [ "blur", "change" ] }
   ],
 })
 
-// const handleLogin = () => {
-//   store.login(...user.value)
-// }
-
-const submitForm = async (formEl) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
+const handleLogin = async () => {
+  if (!form.value) return
+  await form.value.validate((valid, fields) => {
     if (valid) {
-      console.log('submit!')
-      // handleLogin()
-      router.push("/")
+      loading_store.setLoading(true)
+      store.signIn({ ...user.value })
     } else {
       console.log('error submit!', fields)
     }

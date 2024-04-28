@@ -1,5 +1,5 @@
 <template>
-  <el-form label-position="top" ref="ruleFormRef" size="large" :model="user" :rules="rules">
+  <el-form label-position="top" ref="form" size="large" :model="user" :rules="rules">
     
     <el-text class="title">Ro'yxatdan o'tish</el-text>
     
@@ -47,7 +47,7 @@
     </el-row>
 
     <el-form-item class="form__btn">
-      <el-button type="primary" plain @click="submitForm(ruleFormRef)" round>{{ active > 2 ? 'Yakunlash' : 'Keyingi' }}</el-button>
+      <el-button type="primary" @click="handleReg(form)" :loading="loading" round>{{ active > 2 ? 'Yakunlash' : 'Keyingi' }}</el-button>
     </el-form-item>
 
     <div class="form__links">
@@ -60,8 +60,15 @@
 </template>
 
 <script setup>
-import router from '@/router';
+import { authStore } from '@/stores/auth/auth';
+import { loadingStore } from '@/stores/utils/loading';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+
+const loading_store = loadingStore()
+const { loading } = storeToRefs(loading_store);
+
+const store = authStore()
 
 const user = ref({
   firstName: '',
@@ -83,7 +90,7 @@ const checkPass = (rule, value, callback) => {
   }
 }
 
-const ruleFormRef = ref();
+const form = ref();
 
 const rules = ref({
   firstName: [
@@ -100,6 +107,7 @@ const rules = ref({
   ],
   email: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
+    { type: 'email', message: "Iltimos, emailni kiriting", trigger: [ "blur", "change" ] }
   ],
   password: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
@@ -122,12 +130,16 @@ const backForm = (step) => {
   if (step == 2 && user.value.email) active.value = 2;
 }
 
-const submitForm = async (formEl) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
+const handleReg = async () => {
+  if (!form.value) return
+  await form.value.validate((valid, fields) => {
     if (valid) {
-      if (active.value < 3) next();
-      else router.push("/auth/signin");
+      if (active.value < 3) {
+        next()
+      } else {
+        loading_store.setLoading(true)
+        store.signUp({ ...user.value })
+      }
     } else {
       console.log('error submit!', fields)
     }
