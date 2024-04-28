@@ -10,8 +10,8 @@
   >
     <template #default>
       <el-form ref="ruleFormRef" size="large" :rules="rules" :model="user" label-position="top">
-        <el-form-item label="Lavozim" prop="rank">
-          <el-select v-model="user.rank" placeholder="Lavozim">
+        <el-form-item label="Lavozim" prop="role">
+          <el-select v-model="user.role" placeholder="Lavozim">
             <el-option label="Admin" :value="0" />
             <el-option label="Operator" :value="1" />
           </el-select>
@@ -62,7 +62,7 @@ const dialog = dialogStore();
 const { toggle } = storeToRefs(dialog);
 
 const user = reactive({
-  rank: '',
+  role: '',
   firstName: '',
   lastName: '',
   email: ''
@@ -76,7 +76,7 @@ const resetForm = (formEl) => {
 
 
 const rules = ref({
-  rank: [
+  role: [
     {
       required: true,
       message: "Iltimos qiymatni tanlang",
