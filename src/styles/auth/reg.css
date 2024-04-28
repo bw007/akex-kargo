@@ -29,9 +29,8 @@
 }
 .el-button {
   font-weight: 500;
-  display: inline-block;
   width: 100%;
-  font-size: 16px;
+  font-size: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
