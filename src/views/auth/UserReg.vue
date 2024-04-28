@@ -137,41 +137,5 @@ const submitForm = async (formEl) => {
 </script>
 
 <style lang="css" scoped>
-.el-form {
-  width: 392px;
-  min-width: 220px;
-  padding: 4px 12px;
-  display: flex;
-  flex-direction: column;
-}
-.el-text.title {
-  font-size: 24px;
-  display: inline-block;
-  margin-bottom: 24px;
-  color: #333333;
-}
-.el-steps {
-  margin-bottom: 42px;
-  opacity: 0.85;
-}
-.form__links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.form__links a {
-  color: #333333;
-}
-.form__links .el-text {
-  margin-bottom: 10px;
-  text-align: center;
-}
-.el-button {
-  font-weight: 500;
-  display: inline-block;
-  width: 100%;
-  font-size: 16px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+@import url("@/styles/auth/reg.css");
 </style>

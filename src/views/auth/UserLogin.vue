@@ -43,7 +43,10 @@
 
 <script setup>
 import router from '@/router';
+// import { authStore } from '@/stores/auth/auth';
 import { ref } from 'vue';
+
+// const store = authStore()
 
 const ruleFormRef = ref()
 
@@ -66,12 +69,17 @@ const rules = ref({
   ],
 })
 
+// const handleLogin = () => {
+//   store.login(...user.value)
+// }
+
 const submitForm = async (formEl) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
       console.log('submit!')
-      router.push("/");
+      // handleLogin()
+      router.push("/")
     } else {
       console.log('error submit!', fields)
     }
@@ -81,41 +89,5 @@ const submitForm = async (formEl) => {
 </script>
 
 <style lang="css" scoped>
-.el-form {
-  width: 392px;
-  min-width: 220px;
-  display: flex;
-  padding: 4px 12px;
-  flex-direction: column;
-}
-.el-text.title {
-  font-size: 24px;
-  display: inline-block;
-  margin-bottom: 24px;
-  color: #333333;
-}
-.el-form-item {
-  margin-bottom: 16px;
-}
-.form__links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.form__links a {
-  color: #333333;
-}
-.form__links .el-text {
-  margin-bottom: 10px;
-  text-align: center;
-}
-.el-button {
-  font-weight: 500;
-  display: inline-block;
-  width: 100%;
-  font-size: 16px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+@import url("@/styles/auth/login.css");
 </style>
