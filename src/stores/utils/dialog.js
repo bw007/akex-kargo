@@ -10,7 +10,7 @@ export const dialogStore = defineStore("dialogStore", () => {
 
   return {
     toggle,
-
+    
     setToggle
   }
 })
