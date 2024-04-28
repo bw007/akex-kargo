@@ -142,8 +142,15 @@ const submitForm = async (formEl) => {
   width: 49%;
 }
 .el-form-item.submit {
+  /* display: flex; */
   width: 100% !important;
+  justify-content: center
 }
+.el-form-item.submit .el-button {
+  width: 25%;
+  min-width: 100px;
+}
+
 .modal .el-form .el-form-item__label {
   margin-bottom: 4px !important;
 }
@@ -155,6 +162,10 @@ const submitForm = async (formEl) => {
   .modal {
     width: 90%;
     min-width: 240px;
+  }
+  .el-form-item.submit .el-form-item__content {
+    justify-content: center;
+    flex-wrap: nowrap;
   }
 }
 @media only screen and (max-width: 540px) {
