@@ -18,7 +18,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
-app.use(VueCookies, { expires: '5s' })
+app.use(VueCookies, { expires: '1h' })
 app.use(createPinia())
 app.use(ElementPlus)
 app.use(router)
