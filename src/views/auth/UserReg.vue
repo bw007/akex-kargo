@@ -107,7 +107,7 @@ const rules = ref({
   ],
   email: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
-    { type: 'email', message: "Iltimos, emailni kiriting", trigger: [ "blur", "change" ] }
+    { type: 'email', message: "Iltimos, emailni kiriting", trigger: "change" }
   ],
   password: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
