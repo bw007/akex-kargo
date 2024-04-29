@@ -2,11 +2,15 @@ import axios from "axios";
 import { defineStore, storeToRefs } from "pinia";
 import { url } from "./env";
 import { tokenStore } from "../auth/token";
+import { ElMessage } from "element-plus";
+import { loadingStore } from "./loading";
 
 export const apiStore = defineStore("apiStore", () => {
 
   const token_store = tokenStore();
   const { token } = storeToRefs(token_store);
+
+  const loading_store = loadingStore();
 
   // GET
   const get = async (payload) => {
@@ -28,7 +32,13 @@ export const apiStore = defineStore("apiStore", () => {
         "Authorization": `Bearer ${token?.value}`
       }
     }).catch(e => {
-      console.log(e);
+      if (e.response.status == 400) {
+        ElMessage({
+          type: "error",
+          message: "Bunday foydalanuvchi mavjud emas"
+        })
+        loading_store.setLoading(false);
+      }
     })
   }
 
