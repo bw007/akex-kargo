@@ -11,6 +11,15 @@ export const authStore = defineStore("authStore", () => {
   const loading_store = loadingStore()
 
   const user = ref({})
+
+  // User check
+  // const checkUser = async () => {
+  //   let res = await api.post({ url: "checkuser" })
+
+  //   if (res.status == 200) {
+  //     console.log(res.data);
+  //   }
+  // }
   
   // Login
   const signIn = async (data) => {
@@ -52,6 +61,7 @@ export const authStore = defineStore("authStore", () => {
   return {
     user,
 
+    // checkUser,
     signIn,
     signUp
   }
