@@ -9,21 +9,30 @@
     :close-on-press-escape="false"
   >
     <template #default>
-      <el-form ref="ruleFormRef" size="large" :rules="rules" :model="user" label-position="top">
-        <el-form-item label="Lavozim" prop="role">
-          <el-select v-model="user.role" placeholder="Lavozim">
-            <el-option label="Admin" :value="0" />
-            <el-option label="Operator" :value="1" />
-          </el-select>
-        </el-form-item>
+      <el-form ref="form" @submit.prevent size="large" :rules="rules" :model="user" label-position="top">
         <el-form-item label="Ism" prop="firstName">
           <el-input v-model="user.firstName" placeholder="Ism" clearable />
         </el-form-item>
         <el-form-item label="Familiya" prop="lastName">
           <el-input v-model="user.lastName" placeholder="Familiya" clearable />
         </el-form-item>
+        <el-form-item label="Lavozim" prop="role">
+          <el-select v-model="user.role" placeholder="Lavozim">
+            <el-option label="Admin" :value="0" />
+            <el-option label="Operator" :value="1" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="Email" prop="email">
           <el-input v-model="user.email" type="email" placeholder="Email" clearable />
+        </el-form-item>
+        <el-form-item label="Tug'ilgan sana" prop="birth">
+          <el-date-picker v-model="user.birth" placeholder="Sanani tanlang" />
+        </el-form-item>
+        <el-form-item label="Jins" prop="gender">
+          <el-radio-group v-model="user.gender">
+            <el-radio border value="Ayol">Ayol</el-radio>
+            <el-radio border value="Erkak">Erkak</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="Avatar">
           <el-upload 
@@ -45,8 +54,8 @@
           </el-upload>
         </el-form-item>
         <el-form-item class="submit">
-          <el-button type="danger" @click="dialog.setToggle(false), resetForm(ruleFormRef)">Bekor qilish</el-button>
-          <el-button type="success" @click="submitForm(ruleFormRef)">Qo'shish</el-button>
+          <el-button type="danger" @click="dialog.setToggle(false), resetForm(form)">Bekor qilish</el-button>
+          <el-button type="success" @click="addWorker(form)">Qo'shish</el-button>
         </el-form-item>
       </el-form>
     </template>
@@ -65,9 +74,13 @@ const user = reactive({
   role: '',
   firstName: '',
   lastName: '',
-  email: ''
+  email: '',
+  birth: '',
+  createdtime: '',
+  gender: '',
+  password: '',
 })
-const ruleFormRef = ref()
+const form = ref()
 
 const resetForm = (formEl) => {
   if (!formEl) return
@@ -115,12 +128,12 @@ const handleClose = () => {
   dialog.setToggle(false);
 }
 
-const submitForm = async (formEl) => {
+const addWorker = async (formEl) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('submit!')
-      dialog.setToggle(false)
+      console.log('submit!');
+      dialog.setToggle(false);
     } else {
       console.log('error submit!', fields)
     }
@@ -132,6 +145,9 @@ const submitForm = async (formEl) => {
 <style lang="css">
 .upload-demo .el-upload-dragger {
   padding: 10px;
+}
+.el-date-editor {
+  width: 100% !important;
 }
 .modal .el-form {
   display: flex;

@@ -32,7 +32,15 @@ export const apiStore = defineStore("apiStore", () => {
         "Authorization": `Bearer ${token?.value}`
       }
     }).catch(e => {
-      if (e.response.status == 400) {
+      console.log(e);
+      if (e.response.status == 400 && e.response.data == "Incorrect password") {
+        ElMessage({
+          type: "error",
+          message: "Parolda xatolik bor"
+        })
+        loading_store.setLoading(false);
+      }
+      if (e.response.status == 400 && e.response.data == "Cannot find user") {
         ElMessage({
           type: "error",
           message: "Bunday foydalanuvchi mavjud emas"

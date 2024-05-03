@@ -4,7 +4,8 @@
     :model="user"
     :rules="rules"
     label-position="top"
-    >
+    @submit.prevent
+  >
     <el-text class="title">Tizimga kirish</el-text>
     <el-form-item label="Email" prop="email">
       <el-input 
@@ -31,11 +32,8 @@
     </el-form-item>
     <div class="form__links">
       <el-text>
-        <router-link to="/auth/forgot">Parolingizni unutdingizmi?</router-link>
-      </el-text>
-      <el-text>
-        Hisobingiz yo'qmi?
-        <router-link to="/auth/signup">Ro'yxatdan o'ting</router-link>
+        Parolingizni unutdingizmi?
+        <router-link to="/auth/forgot">Parolni tiklash</router-link>
       </el-text>
     </div>
   </el-form>
