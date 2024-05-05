@@ -26,13 +26,19 @@ export const apiStore = defineStore("apiStore", () => {
 
   // POST
   const post = async (payload) => {
-    console.log(payload);
     return await axios.post(`${url}/${payload.url}`, payload.data, {
       headers: {
         "Authorization": `Bearer ${token?.value}`
       }
     }).catch(e => {
       console.log(e);
+      if (e.message == "Network Error") {
+        ElMessage({
+          type: "error",
+          message: "Xatolik. Ulanishni tekshiring"
+        })
+        loading_store.setLoading(false);
+      }
       if (e.response.status == 400 && e.response.data == "Incorrect password") {
         ElMessage({
           type: "error",
