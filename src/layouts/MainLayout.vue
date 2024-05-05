@@ -5,7 +5,7 @@
     </Transition>
     <el-container class="layout-inner">
       <el-header>
-        <el-row class="header-inner" justify="space-between" align="middle">
+        <el-row justify="space-between" align="middle">
           <el-icon @click="isToggle = true, isCollapse = false" id="navbar-menu-icon" :size="24" color="#00000095">
             <Bars3BottomLeftIcon />
           </el-icon>
