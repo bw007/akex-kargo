@@ -42,7 +42,11 @@
                   </router-link>
                 </el-col>
                 <el-col>
-                  <router-link class="profil-link" to="/auth/signin">
+                  <router-link 
+                    @click="cookies.remove('token'), cookies.remove('user')" 
+                    class="profil-link" 
+                    to="/auth/signin"
+                  >
                     <el-icon :size="18" color="#303133">
                       <ArrowRightStartOnRectangleIcon />
                     </el-icon>
@@ -64,7 +68,7 @@
                 <ArrowLeft v-else />
               </el-icon>
             </el-button>
-            <el-menu-item v-for="item in menu" :index="item.name" :key="item.name" :route="{ name: item.name }"
+            <el-menu-item v-for="item in superMenu" :index="item.name" :key="item.name" :route="{ name: item.name }"
               :class="$route.name == item.name ? 'active' : ''">
               <el-divider direction="vertical" />
               <el-icon>
@@ -87,14 +91,23 @@
 
 <script setup>
 import { RouterView } from 'vue-router';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { menu } from "@/stores/utils/menu";
 import { Bars3BottomLeftIcon, ArrowRightStartOnRectangleIcon, Cog8ToothIcon } from '@heroicons/vue/24/outline';
 import router from '@/router';
+import cookies from "vue-cookies";
 
 const isCollapse = ref(false);
 const isToggle = ref(false);
 const isActive = ref(false);
+
+const superMenu = computed(() => {
+  if (cookies.get("user").role !== "@super_admin") {
+    return [ ...menu.filter(m => m.name !== "workers") ]
+  } else {
+    return [ ...menu ]
+  }
+})
 
 const handleSelect = (index) => {
   router.push({ name: index });
