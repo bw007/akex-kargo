@@ -54,6 +54,7 @@ const form = ref()
 const user = ref({
   email: '',
   password: '',
+  remember: false,
 })
 
 const rules = ref({
