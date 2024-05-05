@@ -5,59 +5,53 @@
     </Transition>
     <el-container class="layout-inner">
       <el-header>
-        <el-row justify="space-between" align="middle">
-          <el-col @click="isCollapse = false, isToggle = true" id="navbar-menu-icon" :span="2">
-            <el-icon :size="24" color="#00000095">
-              <Bars3BottomLeftIcon />
-            </el-icon>
-          </el-col>
-          <el-col id="navbar-logo" :span="2">
-            <router-link to="/">
-              <img src="@/assets/imgs/logo.svg" alt="">
-            </router-link>
-          </el-col>
-          <el-col id="navbar-profile" :span="12">
-            <el-popover @before-enter="isActive = true" @before-leave="isActive = false" :show-after="100" :hide-after="100" placement="bottom-end" :width="280" trigger="click">
-              <template #reference>
-                <el-avatar :class="isActive ? 'active' : ''">L</el-avatar>
-              </template>
-              <template #default>
-                <el-row class="profil-items" :gutter="7">
-                  <el-col :span="5">
-                    <el-avatar>L</el-avatar>
-                  </el-col>
-                  <el-col :span="18">
-                    <el-row>
-                      <el-col>
-                        <el-text tag="b">Laziz Hasanov</el-text>
-                      </el-col>
-                      <el-col>
-                        <el-text size="small">mr.abdulaziz00791@gmail.com</el-text>
-                      </el-col>
-                    </el-row>
-                  </el-col>
-                </el-row>
-                <el-row class="profil-items profil-menu">
-                  <el-col>
-                    <router-link class="profil-link" to="/setting">
-                      <el-icon :size="18" color="#303133">
-                        <Cog8ToothIcon />
-                      </el-icon>
-                      Profil
-                    </router-link>
-                  </el-col>
-                  <el-col>
-                    <router-link class="profil-link" to="/auth/signin">
-                      <el-icon :size="18" color="#303133">
-                        <ArrowRightStartOnRectangleIcon />
-                      </el-icon>
-                      Chiqish
-                    </router-link>
-                  </el-col>
-                </el-row>
-              </template>
-            </el-popover>
-          </el-col>
+        <el-row class="header-inner" justify="space-between" align="middle">
+          <el-icon @click="isToggle = true, isCollapse = false" id="navbar-menu-icon" :size="24" color="#00000095">
+            <Bars3BottomLeftIcon />
+          </el-icon>
+          <router-link id="navbar-logo" to="/">
+            <img src="@/assets/imgs/logo.svg" alt="">
+          </router-link>
+          <el-popover @before-enter="isActive = true" @before-leave="isActive = false" :show-after="100" :hide-after="100" placement="bottom-end" :width="280" trigger="click">
+            <template #reference>
+              <el-avatar :class="{ active: isActive }" id="navbar-profile">L</el-avatar>
+            </template>
+            <template #default>
+              <el-row class="user-info">
+                <el-col :span="4">
+                  <el-avatar>L</el-avatar>
+                </el-col>
+                <el-col :span="20">
+                  <el-row>
+                    <el-col>
+                      <el-text tag="b">Laziz Hasanov</el-text>
+                    </el-col>
+                    <el-col>
+                      <el-text size="small">mr.abdulaziz00791@gmail.com</el-text>
+                    </el-col>
+                  </el-row>
+                </el-col>
+              </el-row>
+              <el-row class="profil-menu">
+                <el-col>
+                  <router-link class="profil-link" to="/setting">
+                    <el-icon :size="18" color="#303133">
+                      <Cog8ToothIcon />
+                    </el-icon>
+                    Profil
+                  </router-link>
+                </el-col>
+                <el-col>
+                  <router-link class="profil-link" to="/auth/signin">
+                    <el-icon :size="18" color="#303133">
+                      <ArrowRightStartOnRectangleIcon />
+                    </el-icon>
+                    Chiqish
+                  </router-link>
+                </el-col>
+              </el-row>
+            </template>
+          </el-popover>
         </el-row>
       </el-header>
       <el-container class="layout-main">
