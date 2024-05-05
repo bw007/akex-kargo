@@ -1,5 +1,7 @@
+import { authStore } from "@/stores/auth/auth";
 import { menu } from "@/stores/utils/menu";
 import { createRouter, createWebHistory } from "vue-router";
+import cookies from "vue-cookies";
 
 const routes = [
   {
@@ -41,6 +43,22 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+
+router.beforeEach((to, from, next) => {
+  if (to.name == "workers" && cookies.get("user").role !== "@super_admin") {
+    cookies.remove("token");
+    cookies.remove("user");
+    router.push({ name: "signin" })
+  }
+  if (['signin'].includes(to.name)) {
+    next()
+  } else {
+    const auth_store = authStore()
+    auth_store.checkUser()
+    next()
+  }
 })
 
 export default router
