@@ -45,7 +45,7 @@ import { loadingStore } from '@/stores/utils/loading';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
-const store = authStore()
+const auth_store = authStore()
 const loading_store = loadingStore()
 const { loading } = storeToRefs(loading_store);
 
@@ -73,7 +73,7 @@ const handleLogin = async () => {
   await form.value.validate((valid, fields) => {
     if (valid) {
       loading_store.setLoading(true)
-      store.signIn({ ...user.value })
+      auth_store.signIn({ ...user.value })
     } else {
       console.log('error submit!', fields)
     }
