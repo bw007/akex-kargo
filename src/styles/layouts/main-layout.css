@@ -37,8 +37,7 @@
   display: none !important;
 }
 
-#navbar-logo a,
-#navbar-profile a {
+#navbar-logo {
   display: inline-flex;
   align-items: center;
 }
@@ -53,16 +52,13 @@
   opacity: 0.8;
 }
 
-#navbar-profile {
-  justify-content: flex-end;
-}
-
 .profil-menu {
   padding-top: 10px;
 }
 
-.profil-items {
-  margin: 8px 0;
+.user-info {
+  flex-wrap: nowrap;
+  gap: 8px;
 }
 
 .profil-link {
