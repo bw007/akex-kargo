@@ -7,9 +7,9 @@
     </el-row>
     <el-table :data="filterTableData" style="width: 100%; height: calc(100vh - 180px);">
       <el-table-column fixed type="index" align="center" />
-      <el-table-column label="Ism, Familiya" min-width="180" prop="name">
+      <el-table-column label="Ism, Familiya" min-width="180" prop="firstName">
         <template #default="list">
-          <el-text tag="b">{{ list.row.name }}</el-text>
+          <el-text tag="b">{{ list.row.firstName }} {{ list.row.lastName }}</el-text>
         </template>
       </el-table-column>
       <el-table-column label="Email" min-width="220" prop="email">
@@ -17,14 +17,14 @@
           <el-text>{{ list.row.email }}</el-text>
         </template>
       </el-table-column>
-      <el-table-column label="Qo'shilgan sana" min-width="145" prop="date">
+      <el-table-column label="Qo'shilgan sana" min-width="145" prop="createdTime">
         <template #default="list">
-          <el-text>{{ list.row.date }}</el-text>
+          <el-text>{{ list.row.createdTime }}</el-text>
         </template>
       </el-table-column>
-      <el-table-column label="Holati" min-width="72" prop="name">
+      <el-table-column label="Holati" min-width="72" prop="status">
         <template #default="list">
-          <el-button :type="list.row.status ? 'success' : 'warning'">
+          <el-button :disabled="![0, 1].includes(list.row.role)" :type="list.row.status ? 'success' : 'warning'">
             <el-icon :size="16">
               <LockOpenIcon v-if="list.row.status" />
               <LockClosedIcon v-else />
@@ -32,18 +32,20 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="Lavozim" min-width="125" prop="rank">
+      <el-table-column label="Lavozim" min-width="125" prop="role">
         <template #default="list">
-          <el-text>{{ list.row.rank }}</el-text>
+          <el-text v-if="list.row.role == 1">Operator</el-text>
+          <el-text v-else-if="list.row.role == 0">Admin</el-text>
+          <el-text type="success" v-else>Super Admin</el-text>
         </template>
       </el-table-column>
       <el-table-column align="right" min-width="180">
         <template #header>
           <el-input v-model="search" placeholder="Qidirish..." />
         </template>
-        <template #default>
-          <el-button title="Tahrirlash" :icon="Edit" type="primary" plain />
-          <el-button title="O'chirish" :icon="Delete" type="danger" plain />
+        <template #default="list">
+          <el-button :disabled="![0, 1].includes(list.row.role)" title="Tahrirlash" :icon="Edit" type="primary" plain />
+          <el-button :disabled="![0, 1].includes(list.row.role)" title="O'chirish" :icon="Delete" type="danger" plain />
         </template>
       </el-table-column>
     </el-table>
@@ -51,42 +53,30 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/vue/24/outline";
 import WorkerDialog from '@/components/workers/WorkerDialog.vue';
 import { dialogStore } from "@/stores/utils/dialog";
+import { userStore } from '@/stores/data/user';
+import { storeToRefs } from 'pinia';
 
 const dialog = dialogStore();
+const user_store = userStore();
+const { users } = storeToRefs(user_store);
 
 const search = ref('')
 const filterTableData = computed(() =>
-  tableData.filter((data) =>
+  users.value.filter((data) =>
     !search.value ||
-    data.name.toLowerCase().includes(search.value.toLowerCase())
+    (data.firstName + data.lastName).toLowerCase().includes(search.value.toLowerCase())
   )
 )
 
+onMounted(() => {
+  user_store.getAllUsers();
+})
 
-
-const tableData = reactive([
-  {
-    date: '2016-05-03',
-    name: 'Abdurahmon Umarov',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: false,
-    rank: 'Boshqaruvchi'
-  },
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: false,
-    rank: 'Operator'
-  }
-])
 </script>
 
 <style lang="css" scoped>
