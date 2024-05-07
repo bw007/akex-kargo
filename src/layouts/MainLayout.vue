@@ -14,20 +14,24 @@
           </router-link>
           <el-popover @before-enter="isActive = true" @before-leave="isActive = false" :show-after="100" :hide-after="100" placement="bottom-end" :width="280" trigger="click">
             <template #reference>
-              <el-avatar :class="{ active: isActive }" id="navbar-profile">L</el-avatar>
+              <el-avatar :class="{ active: isActive }" id="navbar-profile">
+                {{ user.avatar ? user.avatar : user.firstName?.slice(0, 1) }}
+              </el-avatar>
             </template>
             <template #default>
               <el-row class="user-info">
                 <el-col :span="4">
-                  <el-avatar>L</el-avatar>
+                  <el-avatar>
+                    {{ user.avatar ? user.avatar : user.firstName?.slice(0, 1) }}
+                  </el-avatar>
                 </el-col>
                 <el-col :span="20">
                   <el-row>
                     <el-col>
-                      <el-text tag="b">Laziz Hasanov</el-text>
+                      <el-text tag="b">{{ user.firstName }} {{ user.lastName }}</el-text>
                     </el-col>
                     <el-col>
-                      <el-text size="small">mr.abdulaziz00791@gmail.com</el-text>
+                      <el-text size="small">{{ user.email }}</el-text>
                     </el-col>
                   </el-row>
                 </el-col>
@@ -91,7 +95,7 @@
 
 <script setup>
 import { RouterView } from 'vue-router';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { menu } from "@/stores/utils/menu";
 import { Bars3BottomLeftIcon, ArrowRightStartOnRectangleIcon, Cog8ToothIcon } from '@heroicons/vue/24/outline';
 import router from '@/router';
@@ -101,12 +105,18 @@ const isCollapse = ref(false);
 const isToggle = ref(false);
 const isActive = ref(false);
 
+const user = ref({ ...cookies.get("user") })
+
 const superMenu = computed(() => {
-  if (cookies.get("user").role !== "@super_admin") {
+  if (user.value.role !== "@super_admin") {
     return [ ...menu.filter(m => m.name !== "workers") ]
   } else {
     return [ ...menu ]
   }
+})
+
+onMounted(() => {
+  console.log(120);
 })
 
 const handleSelect = (index) => {
