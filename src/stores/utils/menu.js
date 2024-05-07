@@ -6,7 +6,7 @@ export const menu = [
     icon: 'pie-chart',
     meta: {
       title: 'Statistika',
-      secure: false
+      secure: true
     },
     component: () => import('@/views/HomeView.vue')
   },
@@ -17,7 +17,7 @@ export const menu = [
     icon: 'Service',
     meta: {
       title: 'Ishchi xodimlar',
-      secure: false
+      secure: true
     },
     component: () => import('@/views/WorkersView.vue')
   },
@@ -28,7 +28,7 @@ export const menu = [
     icon: 'Goods',
     meta: {
       title: 'Buyurtmalar ro`yxati',
-      secure: false
+      secure: true
     }
     // component: () => import("@/views/SettingView.vue")
   },
@@ -39,7 +39,7 @@ export const menu = [
     icon: 'Money',
     meta: {
       title: 'Tranzaksiyalar ro`yxati',
-      secure: false
+      secure: true
     }
     // component: () => import("@/views/SettingView.vue")
   },
@@ -50,7 +50,7 @@ export const menu = [
     icon: 'Setting',
     meta: {
       title: 'Tizim sozlamalari',
-      secure: false
+      secure: true
     }
     // component: () => import("@/views/SettingView.vue")
   }
