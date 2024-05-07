@@ -15,20 +15,20 @@
           <el-popover @before-enter="isActive = true" @before-leave="isActive = false" :show-after="100" :hide-after="100" placement="bottom-end" :width="280" trigger="click">
             <template #reference>
               <el-avatar :class="{ active: isActive }" id="navbar-profile">
-                {{ user.avatar ? user.avatar : user.firstName?.slice(0, 1) }}
+                {{ user.avatar ? user.avatar : user.name.first?.slice(0, 1) }}
               </el-avatar>
             </template>
             <template #default>
               <el-row class="user-info">
                 <el-col :span="4">
                   <el-avatar>
-                    {{ user.avatar ? user.avatar : user.firstName?.slice(0, 1) }}
+                    {{ user.avatar ? user.avatar : user.name.first?.slice(0, 1) }}
                   </el-avatar>
                 </el-col>
                 <el-col :span="20">
                   <el-row>
                     <el-col>
-                      <el-text tag="b">{{ user.firstName }} {{ user.lastName }}</el-text>
+                      <el-text tag="b">{{ user.name.first }} {{ user.name.last }}</el-text>
                     </el-col>
                     <el-col>
                       <el-text size="small">{{ user.email }}</el-text>
