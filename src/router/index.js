@@ -29,6 +29,9 @@ const routes = [
       {
         path: "/auth/signin",
         name: "signin",
+        meta: {
+          secure: false
+        },
         component: () => import("@/views/auth/UserLogin.vue")
       },
       // {
@@ -52,7 +55,7 @@ router.beforeEach((to, from, next) => {
     cookies.remove("user");
     router.push({ name: "signin" })
   }
-  if (['signin'].includes(to.name)) {
+  if (!to.meta.secure) {
     next()
   } else {
     const auth_store = authStore()
