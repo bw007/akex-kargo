@@ -48,9 +48,8 @@ const router = createRouter({
   routes,
 })
 
-
 router.beforeEach((to, from, next) => {
-  if (to.name == "workers" && cookies.get("user").role !== "@super_admin") {
+  if (to.name == "workers" && cookies.get("user")?.role !== "@super_admin") {
     cookies.remove("token");
     cookies.remove("user");
     router.push({ name: "signin" })
