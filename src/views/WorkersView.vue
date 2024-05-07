@@ -67,6 +67,8 @@ const filterTableData = computed(() =>
   )
 )
 
+
+
 const tableData = reactive([
   {
     date: '2016-05-03',
@@ -83,71 +85,7 @@ const tableData = reactive([
     email: 'someone@gmail.com',
     status: false,
     rank: 'Operator'
-  },
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: false,
-    rank: 'Operator'
-  },
-  {
-    date: '2016-05-02',
-    name: 'John',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: false,
-    rank: 'Admin'
-  },
-  {
-    date: '2016-05-04',
-    name: 'Morgan',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: true,
-    rank: 'Admin'
-  },
-  {
-    date: '2016-05-01',
-    name: 'Jessy',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: true,
-    rank: 'Admin'
-  },
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: false,
-    rank: 'Operator'
-  },
-  {
-    date: '2016-05-02',
-    name: 'John',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: false,
-    rank: 'Admin'
-  },
-  {
-    date: '2016-05-04',
-    name: 'Morgan',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: true,
-    rank: 'Admin'
-  },
-  {
-    date: '2016-05-01',
-    name: 'Jessy',
-    address: 'No. 189, Grove St, Los Angeles',
-    email: 'someone@gmail.com',
-    status: true,
-    rank: 'Admin'
-  },
+  }
 ])
 </script>
 
