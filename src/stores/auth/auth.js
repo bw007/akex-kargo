@@ -19,6 +19,7 @@ export const authStore = defineStore("authStore", () => {
     
     if (cookies.isKey("token") && cookies.isKey("user")) {
       token_store.setToken(cookies.get("token"))
+
       let res = await api.get({ url: `users/${cookies.get("user").id}`})
       
       if (res.response?.status == 404) {
@@ -47,7 +48,17 @@ export const authStore = defineStore("authStore", () => {
         message: "Muvaffaqiyatli tizimga kirildi"
       })
       user.value = { ...res.data.user };
-      cookies.set("user", { ...res.data.user });
+      cookies.set("user", 
+        {
+          name: {
+            first: res.data.user.firstName,
+            last: res.data.user.lastName,
+          },
+          email: res.data.user.email,
+          role: res.data.user.role,
+          id: res.data.user.id
+        });
+      
       if (data.remember) cookies.set("remember", data.remember);
 
       token_store.setToken(res.data.accessToken.slice());
