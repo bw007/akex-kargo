@@ -31,7 +31,7 @@
                       <el-text tag="b">{{ user.name.first }} {{ user.name.last }}</el-text>
                     </el-col>
                     <el-col>
-                      <el-text size="small">{{ user.email }}</el-text>
+                      <el-text :type="user.role == '@super_admin' ? 'success' : ''" size="small">{{ user.email }}</el-text>
                     </el-col>
                   </el-row>
                 </el-col>
@@ -63,7 +63,7 @@
         </el-row>
       </el-header>
       <el-container class="layout-main">
-        <el-aside :class="isToggle ? 'open' : ''" width="fit-content">
+        <el-aside :class="{ open: isToggle }" width="fit-content">
           <el-menu :default-active="$route.name" class="el-menu-vertical-demo" :collapse="isCollapse"
             @select="handleSelect">
             <el-button @click="isToggle ? isToggle = false : isCollapse = !isCollapse" text>
@@ -72,8 +72,13 @@
                 <ArrowLeft v-else />
               </el-icon>
             </el-button>
-            <el-menu-item v-for="item in superMenu" :index="item.name" :key="item.name" :route="{ name: item.name }"
-              :class="$route.name == item.name ? 'active' : ''">
+            <el-menu-item 
+              v-for="item in superMenu" 
+              :index="item.name" 
+              :key="item.name" 
+              :route="{ name: item.name }"
+              :class="{ active: $route.name == item.name }"
+            >
               <el-divider direction="vertical" />
               <el-icon>
                 <component :is="item.icon" />
