@@ -31,9 +31,13 @@
       <el-button size="large" type="primary" :loading="loading" @click="handleLogin(form)" round>Kirish</el-button>
     </el-form-item>
     <div class="form__links">
-      <el-text>
+      <!-- <el-text>
         Parolingizni unutdingizmi?
         <router-link to="/auth/forgot">Parolni tiklash</router-link>
+      </el-text> -->
+      <el-text>
+        Loyihani ishlatib ko'rish uchun
+        <router-link to="/auth/guide">yo'riqnoma</router-link>
       </el-text>
     </div>
   </el-form>
