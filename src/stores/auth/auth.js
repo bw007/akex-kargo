@@ -43,10 +43,6 @@ export const authStore = defineStore("authStore", () => {
     let res = await api.post({ url: "signin", data });
 
     if (res.status == 200) {
-      ElMessage({
-        type: "success",
-        message: "Muvaffaqiyatli tizimga kirildi"
-      })
       user.value = { ...res.data.user };
       cookies.set("user", 
         {
@@ -64,6 +60,10 @@ export const authStore = defineStore("authStore", () => {
       token_store.setToken(res.data.accessToken.slice());
 
       setTimeout(() => {
+        ElMessage({
+          type: "success",
+          message: "Muvaffaqiyatli tizimga kirildi"
+        })
         loading_store.setLoading(false)
       }, 1000);
       
