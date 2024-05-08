@@ -16,16 +16,23 @@ export const userStore = defineStore("userStore", () => {
         type: "success",
         message: "Muvaffaqiyatli qo'shildi"
       })
-      users.value = [ { ...res.data.user }, ...users.value ]
+      users.value = [ 
+        ...users.value.filter(u => u.role == "@super_admin"),
+       { ...res.data.user }, 
+       ...users.value.filter(u => u.role !== "@super_admin")
+      ]
     }
   }
 
   // Get all users
   const getAllUsers = async () => {
-    let res = await api.get({ url: "users" })
+    let res = await api.get({ url: "users?_sort=id&_order=desc" })
 
     if (res.status == 200) {
-      users.value = [ ...res.data ]
+      users.value = [ 
+        ...res.data.filter(u => u.role == "@super_admin"), 
+        ...res.data.filter(u => u.role !== "@super_admin")
+      ]
       console.log(users.value);
     }
   }
@@ -42,7 +49,7 @@ export const userStore = defineStore("userStore", () => {
 
   // Remove user
   // const removeUser = async (id) => {
-
+    
   // }
 
   // Change status user
