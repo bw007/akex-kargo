@@ -34,11 +34,11 @@ const routes = [
         },
         component: () => import("@/views/auth/UserLogin.vue")
       },
-      // {
-      //   path: "/auth/signup",
-      //   name: "signup",
-      //   component: () => import("@/views/auth/UserReg.vue")
-      // }
+      {
+        path: "/auth/guide",
+        name: "guide",
+        component: () => import("@/views/auth/GuideView.vue")
+      }
     ]
   }
 ]
