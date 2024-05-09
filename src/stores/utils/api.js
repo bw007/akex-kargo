@@ -53,6 +53,7 @@ export const apiStore = defineStore("apiStore", () => {
         })
         loading_store.setLoading(false);
       }
+
       if (e.response.status == 400 && e.response.data == "Incorrect password") {
         ElMessage({
           type: "error",
@@ -60,6 +61,15 @@ export const apiStore = defineStore("apiStore", () => {
         })
         loading_store.setLoading(false);
       }
+
+      if (e.response.status == 400 && e.response.data == "Email already exists") {
+        ElMessage({
+          type: "error",
+          message: "Bunday email ro'yxatdan o'tgan"
+        })
+        loading_store.setLoading(false);
+      }
+
       if (e.response.status == 400 && e.response.data == "Cannot find user") {
         ElMessage({
           type: "error",
@@ -67,6 +77,7 @@ export const apiStore = defineStore("apiStore", () => {
         })
         loading_store.setLoading(false);
       }
+
     })
   }
 
@@ -88,7 +99,27 @@ export const apiStore = defineStore("apiStore", () => {
         "Authorization": `Bearer ${token?.value}`
       }
     }).catch(e => {
+
+      if (e.response.status == 401 && e.response.statusText == "Unauthorized") {
+        ElMessage({
+          type: "error",
+          message: "Tizimga kirish ruxsati yo'q"
+        })
+
+        cookies.remove("token");
+        cookies.remove("user");
+        setTimeout(() => {
+          router.push({ name: "signin" })
+        }, 1000);
+      }
       console.log(e);
+      if (e.message == "Network Error") {
+        ElMessage({
+          type: "error",
+          message: "Xatolik. Ulanishni tekshiring"
+        })
+      }
+
     })
   }
 
