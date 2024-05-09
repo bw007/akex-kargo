@@ -1,7 +1,10 @@
+import { markRaw, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+
 import { apiStore } from '../utils/api'
-import { ElMessage } from 'element-plus'
+
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { TrashIcon } from "@heroicons/vue/24/solid";
 
 export const userStore = defineStore('userStore', () => {
   const users = ref([])
@@ -49,7 +52,28 @@ export const userStore = defineStore('userStore', () => {
   // }
 
   // Remove user
-  
+  const removeUser = (id) => {
+    ElMessageBox.confirm("Ma'lumot o'chirilmoqda. Davom ettirilsinmi?", "Ogohlantirish", {
+      confirmButtonText: "Ha",
+      cancelButtonText: "Yo'q",
+      type: 'error',
+      icon: markRaw(TrashIcon)
+    })
+      .then(async () => {
+        await api.del({ url: `users/${id}` })
+        ElMessage({
+          type: 'success',
+          message: "Muvaffaqiyatli o'chirildi"
+        })
+        users.value = [
+          ...users.value.filter((u) => u.role == '@super_admin'),
+          ...users.value.filter((u) => (u.role !== '@super_admin' && u.id != id))
+        ]
+      })
+      .catch(() => {
+        console.log('Cancel')
+      })
+  }
 
   // Change status user
   // const changeStatusUser = (id) => {
@@ -62,7 +86,6 @@ export const userStore = defineStore('userStore', () => {
     // getUser,
     addUser,
     getAllUsers,
-
-    
+    removeUser
   }
 })
