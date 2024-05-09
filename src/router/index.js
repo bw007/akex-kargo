@@ -32,7 +32,7 @@ const routes = [
         meta: {
           secure: false
         },
-        component: () => import("@/views/auth/UserLogin.vue")
+        component: () => import("@/views/auth/LoginView.vue")
       },
       {
         path: "/auth/guide",
