@@ -117,8 +117,10 @@ const addUser = async () => {
   await form.value.validate((valid, fields) => {
     if (valid) {
       user_store.addUser({ ...user, createdTime: new Date(), status: false })
-      resetForm()
-      dialog_store.setToggle(false)
+        .then(() => {
+          dialog_store.setToggle(false)
+          resetForm()
+        })
     } else {
       console.log('error submit!', fields)
     }
