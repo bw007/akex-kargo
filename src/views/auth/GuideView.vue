@@ -1,9 +1,8 @@
 <template>
-  <el-collapse v-model="activeName" accordion>
+  <el-collapse v-model="active" accordion>
     <el-collapse-item title="Loyiha haqida" name="1">
       <el-text size="small">
-        Loyiha amaliyot maqsadida ishlab chiqilmoqda.
-        Loyiha yakuniga yetgach mijozga maqul kelsa bepul tadqim etiladi va dasturchi portfoliosiga qo'shiladi.
+        Loyiha yuk yetkazib berish xizmati xodimlari ishini yengillashtirishga mo'ljallangan.
       </el-text>
     </el-collapse-item>
     <el-collapse-item title="Foydalanilgan texnologiyalar" name="2">
@@ -39,7 +38,13 @@
     </el-collapse-item>
   </el-collapse>
 </template>
-<script setup></script>
+
+<script setup>
+import { ref } from 'vue';
+
+const active = ref('1')
+</script>
+
 <style lang="css" scoped>
 .el-collapse {
   width: 500px;
