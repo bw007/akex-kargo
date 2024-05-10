@@ -40,7 +40,7 @@
           <el-input v-model="user.password" type="password" show-password placeholder="Parol" />
         </el-form-item>
         <el-form-item label="Avatar">
-          <el-upload class="upload-demo" drag multiple>
+          <el-upload class="upload-demo" drag>
             <el-icon :size="24" color="#30313390">
               <upload-filled />
             </el-icon>
@@ -129,58 +129,5 @@ const addUser = async () => {
 </script>
 
 <style lang="css">
-.upload-demo .el-upload-dragger {
-  padding: 10px;
-}
-
-.el-date-editor {
-  width: 100% !important;
-}
-
-.modal .el-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2%;
-}
-
-.modal .el-form .el-form-item {
-  width: 49%;
-}
-
-.el-form-item.submit {
-  /* display: flex; */
-  width: 100% !important;
-  justify-content: center;
-}
-
-.el-form-item.submit .el-button {
-  width: 25%;
-  min-width: 100px;
-}
-
-.modal .el-form .el-form-item__label {
-  margin-bottom: 4px !important;
-}
-
-.modal .el-form .el-form-item__content {
-  line-height: 20px;
-}
-
-@media only screen and (max-width: 767px) {
-  .modal {
-    width: 90%;
-    min-width: 240px;
-  }
-
-  .el-form-item.submit .el-form-item__content {
-    justify-content: center;
-    flex-wrap: nowrap;
-  }
-}
-
-@media only screen and (max-width: 540px) {
-  .modal .el-form .el-form-item {
-    width: 100%;
-  }
-}
+@import url("@/styles/components/workers/worker-dialog.css");
 </style>
