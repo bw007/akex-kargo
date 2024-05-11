@@ -50,7 +50,14 @@ export const userStore = defineStore('userStore', () => {
 
   // Update user
   // const updateUser = async (payload) => {
-    
+  //   let res = await api.put({ 
+  //     url: `users/${payload.id}`, 
+  //     data: { ...payload, status: !payload.status } 
+  //   })
+
+  //   if (res.status == 200) {
+  //     console.log(res.data);
+  //   } 
   // }
 
   // Remove user
@@ -114,7 +121,7 @@ export const userStore = defineStore('userStore', () => {
     addUser,
     getAllUsers,
     // getUser,
-    updateUser,
+    // updateUser,
     changeStatus,
     removeUser,
   }
