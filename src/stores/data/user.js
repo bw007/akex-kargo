@@ -28,6 +28,8 @@ export const userStore = defineStore('userStore', () => {
     }
   }
 
+  
+
   // Get all users
   const getAllUsers = async () => {
     let res = await api.get({ url: 'users?_sort=id&_order=desc' })
@@ -47,8 +49,8 @@ export const userStore = defineStore('userStore', () => {
   // }
 
   // Update user
-  // const updateUser = async (id) => {
-
+  // const updateUser = async (payload) => {
+    
   // }
 
   // Remove user
@@ -65,27 +67,55 @@ export const userStore = defineStore('userStore', () => {
           type: 'success',
           message: "Muvaffaqiyatli o'chirildi"
         })
-        users.value = [
-          ...users.value.filter((u) => u.role == '@super_admin'),
-          ...users.value.filter((u) => (u.role !== '@super_admin' && u.id != id))
-        ]
+        users.value = [ ...users.value.filter((u) => (u.id != id)) ]
       })
       .catch(() => {
         console.log('Cancel')
       })
   }
 
-  // Change status user
-  // const changeStatusUser = (id) => {
+  // Change status
+  const changeStatus = (payload) => {
+    ElMessageBox.prompt( "Foydalanuvchi parolini tering", !payload.status ? "Foydalanuvchini faollashtirish" : "Foydalanuvchini cheklash", {
+      confirmButtonText: "Ha",
+      cancelButtonText: "Yo'q",
+      inputPattern: /^[A-Za-z\d]{8,10}$/,
+      inputErrorMessage: 'Belgilar soni 8 tadan 10 tagacha',
+      type: 'warning'
+    })
+      .then(async (data) => {
+        console.log(data);
+        await api.put({ 
+          url: `users/${payload.id}`, 
+          data: { ...payload, password: data.value, status: !payload.status } 
+        })
+        users.value = [ ...users.value.map((u) => {
+              if (u.id == payload.id) return {
+                ...u,
+                status: !u.status
+              }
+              return u
+            })
+          ]
+        ElMessage({
+          type: 'success',
+          message: !payload.status ? "Foydalanuvchi faollashtirildi" : "Foydalanuvchi cheklandi"
+        })
+      })
+      .catch((e) => {
+        console.log(e)
+      })
 
-  // }
+  }
 
   return {
     users,
 
-    // getUser,
     addUser,
     getAllUsers,
-    removeUser
+    // getUser,
+    updateUser,
+    changeStatus,
+    removeUser,
   }
 })
