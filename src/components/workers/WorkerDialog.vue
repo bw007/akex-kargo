@@ -40,7 +40,21 @@
           <el-input v-model="user.password" type="password" show-password placeholder="Parol" />
         </el-form-item>
         <el-form-item label="Avatar">
-          <el-upload class="upload-demo" drag>
+
+          <el-upload 
+            v-model:file-list="user.avatar"
+            :action="`${url}/avatars`"
+            :headers="{
+              'authorization': `Bearer ${token}`
+            }"
+            :on-remove="fileRemove"
+            :before-upload="fileUpload"
+            :on-success="fileSuccess"
+            :on-error="fileError"
+            :limit="1"
+            class="upload-demo"
+            drag
+          >
             <el-icon :size="24" color="#30313390">
               <upload-filled />
             </el-icon>
@@ -49,10 +63,12 @@
               <div class="el-upload__tip">Hajmi 500 kb dan kam bo'lgan <b>jpg/png</b> fayllar</div>
             </template>
           </el-upload>
+
         </el-form-item>
         <el-form-item class="submit">
           <el-button type="danger" @click="dialog_store.setToggle(false), resetForm()">Bekor qilish</el-button>
           <el-button type="success" @click="addUser(form)">Qo'shish</el-button>
+          <img :src="imgUrl" alt="">
         </el-form-item>
       </el-form>
     </template>
@@ -64,8 +80,13 @@ import { reactive, ref } from 'vue'
 import { dialogStore } from '@/stores/utils/dialog'
 import { storeToRefs } from 'pinia'
 import { userStore } from '@/stores/data/user'
+import { url } from '@/stores/utils/env';
+import cookies from "vue-cookies";
+// import { apiStore } from '@/stores/utils/api';
 
 const user_store = userStore()
+const token = cookies.get("token")
+// const api = apiStore()
 const dialog_store = dialogStore()
 const { toggle } = storeToRefs(dialog_store)
 
@@ -75,7 +96,8 @@ const user = reactive({
   lastName: '',
   email: '',
   birth: '',
-  password: ''
+  password: '',
+  avatar: []
 })
 const form = ref()
 
@@ -107,9 +129,39 @@ const rules = ref({
   ]
 })
 
+const imgUrl = ref('')
+
 const handleClose = () => {
   resetForm()
   dialog_store.setToggle(false)
+}
+
+const fileUpload = (file) => {
+  console.log(file);
+}
+const fileRemove = async (file) => {
+  console.log(file);
+}
+
+const fileSuccess = (response, file, fileList) => {
+
+  new Promise((resolve, reject) => {
+
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (e) => reject(e);
+    reader.readAsDataURL(file.raw)
+
+  }).then((baseString) => {
+    user.avatar[0].response.data = baseString
+  }).catch((e) => {
+    console.log(e);
+  })
+
+}
+
+const fileError = (file) => {
+  console.log(file);
 }
 
 const addUser = async () => {
@@ -126,6 +178,7 @@ const addUser = async () => {
     }
   })
 }
+
 </script>
 
 <style lang="css">
