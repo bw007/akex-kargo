@@ -18,7 +18,7 @@
     </el-table-column>
     <el-table-column label="Holati" min-width="72" prop="status">
       <template #default="list">
-        <el-button :disabled="['@super_admin'].includes(list.row.role)" :type="list.row.status ? 'success' : 'warning'">
+        <el-button @click="user_store.changeStatus(list.row)" :disabled="['@super_admin'].includes(list.row.role)" :type="list.row.status ? 'success' : 'warning'">
           <el-icon :size="16">
             <LockOpenIcon v-if="list.row.status" />
             <LockClosedIcon v-else />
@@ -38,7 +38,7 @@
         <el-input v-model="search" placeholder="Qidirish..." />
       </template>
       <template #default="list">
-        <el-button title="Tahrirlash" :icon="Edit" type="primary" plain />
+        <el-button :disabled="['@super_admin'].includes(list.row.role)" title="Tahrirlash" :icon="Edit" type="primary" plain />
         <el-button @click="user_store.removeUser(list.row.id)" :disabled="['@super_admin'].includes(list.row.role)" title="O'chirish" :icon="Delete" type="danger" plain />
       </template>
     </el-table-column>
