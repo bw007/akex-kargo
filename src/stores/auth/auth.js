@@ -44,6 +44,7 @@ export const authStore = defineStore("authStore", () => {
 
     if (res.status == 200) {
       user.value = { ...res.data.user };
+      console.log(res.data);
       cookies.set("user", 
         {
           name: {
