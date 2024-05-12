@@ -22,24 +22,24 @@
         trigger="click"
       >
         <template #reference>
-          <el-avatar :class="{ active: isActive }" id="navbar-profile">
-            {{ user.avatar ? user.avatar : user.name.first?.slice(0, 1) }}
+          <el-avatar :class="{ active: isActive }" id="navbar-profile" :src="user.avatar?.response?.data">
+            {{ user.avatar?.response ? "" : user.name?.first.slice(0, 1) }}
           </el-avatar>
         </template>
         <template #default>
           <el-row class="user-info">
             <el-col :span="4">
-              <el-avatar>
-                {{ user.avatar ? user.avatar : user.name.first?.slice(0, 1) }}
+              <el-avatar :src="user.avatar?.response?.data">
+                {{ user.avatar?.response ? "" : user.name?.first.slice(0, 1) }}
               </el-avatar>
             </el-col>
             <el-col :span="20">
               <el-row>
                 <el-col>
-                  <el-text tag="b">{{ user.name.first }} {{ user.name.last }}</el-text>
+                  <el-text tag="b">{{ user.name?.first }} {{ user.name?.last }}</el-text>
                 </el-col>
                 <el-col>
-                  <el-text :type="user.role == '@super_admin' ? 'success' : ''" size="small">{{ user.email }}</el-text>
+                  <el-text size="small">{{ user.email }}</el-text>
                 </el-col>
               </el-row>
             </el-col>
@@ -55,7 +55,7 @@
             </el-col>
             <el-col>
               <router-link 
-                @click="cookies.remove('token'), cookies.remove('user')" 
+                @click="cookies.remove('token'), cookies.remove('user-id')" 
                 class="profil-link" 
                 to="/auth/signin"
               >
@@ -73,15 +73,24 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import cookies from "vue-cookies";
 import { triggerStore } from '@/stores/utils/trigger';
 import { Bars3BottomLeftIcon, ArrowRightStartOnRectangleIcon, Cog8ToothIcon } from '@heroicons/vue/24/outline';
+import { userStore } from '@/stores/data/user';
+import { storeToRefs } from 'pinia';
 
+const user_store = userStore();
 const trigger_store = triggerStore();
 
+const { user } = storeToRefs(user_store);
+
 const isActive = ref(false);
-const user = ref({ ...cookies.get("user") })
+const userId = ref(cookies.get("user-id"));
+
+onMounted(() => {
+  user_store.getUser(userId.value)
+})
 
 </script>
 
