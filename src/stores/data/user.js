@@ -8,6 +8,7 @@ import { TrashIcon } from "@heroicons/vue/24/solid";
 
 export const userStore = defineStore('userStore', () => {
   const users = ref([])
+  const user = ref({})
   const api = apiStore()
 
   // Add user
@@ -28,8 +29,6 @@ export const userStore = defineStore('userStore', () => {
     }
   }
 
-  
-
   // Get all users
   const getAllUsers = async () => {
     let res = await api.get({ url: 'users?_sort=id&_order=desc' })
@@ -39,14 +38,27 @@ export const userStore = defineStore('userStore', () => {
         ...res.data.filter((u) => u.role == '@super_admin'),
         ...res.data.filter((u) => u.role !== '@super_admin')
       ]
-      console.log(users.value)
     }
   }
 
   // Get user
-  // const getUser = async (id) => {
-  //   return await api.get({ url: "users" })
-  // }
+  const getUser = async (id) => {
+    let res = await api.get({ url: `users/${id}` });
+
+    if (res.status == 200) {
+      user.value = {
+        name: {
+          first: res.data.firstName,
+          last: res.data.lastName
+        },
+        id: res.data.id,
+        email: res.data.email,
+        role: res.data.role,
+        status: res.data.status,
+        avatar: { ...res.data.avatar[0] }
+      }
+    }
+  }
 
   // Update user
   // const updateUser = async (payload) => {
@@ -91,7 +103,6 @@ export const userStore = defineStore('userStore', () => {
       type: 'warning'
     })
       .then(async (data) => {
-        console.log(data);
         await api.put({ 
           url: `users/${payload.id}`, 
           data: { ...payload, password: data.value, status: !payload.status } 
@@ -117,12 +128,13 @@ export const userStore = defineStore('userStore', () => {
 
   return {
     users,
+    user,
 
     addUser,
     getAllUsers,
-    // getUser,
+    getUser,
     // updateUser,
     changeStatus,
-    removeUser,
+    removeUser
   }
 })
