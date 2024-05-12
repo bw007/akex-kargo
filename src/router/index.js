@@ -2,12 +2,15 @@ import { authStore } from "@/stores/auth/auth";
 import { menu } from "@/stores/utils/menu";
 import { createRouter, createWebHistory } from "vue-router";
 import cookies from "vue-cookies";
+import { userStore } from "@/stores/data/user";
+import { storeToRefs } from "pinia";
+import { watch } from "vue";
 
 const routes = [
   {
     path: "/",
     name: "main-layout",
-    component: () => import("@/layouts/MainLayout.vue"),
+    component: () => import("@/layouts/BaseLayout.vue"),
     children: [
       ...menu,
       {
@@ -48,12 +51,18 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.name == "workers" && cookies.get("user")?.role !== "@super_admin") {
-    cookies.remove("token");
-    cookies.remove("user");
-    router.push({ name: "signin" })
-  }
+router.beforeEach(async (to, from, next) => {
+  const user_store = userStore()
+  const { user } = storeToRefs(user_store)
+  
+  watch(user, (newValue) => {
+    if (to.name == "workers" && newValue.role !== "@super_admin") {
+      cookies.remove("token");
+      cookies.remove("user-id");
+      router.push({ name: "signin" })
+    }
+  })
+  
   if (!to.meta.secure) {
     next()
   } else {
@@ -61,6 +70,7 @@ router.beforeEach((to, from, next) => {
     auth_store.checkUser()
     next()
   }
+
 })
 
 export default router
