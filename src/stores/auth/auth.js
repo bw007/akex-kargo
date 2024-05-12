@@ -17,10 +17,10 @@ export const authStore = defineStore("authStore", () => {
   // User check
   const checkUser = async () => {
     
-    if (cookies.isKey("token") && cookies.isKey("user")) {
+    if (cookies.isKey("token") && cookies.isKey("user-id")) {
       token_store.setToken(cookies.get("token"))
 
-      let res = await api.get({ url: `users/${cookies.get("user").id}`})
+      let res = await api.get({ url: `users/${cookies.get("user-id")}`})
       
       if (res.response?.status == 404) {
         ElMessage({
@@ -29,7 +29,7 @@ export const authStore = defineStore("authStore", () => {
         })
 
         cookies.remove("token");
-        cookies.remove("user");
+        cookies.remove("user-id");
       }
 
     } else {
@@ -45,16 +45,7 @@ export const authStore = defineStore("authStore", () => {
     if (res.status == 200) {
       user.value = { ...res.data.user };
       console.log(res.data);
-      cookies.set("user", 
-        {
-          name: {
-            first: res.data.user.firstName,
-            last: res.data.user.lastName,
-          },
-          email: res.data.user.email,
-          role: res.data.user.role,
-          id: res.data.user.id
-        });
+      cookies.set("user-id", res.data.user.id);
       
       if (data.remember) cookies.set("remember", data.remember);
 
