@@ -33,17 +33,19 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import router from '@/router';
 import { triggerStore } from '@/stores/utils/trigger';
 import { storeToRefs } from 'pinia';
-import cookies from "vue-cookies";
 import { menu } from '@/stores/utils/menu';
+import { userStore } from '@/stores/data/user';
 
 const trigger_store = triggerStore();
 const { sidebarToggle, sidebarCollapse } = storeToRefs(trigger_store);
 
-const user = ref({ ...cookies.get("user") })
+const user_store = userStore();
+const { user } = storeToRefs(user_store)
+
 const superMenu = computed(() => {
   if (user.value.role !== "@super_admin") {
     return [ ...menu.filter(m => m.name !== "workers") ]
