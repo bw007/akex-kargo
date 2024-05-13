@@ -47,8 +47,6 @@
             :headers="{
               'authorization': `Bearer ${token}`
             }"
-            :on-remove="fileRemove"
-            :before-upload="fileUpload"
             :on-success="fileSuccess"
             :on-error="fileError"
             :limit="1"
@@ -129,21 +127,7 @@ const rules = ref({
   ]
 })
 
-const imgUrl = ref('')
-
-const handleClose = () => {
-  resetForm()
-  dialog_store.setToggle(false)
-}
-
-const fileUpload = (file) => {
-  console.log(file);
-}
-const fileRemove = async (file) => {
-  console.log(file);
-}
-
-const fileSuccess = (response, file, fileList) => {
+const fileSuccess = (response, file) => {
 
   new Promise((resolve, reject) => {
 
