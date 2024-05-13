@@ -46,7 +46,7 @@
           </el-row>
           <el-row class="profil-menu">
             <el-col>
-              <router-link class="profil-link" to="/setting">
+              <router-link class="profil-link" :to="`/setting/profile/${userId}`">
                 <el-icon :size="18" color="#303133">
                   <Cog8ToothIcon />
                 </el-icon>
