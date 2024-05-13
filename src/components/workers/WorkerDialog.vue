@@ -4,7 +4,6 @@
     title="Yangi xodim"
     width="740"
     class="modal"
-    :before-close="handleClose"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     align-center
@@ -66,7 +65,6 @@
         <el-form-item class="submit">
           <el-button type="danger" @click="dialog_store.setToggle(false), resetForm()">Bekor qilish</el-button>
           <el-button type="success" @click="addUser(form)">Qo'shish</el-button>
-          <img :src="imgUrl" alt="">
         </el-form-item>
       </el-form>
     </template>
