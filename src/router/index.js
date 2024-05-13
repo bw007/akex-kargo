@@ -14,6 +14,15 @@ const routes = [
     children: [
       ...menu,
       {
+        path: 'setting/profile/:id',
+        name: 'profile-setting',
+        meta: {
+          title: 'Profil',
+          secure: true
+        },
+        component: () => import('@/views/ProfileView.vue'),
+      },
+      {
         path: '/:pathMatch(.*)*',
         name: 'error',
         meta: {
