@@ -28,10 +28,5 @@ onMounted(() => {
 </script>
 
 <style lang="css" scoped>
-section {
-  padding: 10px;
-}
-.add-worker {
-  padding-bottom: 10px;
-}
+@import url("@/styles/components/workers/worker.css");
 </style>
