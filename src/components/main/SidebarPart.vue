@@ -20,7 +20,7 @@
         :index="item.name" 
         :key="item.name" 
         :route="{ name: item.name }"
-        :class="{ active: $route.name == item.name }"
+        :class="{ active: $route.name.includes(item.name) }"
       >
         <el-divider direction="vertical" />
         <el-icon>
@@ -58,6 +58,7 @@ const handleSelect = (index) => {
   router.push({ name: index });
   trigger_store.setSidebarToggle(false);
 }
+
 </script>
 
 <style lang="css" scoped>
