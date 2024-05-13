@@ -13,7 +13,7 @@
     </el-table-column>
     <el-table-column label="Qo'shilgan sana" min-width="145" prop="createdTime">
       <template #default="list">
-        <el-text>{{ convertDate(list.row.createdTime) }}</el-text>
+        <el-text>{{ list.row.createdTime }}</el-text>
       </template>
     </el-table-column>
     <el-table-column label="Holati" min-width="72" prop="status">
@@ -59,11 +59,20 @@ const { users } = storeToRefs(user_store);
 const search = ref('')
 
 const filterUserData = computed(() =>
-  users.value.filter((data) =>
+  usersData.value.filter((data) =>
     !search.value ||
     (data.firstName + data.lastName).toLowerCase().includes(search.value.toLowerCase())
   )
 )
+
+const usersData = computed(() => {
+  return users.value.map(user => {
+    return {
+      ...user,
+      createdTime: convertDate(user.createdTime)
+    }
+  })
+})
 
 </script>
 
