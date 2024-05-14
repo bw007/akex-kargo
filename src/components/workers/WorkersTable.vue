@@ -38,7 +38,7 @@
         <el-input v-model="search" placeholder="Qidirish..." />
       </template>
       <template #default="list">
-        <el-button :disabled="['@super_admin'].includes(list.row.role)" title="Tahrirlash" :icon="Edit" type="primary" plain />
+        <el-button @click="edit(list.row.id)" title="Tahrirlash" :icon="Edit" type="primary" plain />
         <el-button @click="user_store.removeUser(list.row.id)" :disabled="['@super_admin'].includes(list.row.role)" title="O'chirish" :icon="Delete" type="danger" plain />
       </template>
     </el-table-column>
@@ -46,15 +46,19 @@
 </template>
 
 <script setup>
+const emit = defineEmits(["edit"]);
 import { computed, ref } from 'vue';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/vue/24/outline";
 import { userStore } from '@/stores/data/user';
 import { storeToRefs } from 'pinia';
 import { convertDate } from '@/stores/utils/helper';
+import { dialogStore } from '@/stores/utils/dialog';
 
 const user_store = userStore();
 const { users } = storeToRefs(user_store);
+
+const dialog_store = dialogStore()
 
 const search = ref('')
 
@@ -73,6 +77,11 @@ const usersData = computed(() => {
     }
   })
 })
+
+const edit = (id) => {
+  emit("edit", id)
+  dialog_store.setEditToggle(true)
+}
 
 </script>
 
