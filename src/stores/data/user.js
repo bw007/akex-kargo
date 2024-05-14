@@ -61,16 +61,24 @@ export const userStore = defineStore('userStore', () => {
   }
 
   // Update user
-  // const updateUser = async (payload) => {
-  //   let res = await api.put({ 
-  //     url: `users/${payload.id}`, 
-  //     data: { ...payload, status: !payload.status } 
-  //   })
+  const updateUser = async (payload) => {
+    let res = await api.put({ 
+      url: `users/${payload.id}`,
+      data: { ...payload } 
+    })
 
-  //   if (res.status == 200) {
-  //     console.log(res.data);
-  //   } 
-  // }
+    if (res.status == 200) {
+      users.value = [ ...users.value.map((u) => {
+          if (u.id == payload.id) return { ...res.data }
+          return u
+        })
+      ]
+      ElMessage({
+        type: 'success',
+        message: "Muvaffaqiyatli saqlandi"
+      })
+    } 
+  }
 
   // Remove user
   const removeUser = (id) => {
@@ -133,7 +141,7 @@ export const userStore = defineStore('userStore', () => {
     addUser,
     getAllUsers,
     getUser,
-    // updateUser,
+    updateUser,
     changeStatus,
     removeUser
   }
