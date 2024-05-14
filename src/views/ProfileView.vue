@@ -10,7 +10,7 @@
               </div>
             </template>
           </el-image>
-          <el-button :icon="Edit" type="primary" plain/>
+          <el-button @click="dialog_store.setEditToggle(true), id = user.id" :icon="Edit" type="primary" plain/>
         </div>
       </template>
       <el-row>
@@ -37,35 +37,47 @@
       </el-row>
       <template #footer>
         <el-row>
-        <el-col>
-          <el-text class="label" tag="b">Buyurtmalar soni:</el-text>
-          <el-text>0 ta</el-text>
-        </el-col>
-        <el-col>
-          <el-text class="label" tag="b">Daromad:</el-text>
-          <el-text>0 so'm</el-text>
-        </el-col>
-      </el-row>
+          <el-col>
+            <el-text class="label" tag="b">Buyurtmalar soni:</el-text>
+            <el-text>0 ta</el-text>
+          </el-col>
+          <el-col>
+            <el-text class="label" tag="b">Daromad:</el-text>
+            <el-text>0 so'm</el-text>
+          </el-col>
+        </el-row>
       </template>
     </el-card>
   </section>
+  <WorkerDialog :id="id" />
 </template>
 
 <script setup>
 import { userStore } from '@/stores/data/user';
 import cookies from "vue-cookies";
 import { storeToRefs } from 'pinia';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
+import WorkerDialog from '@/components/workers/WorkerDialog.vue';
+
+import { dialogStore } from "@/stores/utils/dialog";
+
+const dialog_store = dialogStore();
 
 const user_store = userStore();
 const { user } = storeToRefs(user_store);
+
+watch(user, (newValue, oldValue) => {
+  console.log(newValue, oldValue);
+})
 
 const userId = ref(cookies.get("user-id"));
 
 onMounted(() => {
   user_store.getUser(userId.value)
 })
+
+const id = ref("")
 
 </script>
 
