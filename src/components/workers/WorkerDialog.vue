@@ -4,6 +4,7 @@
     title="Yangi xodim"
     width="740"
     class="modal"
+    :before-close="handleClose"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     align-center
@@ -24,7 +25,7 @@
           <el-input v-model="user.lastName" placeholder="Familiya" clearable />
         </el-form-item>
         <el-form-item label="Lavozim" prop="role">
-          <el-select v-model="user.role" placeholder="Lavozim">
+          <el-select :disabled="['@super_admin'].includes(user.role)" v-model="user.role" placeholder="Lavozim">
             <el-option label="Admin" :value="0" />
             <el-option label="Operator" :value="1" />
           </el-select>
@@ -63,7 +64,7 @@
 
         </el-form-item>
         <el-form-item class="submit">
-          <el-button type="danger" @click="dialog_store.setToggle(false), resetForm()">Bekor qilish</el-button>
+          <el-button type="danger" @click="handleClose">Bekor qilish</el-button>
           <el-button type="success" @click="addUser(form)">Qo'shish</el-button>
         </el-form-item>
       </el-form>
@@ -72,33 +73,28 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { ref, watch } from 'vue'
 import { dialogStore } from '@/stores/utils/dialog'
 import { storeToRefs } from 'pinia'
 import { userStore } from '@/stores/data/user'
 import { url } from '@/stores/utils/env';
 import cookies from "vue-cookies";
-// import { apiStore } from '@/stores/utils/api';
+import { apiStore } from '@/stores/utils/api';
+
+const props = defineProps(['id'])
 
 const user_store = userStore()
 const token = cookies.get("token")
-// const api = apiStore()
+const api = apiStore()
 const dialog_store = dialogStore()
-const { toggle } = storeToRefs(dialog_store)
+const { toggle, editToggle } = storeToRefs(dialog_store)
 
-const user = reactive({
-  role: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  birth: '',
-  password: '',
-  avatar: []
-})
+const user = ref({})
 const form = ref()
 
 const resetForm = () => {
   if (!form.value) return
+  user.value = {}
   form.value.resetFields()
 }
 
@@ -126,22 +122,17 @@ const rules = ref({
 })
 
 const fileSuccess = (response, file) => {
-
   new Promise((resolve, reject) => {
-
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
     reader.onerror = (e) => reject(e);
     reader.readAsDataURL(file.raw)
-
   }).then((baseString) => {
-    user.avatar[0].response.data = baseString
+    user.value.avatar[0].response.data = baseString
   }).catch((e) => {
     console.log(e);
   })
-
 }
-
 const fileError = (file) => {
   console.log(file);
 }
@@ -150,15 +141,41 @@ const addUser = async () => {
   if (!form.value) return
   await form.value.validate((valid, fields) => {
     if (valid) {
-      user_store.addUser({ ...user, createdTime: new Date(), status: false })
-        .then(() => {
-          dialog_store.setToggle(false)
-          resetForm()
-        })
+      if (editToggle.value) {
+        // Update user data
+        user_store.updateUser({ ...user.value })
+          .then(() => {
+            handleClose()
+          })
+      } else {
+        // Add new user
+        user_store.addUser({ ...user.value, createdTime: new Date(), status: false })
+          .then(() => {
+            handleClose()
+          })
+      }
     } else {
       console.log('error submit!', fields)
     }
   })
+}
+
+watch(editToggle, async () => {
+  if (editToggle.value && props.id) {
+    let res = await api.get({ url: `users/${props.id}` })
+    
+    if (res.status == 200) {
+      user.value = { ...res.data, password: "" }
+      dialog_store.setToggle(true)
+    }
+  }
+})
+
+const handleClose = () => {
+  user.value = {}
+  dialog_store.setToggle(false)
+  dialog_store.setEditToggle(false)
+  resetForm()
 }
 
 </script>
