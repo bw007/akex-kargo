@@ -1,16 +1,16 @@
 <template>
   <section>
-    <WorkerDialog />
+    <WorkerDialog :id="id" />
     <el-row class="add-worker" justify="space-between">
       <el-text size="large">{{ $route.meta.title }} ro'yxati</el-text>
       <el-button @click="dialog_store.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
-    <WorkersTable />
+    <WorkersTable @edit="handleEdit" />
   </section>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import WorkerDialog from '@/components/workers/WorkerDialog.vue';
 import WorkersTable from '@/components/workers/WorkersTable.vue';
@@ -24,6 +24,12 @@ const user_store = userStore();
 onMounted(() => {
   user_store.getAllUsers();
 })
+
+const id = ref('')
+
+const handleEdit = (_id) => {
+  id.value = _id
+}
 
 </script>
 
