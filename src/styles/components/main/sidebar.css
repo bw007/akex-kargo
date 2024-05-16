@@ -17,11 +17,11 @@
   box-shadow: var(--el-box-shadow-lighter);
 }
 
-.el-menu-item.active {
+.el-menu-item.is-active {
   background-color: #f2f6fc;
 }
 
-.el-menu-item.active .el-divider {
+.el-menu-item.is-active .el-divider {
   background: #79bbff;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 240px;
+  width: 220px;
 }
 
 @media only screen and (max-width: 767px) {
