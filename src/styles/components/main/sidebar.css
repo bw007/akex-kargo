@@ -43,7 +43,7 @@
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 220px;
+  width: 200px;
 }
 
 @media only screen and (max-width: 767px) {
