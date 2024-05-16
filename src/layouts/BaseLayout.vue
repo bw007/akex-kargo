@@ -16,9 +16,9 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 
-import HeaderPart from '@/components/main/HeaderPart.vue';
-import SidebarPart from '@/components/main/SidebarPart.vue';
-import MainPart from '@/components/main/MainPart.vue';
+import HeaderPart from '@/components/base/HeaderComp.vue';
+import SidebarPart from '@/components/base/SidebarComp.vue';
+import MainPart from '@/components/base/MainComp.vue';
 import { triggerStore } from '@/stores/utils/trigger';
 
 const trigger_store = triggerStore();
