@@ -18,9 +18,9 @@
       <el-menu-item 
         v-for="item in superMenu" 
         :index="item.name" 
-        :key="item.name" 
+        :key="item.name"
         :route="{ name: item.name }"
-        :class="{ active: $route.name.includes(item.name) }"
+        :class="{ 'is-active': $route.name.toLowerCase().includes(item.name) }"
       >
         <el-divider direction="vertical" />
         <el-icon>
