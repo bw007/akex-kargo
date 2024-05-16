@@ -2,7 +2,7 @@
   <section>
     <WorkerDialog :id="id" />
     <el-row class="add-worker" justify="space-between">
-      <el-text size="large">{{ $route.meta.title }} ro'yxati</el-text>
+      <el-text>{{ $route.meta.title }} ro'yxati</el-text>
       <el-button @click="dialog_store.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
     <WorkersTable @edit="handleEdit" />
