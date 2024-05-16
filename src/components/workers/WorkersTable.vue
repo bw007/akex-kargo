@@ -33,11 +33,19 @@
         <el-text v-else>Admin</el-text>
       </template>
     </el-table-column>
-    <el-table-column align="right" min-width="180">
+    <el-table-column align="right" min-width="195">
       <template #header>
         <el-input v-model="search" placeholder="Qidirish..." />
       </template>
       <template #default="list">
+        <router-link class="profil-link" :to="{ name: 'workersProfile', params: { id: list.row.id } }">
+          <el-text type="primary">
+            Profil
+            <el-icon size="12">
+              <top-right />
+            </el-icon>
+          </el-text>
+        </router-link>
         <el-button @click="edit(list.row.id)" title="Tahrirlash" :icon="Edit" type="primary" plain />
         <el-button @click="user_store.removeUser(list.row.id)" :disabled="['@super_admin'].includes(list.row.role)" title="O'chirish" :icon="Delete" type="danger" plain />
       </template>
@@ -86,5 +94,15 @@ const edit = (id) => {
 </script>
 
 <style lang="css" scoped>
-  
+  .profil-link {
+    margin-right: 12px;
+    text-decoration: none;
+  }
+  .profil-link .el-text {
+    display: inline-flex;
+    gap: 2px;
+  }
+  .profil-link:hover .el-text {
+    color: #337ecc;
+  }
 </style>
