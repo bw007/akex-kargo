@@ -44,15 +44,15 @@ export const menu = [
     // component: () => import("@/views/SettingView.vue")
   },
   {
-    path: 'setting',
-    name: 'setting',
+    path: 'settings',
+    name: 'settings',
     title: 'Sozlamalar',
     icon: 'Setting',
     meta: {
-      title: 'Tizim sozlamalari',
+      title: 'Sozlamalar',
       secure: true
     },
-    component: () => import("@/views/SettingView.vue"),
+    component: () => import("@/views/SettingsView.vue"),
     // children: [
     //   {
     //     path: 'setting/profile/:id',
