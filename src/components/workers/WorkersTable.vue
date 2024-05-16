@@ -94,15 +94,5 @@ const edit = (id) => {
 </script>
 
 <style lang="css" scoped>
-  .profil-link {
-    margin-right: 12px;
-    text-decoration: none;
-  }
-  .profil-link .el-text {
-    display: inline-flex;
-    gap: 2px;
-  }
-  .profil-link:hover .el-text {
-    color: #337ecc;
-  }
+@import url("@/styles/components/workers/workers-table.css");
 </style>
