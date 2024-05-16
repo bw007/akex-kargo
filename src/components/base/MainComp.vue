@@ -1,7 +1,7 @@
 <template>
   <el-main>
     <el-scrollbar>
-      <h2 class="main-title">{{ $route.meta.title }}</h2>
+      <el-text tag="b" size="large">{{ $route.meta.title }}</el-text>
       <RouterView />
     </el-scrollbar>
   </el-main>
