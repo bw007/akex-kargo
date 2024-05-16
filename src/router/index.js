@@ -14,13 +14,13 @@ const routes = [
     children: [
       ...menu,
       {
-        path: 'setting/profile/:id',
-        name: 'profile-setting',
+        path: 'workers/profile/:id',
+        name: 'workersProfile',
         meta: {
-          title: 'Profil',
+          title: "Xodim ma'lumotlari",
           secure: true
         },
-        component: () => import('@/views/ProfileView.vue'),
+        component: () => import('@/components/setting/ProfileSetting.vue'),
       },
       {
         path: '/:pathMatch(.*)*',
