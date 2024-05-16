@@ -51,7 +51,18 @@ export const menu = [
     meta: {
       title: 'Tizim sozlamalari',
       secure: true
-    }
-    // component: () => import("@/views/SettingView.vue")
+    },
+    component: () => import("@/views/SettingView.vue"),
+    // children: [
+    //   {
+    //     path: 'setting/profile/:id',
+    //     name: 'profileSetting',
+    //     meta: {
+    //       title: 'Profil',
+    //       secure: true
+    //     },
+    //     component: () => import('@/views/SettingView.vue'),
+    //   },
+    // ]
   }
 ]
