@@ -20,7 +20,7 @@ const routes = [
           title: "Xodim ma'lumotlari",
           secure: true
         },
-        component: () => import('@/components/setting/ProfileSetting.vue'),
+        component: () => import('@/components/workers/WorkerData.vue'),
       },
       {
         path: '/:pathMatch(.*)*',
