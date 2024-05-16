@@ -5,8 +5,8 @@
 }
 .card-header {
   display: flex;
+  gap: 10px;
   align-items: flex-end;
-  justify-content: space-between;
 }
 .el-row {
   gap: 20px;
@@ -15,12 +15,21 @@
   display: flex;
   gap: 10px;
 }
+.avatar-uploader .el-icon {
+  width: 34px;
+  height: 32px;
+  text-align: center;
+  border: 1px dashed var(--el-border-color);
+  border-radius: 4px;
+}
+
 .label {
   min-width: 135px;
 }
 .el-image {
   width: 250px;
   height: 250px;
+  margin-right: 10px;
   border-radius: 6px;
 }
 
@@ -33,4 +42,17 @@
   background: var(--el-color-primary-light-7);
   font-size: 30px;
   color: #00000090;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
 }
