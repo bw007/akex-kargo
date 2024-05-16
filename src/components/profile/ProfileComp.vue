@@ -9,7 +9,16 @@
             </div>
           </template>
         </el-image>
-        <el-button @click="dialog_store.setEditToggle(true), id = user.id" :icon="Edit" type="primary" plain/>
+        <el-button :icon="Delete" type="danger" />
+        <el-upload
+          class="avatar-uploader"
+          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+          :show-file-list="false"
+        >
+          <el-icon>
+            <Camera />
+          </el-icon>
+        </el-upload>
       </div>
     </template>
     <el-row>
@@ -33,6 +42,7 @@
         <el-text class="label" tag="b">Holati:</el-text>
         <el-text :type="user.status ? 'success' : 'danger'">{{ user.status ? "Faol" : "Nofaol" }}</el-text>
       </el-col>
+      <el-button @click="dialog_store.setEditToggle(true), id = user.id" :icon="Edit" type="primary" plain/>
     </el-row>
     <template #footer>
       <el-row>
@@ -55,7 +65,7 @@ import { userStore } from '@/stores/data/user';
 import cookies from "vue-cookies";
 import { storeToRefs } from 'pinia';
 import { onMounted, ref, watch } from 'vue';
-import { Edit } from '@element-plus/icons-vue';
+import { Edit, Delete } from '@element-plus/icons-vue';
 import WorkerDialog from '@/components/workers/WorkerDialog.vue';
 
 import { dialogStore } from "@/stores/utils/dialog";
@@ -81,4 +91,8 @@ const id = ref("")
 
 <style lang="css" scoped>
 @import url("@/styles/components/profile/profile.css");
+.el-button {
+  width: 34px;
+  height: 32px;
+}
 </style>
