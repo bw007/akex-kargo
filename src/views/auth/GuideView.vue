@@ -22,6 +22,8 @@
         <br>
         <code>cd json-server</code>
         <br>
+        <code>npm install</code>
+        <br>
         <code>npm start</code>
       </el-text>
     </el-collapse-item>
