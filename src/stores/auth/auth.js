@@ -15,13 +15,26 @@ export const authStore = defineStore("authStore", () => {
   const user = ref({})
 
   // User check
-  const checkUser = async () => {
+  const checkUser = async (type) => {
     
     if (cookies.isKey("token") && cookies.isKey("user-id")) {
       token_store.setToken(cookies.get("token"))
 
       let res = await api.get({ url: `users/${cookies.get("user-id")}`})
       
+      if (type == "full") {
+        if (res.status == 200 && res.data.role !== "@super_admin") {
+          ElMessage({
+            type: "error",
+            message: "Ruxsat etilmagan harakat"
+          })
+  
+          cookies.remove("token");
+          cookies.remove("user-id");
+          router.push({ name: "signin" })
+        }
+      }
+
       if (res.response?.status == 404) {
         ElMessage({
           type: "error",
