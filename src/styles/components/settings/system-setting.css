@@ -9,10 +9,10 @@
   gap: 5px;
 }
 .card-header .el-text {
-  width: 90px;
+  width: 135px;
 }
 .el-row {
-  gap: 20px;
+  gap: 10px;
 }
 .el-row .el-col {
   display: flex;
