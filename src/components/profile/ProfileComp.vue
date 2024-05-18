@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card v-loading="loading">
     <template #header>
       <div class="card-header">
         <el-image style="width: 100px; height: 100px" :src="user.avatar?.response?.data" fit="cover">
@@ -36,7 +36,7 @@
       </el-col>
       <el-col>
         <el-text class="label" tag="b">Lavozim:</el-text>
-        <el-text>{{ user.role == 0 ? "Admin" : user.role == 1 ? "Operator" : "Super admin" }}</el-text>
+        <el-text>{{ user.role == "@super_admin" ? "Super admin" : user.role == 1 ? "Operator" : "Admin" }}</el-text>
       </el-col>
       <el-col>
         <el-text class="label" tag="b">Holati:</el-text>
@@ -62,27 +62,32 @@
 
 <script setup>
 import { userStore } from '@/stores/data/user';
-import cookies from "vue-cookies";
 import { storeToRefs } from 'pinia';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import cookies from 'vue-cookies'
+
 import { Edit, Delete } from '@element-plus/icons-vue';
 import WorkerDialog from '@/components/workers/WorkerDialog.vue';
 
 import { dialogStore } from "@/stores/utils/dialog";
+import { loadingStore } from '@/stores/utils/loading';
 
+const route = useRoute()
+const loading_store = loadingStore()
+const { loading } = storeToRefs(loading_store)
 const dialog_store = dialogStore();
 
 const user_store = userStore();
 const { user } = storeToRefs(user_store);
 
-watch(user, (newValue, oldValue) => {
-  console.log(newValue, oldValue);
-})
-
-const userId = ref(cookies.get("user-id"));
+// watch(user, (newValue, oldValue) => {
+//   console.log(newValue);
+//   console.log(oldValue);
+// })
 
 onMounted(() => {
-  user_store.getUser(userId.value)
+  user_store.getUser(route.params.id || cookies.get("user-id"))
 })
 
 const id = ref("")
