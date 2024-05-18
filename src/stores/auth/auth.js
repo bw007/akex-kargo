@@ -25,11 +25,12 @@ export const authStore = defineStore("authStore", () => {
       if (res.response?.status == 404) {
         ElMessage({
           type: "error",
-          message: "Tizimga kirish ruhsati yo'q"
+          message: "Ruxsat etilmagan harakat"
         })
 
         cookies.remove("token");
         cookies.remove("user-id");
+        router.push({ name: "signin" })
       }
 
     } else {
@@ -39,12 +40,9 @@ export const authStore = defineStore("authStore", () => {
   
   // Login
   const signIn = async (data) => {
-    console.log(data);
     let res = await api.post({ url: "signin", data });
 
     if (res.status == 200) {
-      user.value = { ...res.data.user };
-      console.log(res.data);
       cookies.set("user-id", res.data.user.id);
       
       if (data.remember) cookies.set("remember", data.remember);
@@ -62,6 +60,24 @@ export const authStore = defineStore("authStore", () => {
       setTimeout(() => {
         router.push("/")
       }, 1500);
+    }
+  }
+
+  const getUser = async (id) => {
+    let res = await api.get({ url: `users/${id}` });
+
+    if (res.status == 200) {
+      user.value = {
+        name: {
+          first: res.data.firstName,
+          last: res.data.lastName
+        },
+        id: res.data.id,
+        email: res.data.email,
+        role: res.data.role,
+        status: res.data.status,
+        avatar: { ...res.data.avatar[0] }
+      }
     }
   }
 
@@ -88,6 +104,7 @@ export const authStore = defineStore("authStore", () => {
 
     checkUser,
     signIn,
+    getUser
     // signUp
   }
 })
