@@ -77,19 +77,19 @@ import { onMounted, ref } from 'vue';
 import cookies from "vue-cookies";
 import { triggerStore } from '@/stores/utils/trigger';
 import { Bars3BottomLeftIcon, ArrowRightStartOnRectangleIcon, Cog8ToothIcon } from '@heroicons/vue/24/outline';
-import { userStore } from '@/stores/data/user';
 import { storeToRefs } from 'pinia';
+import { authStore } from '@/stores/auth/auth';
 
-const user_store = userStore();
+const auth_store = authStore();
 const trigger_store = triggerStore();
 
-const { user } = storeToRefs(user_store);
+const { user } = storeToRefs(auth_store);
 
 const isActive = ref(false);
 const userId = ref(cookies.get("user-id"));
 
 onMounted(() => {
-  user_store.getUser(userId.value)
+  auth_store.getUser(userId.value)
 })
 
 </script>
