@@ -16,11 +16,12 @@
         </el-icon>
       </el-button>
       <el-menu-item 
-        v-for="item in superMenu" 
-        :index="item.name" 
+        v-for="item in superMenu"
+        :index="item.name"
         :key="item.name"
         :route="{ name: item.name }"
         :class="{ 'is-active': $route.name.toLowerCase().includes(item.name) }"
+        :disabled="!item.meta.view"
       >
         <el-divider direction="vertical" />
         <el-icon>
@@ -38,13 +39,13 @@ import router from '@/router';
 import { triggerStore } from '@/stores/utils/trigger';
 import { storeToRefs } from 'pinia';
 import { menu } from '@/stores/utils/menu';
-import { userStore } from '@/stores/data/user';
+import { authStore } from '@/stores/auth/auth';
 
 const trigger_store = triggerStore();
 const { sidebarToggle, sidebarCollapse } = storeToRefs(trigger_store);
 
-const user_store = userStore();
-const { user } = storeToRefs(user_store)
+const auth_store = authStore();
+const { user } = storeToRefs(auth_store)
 
 const superMenu = computed(() => {
   if (user.value.role !== "@super_admin") {
