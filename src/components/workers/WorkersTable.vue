@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="filterUserData" style="width: 100%; height: calc(100vh - 180px);">
+  <el-table :data="filterUserData" style="width: 100%; height: calc(100vh - 200px);">
     <el-table-column fixed type="index" align="center" />
     <el-table-column label="Ism, Familiya" min-width="180" prop="firstName">
       <template #default="list">
