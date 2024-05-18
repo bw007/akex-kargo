@@ -1,3 +1,7 @@
+import { storeToRefs } from 'pinia';
+import { authStore } from '../auth/auth';
+import { watch } from 'vue';
+
 export const menu = [
   {
     path: '',
@@ -21,7 +25,14 @@ export const menu = [
       secure: true,
       view: true
     },
-    component: () => import('@/views/WorkersView.vue')
+    component: () => import('@/views/WorkersView.vue'),
+    beforeEnter: () => {
+      const auth_store = authStore();
+      const { user } = storeToRefs(auth_store)
+      watch(user, () => {
+        auth_store.checkUser("full")
+      })
+    }
   },
   {
     path: 'orders',
