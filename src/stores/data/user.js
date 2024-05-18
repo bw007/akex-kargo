@@ -5,11 +5,13 @@ import { apiStore } from '../utils/api'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { TrashIcon } from "@heroicons/vue/24/solid";
+import { loadingStore } from '../utils/loading';
 
 export const userStore = defineStore('userStore', () => {
   const users = ref([])
   const user = ref({})
   const api = apiStore()
+  const loading_store = loadingStore()
 
   // Add user
   const addUser = async (data) => {
@@ -43,6 +45,8 @@ export const userStore = defineStore('userStore', () => {
 
   // Get user
   const getUser = async (id) => {
+    user.value = {}
+    loading_store.setLoading(true)
     let res = await api.get({ url: `users/${id}` });
 
     if (res.status == 200) {
@@ -58,6 +62,7 @@ export const userStore = defineStore('userStore', () => {
         avatar: { ...res.data.avatar[0] }
       }
     }
+    loading_store.setLoading(false)
   }
 
   // Update user
