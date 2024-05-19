@@ -1,5 +1,5 @@
 .el-header {
-  box-shadow: var(--el-box-shadow-lighter);
+  /* box-shadow: var(--el-box-shadow-lighter); */
 }
 
 .el-header .el-row {
