@@ -14,9 +14,9 @@
 
 .layout-inner {
   height: calc(100%);
-  flex-direction: column;
+  /* flex-direction: column; */
 }
 
 .layout-main {
-  height: calc(100% - 60px);
+  /* height: calc(100% - 60px); */
 }
