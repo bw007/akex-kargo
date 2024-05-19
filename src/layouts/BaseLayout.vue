@@ -4,9 +4,9 @@
       <div v-if="sidebarToggle" @click="trigger_store.setSidebarToggle(false)" class="el-overlay"></div>
     </Transition>
     <el-container class="layout-inner">
-      <HeaderPart />
-      <el-container class="layout-main">
-        <SidebarPart />
+      <SidebarPart />
+      <el-container direction="vertical" class="layout-main">
+        <HeaderPart />
         <MainPart />
       </el-container>
     </el-container>
