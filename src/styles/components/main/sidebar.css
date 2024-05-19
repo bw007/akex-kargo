@@ -11,10 +11,13 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   background-color: transparent;
   border: none;
   box-shadow: var(--el-box-shadow-lighter);
+}
+.el-menu-item {
+  height: 55px;
 }
 
 .el-menu-item.is-active {
@@ -38,7 +41,7 @@
 .el-menu .el-button {
   margin-left: auto;
   width: 63px;
-  height: 54px;
+  height: 55px;
   opacity: 0.65;
 }
 
