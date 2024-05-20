@@ -5,8 +5,10 @@
       class="el-menu-vertical-demo" 
       :collapse="sidebarCollapse"
       @select="handleSelect"
+      background-color="#1F2937"
+      text-color="#D1D5DB"
     >
-      <el-button 
+      <el-button
         @click="sidebarToggle ? trigger_store.setSidebarToggle(false) : trigger_store.setSidebarCollapse(!sidebarCollapse)" 
         text
       >
