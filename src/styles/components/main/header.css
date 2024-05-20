@@ -1,5 +1,6 @@
 .el-header {
   /* box-shadow: var(--el-box-shadow-lighter); */
+  border-bottom: 1px solid #F3F4F6;
 }
 
 .el-header .el-row {
