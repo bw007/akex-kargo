@@ -1,0 +1,20 @@
+.el-card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+  border: none;
+  width: 100%;
+}
+.card-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+.card-header .el-text {
+  width: 135px;
+}
+.el-row {
+  gap: 10px;
+}
+.el-row .el-col {
+  display: flex;
+  gap: 10px;
+}
