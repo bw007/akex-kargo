@@ -40,11 +40,11 @@ export const menu = [
     title: 'Buyurtmalar',
     icon: 'Goods',
     meta: {
-      title: 'Buyurtmalar ro`yxati',
+      title: 'Buyurtmalar',
       secure: true,
-      view: false
-    }
-    // component: () => import("@/views/SettingView.vue")
+      view: true
+    },
+    component: () => import("@/views/OrdersView.vue")
   },
   {
     path: 'transactions',

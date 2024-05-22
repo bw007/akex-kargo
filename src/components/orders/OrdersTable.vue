@@ -1,10 +1,7 @@
 <template>
-  <el-table empty-text="Ma'lumot yo'q" :data="filterUserData" style="width: 100%; height: calc(100vh - 200px);">
+  <el-table empty-text="Ma'lumot yo'q" :data="filterOrderData" style="width: 100%; height: calc(100vh - 200px);">
     <el-table-column fixed type="index" align="center" />
     <el-table-column label="Ism, Familiya" min-width="180" prop="firstName">
-      <template #default="list">
-        <el-text tag="b">{{ list.row.firstName }} {{ list.row.lastName }}</el-text>
-      </template>
     </el-table-column>
     <el-table-column label="Email" min-width="220" prop="email">
       <template #default="list">
@@ -54,45 +51,35 @@
 </template>
 
 <script setup>
-const emit = defineEmits(["edit"]);
 import { computed, ref } from 'vue';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/vue/24/outline";
-import { userStore } from '@/stores/data/user';
 import { storeToRefs } from 'pinia';
 import { convertDate } from '@/stores/utils/helper';
-import { dialogStore } from '@/stores/utils/dialog';
+import { orderStore } from '@/stores/data/order';
 
-const user_store = userStore();
-const { users } = storeToRefs(user_store);
-
-const dialog_store = dialogStore()
+const order_store = orderStore()
+const { orders } = storeToRefs(order_store)
 
 const search = ref('')
 
-const filterUserData = computed(() =>
-  usersData.value.filter((data) =>
+const filterOrderData = computed(() =>
+  ordersData.value.filter((data) =>
     !search.value ||
     (data.firstName + data.lastName).toLowerCase().includes(search.value.toLowerCase())
   )
 )
 
-const usersData = computed(() => {
-  return users.value.map(user => {
+const ordersData = computed(() => {
+  return orders.value.map(order => {
     return {
-      ...user,
-      createdTime: convertDate(user.createdTime)
+      ...order,
+      createdTime: convertDate(order.createdTime)
     }
   })
 })
-
-const edit = (id) => {
-  emit("edit", id)
-  dialog_store.setEditToggle(true)
-}
-
 </script>
 
 <style lang="css" scoped>
-@import url("@/styles/components/workers/workers-table.css");
+  
 </style>
