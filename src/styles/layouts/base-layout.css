@@ -1,0 +1,22 @@
+.v-enter-active.el-overlay,
+.v-leave-active.el-overlay {
+  transition: opacity 0.3s ease;
+}
+
+.v-enter-from.el-overlay,
+.v-leave-to.el-overlay {
+  opacity: 0;
+}
+
+.home-layout {
+  height: 100vh;
+}
+
+.layout-inner {
+  height: calc(100%);
+  /* flex-direction: column; */
+}
+
+.layout-main {
+  /* height: calc(100% - 60px); */
+}

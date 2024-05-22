@@ -1,0 +1,12 @@
+.profil-link {
+  margin-right: 12px;
+  text-decoration: none;
+}
+.profil-link .el-text {
+  display: inline-flex;
+  gap: 2px;
+}
+.profil-link:hover .el-text {
+  color: #337ecc;
+  text-decoration: underline;
+}
