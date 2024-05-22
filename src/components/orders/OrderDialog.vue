@@ -19,27 +19,27 @@
         label-position="top"
       >
         <el-form-item label="Ism" prop="firstName">
-          <el-input v-model="order.client.firstName" placeholder="Ism" clearable />
+          <el-input v-model="order.firstName" placeholder="Ism" clearable />
         </el-form-item>
         <el-form-item label="Familiya" prop="lastName">
-          <el-input v-model="order.client.lastName" placeholder="Familiya" clearable />
+          <el-input v-model="order.lastName" placeholder="Familiya" clearable />
         </el-form-item>
         <el-form-item label="Telefon raqami" prop="phone">
-          <el-input v-model="order.client.phone" type="number" placeholder="Telefon raqami" clearable />
+          <el-input v-model="order.phone" type="number" placeholder="Telefon raqami" clearable />
         </el-form-item>
-        <el-form-item label="Zaxira telefon raqami" prop="phone">
-          <el-input v-model="order.client.phone" type="number" placeholder="Telefon raqami" clearable />
+        <el-form-item label="Zaxira telefon raqami" prop="phoneReserve">
+          <el-input v-model="order.phoneReserve" type="number" placeholder="Telefon raqami" clearable />
         </el-form-item>
-        <el-form-item label="Buyurtma nomi" prop="orderName">
-          <el-input placeholder="Buyurtma nomini kiriting" />
+        <el-form-item label="Buyurtma nomi" prop="name">
+          <el-input v-model="order.name" placeholder="Buyurtma nomini kiriting" />
         </el-form-item>
-        <el-form-item label="Buyurtmaga havola" prop="orderLink">
+        <el-form-item label="Buyurtmaga havola" prop="link">
           <el-input v-model="order.link" placeholder="Buyurtma havolasini kiriting" />
         </el-form-item>
         <el-form-item label="Narxi" prop="price">
           <el-input-number v-model="order.price" :min="1000" :step="10" controls-position="right" placeholder="Buyurtma narxini kiriting" />
         </el-form-item>
-        <el-form-item label="Oldindan to'lov" prop="payment">
+        <el-form-item label="Oldindan to'lov">
           <el-input-number v-model="order.payment" :min="1000" :step="10" controls-position="right" placeholder="Oldindan to'lov" />
         </el-form-item>
         
@@ -69,7 +69,7 @@
         </el-form-item>
         <el-form-item class="submit">
           <el-button type="danger" @click="handleClose">Bekor qilish</el-button>
-          <el-button type="success" @click="addorder(form)">Qo'shish</el-button>
+          <el-button type="success" @click="addOrder(form)">Qo'shish</el-button>
         </el-form-item>
       </el-form>
     </template>
@@ -93,10 +93,9 @@ const token = cookies.get("token")
 const dialog_store = dialogStore()
 const { toggle } = storeToRefs(dialog_store)
 
-const order = ref({
-  client: {}
-})
 const form = ref()
+
+const order = ref({})
 
 const resetForm = () => {
   if (!form.value) return
@@ -107,25 +106,28 @@ const resetForm = () => {
 }
 
 const rules = ref({
-  role: [
-    { required: true, message: 'Iltimos qiymatni tanlang', trigger: 'change' }
-  ],
   firstName: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
   ],
   lastName: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
   ],
-  email: [
-    { required: true, message: "Iltimos maydonni to'ldiring", trigger: ['blur', 'change'] },
-    { type: 'email', message: 'Iltimos, emailni kiriting', trigger: 'blur' }
+  link: [
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
   ],
-  birth: [
-    { required: true, message: 'Iltimos sanani tanlang', trigger: 'change' }
+  name: [
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
   ],
-  password: [
+  price: [
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'change' }
+  ],
+  phone: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
-    { min: 8, max: 10, message: 'Belgilar soni 8 dan 10 gacha', trigger: 'change' }
+    { min: 8, max: 8, message: 'Belgilar soni 9 ta', trigger: 'blur' }
+  ],
+  phoneReserve: [
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
+    { min: 8, max: 8, message: 'Belgilar soni 9 ta', trigger: 'blur' }
   ]
 })
 
@@ -145,28 +147,16 @@ const fileError = (file) => {
   console.log(file);
 }
 
-// const addOrder = async () => {
-//   if (!form.value) return
-//   await form.value.validate((valid, fields) => {
-//     if (valid) {
-//       if (editToggle.value) {
-//         // Update order data
-//         order_store.updateorder({ ...order.value })
-//           .then(() => {
-//             handleClose()
-//           })
-//       } else {
-//         // Add new order
-//         order_store.addorder({ ...order.value, createdTime: new Date(), status: false })
-//           .then(() => {
-//             handleClose()
-//           })
-//       }
-//     } else {
-//       console.log('error submit!', fields)
-//     }
-//   })
-// }
+const addOrder = async () => {
+  if (!form.value) return
+  await form.value.validate((valid, fields) => {
+    if (valid) {
+      order_store.addOrder()
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
+}
 
 // watch(editToggle, async () => {
 //   if (editToggle.value && props.id) {
@@ -180,9 +170,7 @@ const fileError = (file) => {
 // })
 
 const handleClose = () => {
-  order.value = {
-    client: {}
-  }
+  order.value = {}
   dialog_store.setToggle(false)
   dialog_store.setEditToggle(false)
   resetForm()
