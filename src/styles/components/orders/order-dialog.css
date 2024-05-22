@@ -1,0 +1,64 @@
+.upload-demo .el-upload-dragger {
+  padding: 10px;
+}
+
+.el-date-editor {
+  width: 100% !important;
+}
+
+.modal .el-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2%;
+}
+
+.modal .el-form .el-form-item {
+  width: 49%;
+}
+
+.el-form-item.submit {
+  /* display: flex; */
+  width: 100% !important;
+  justify-content: center;
+}
+
+.el-form-item.submit .el-button {
+  width: 25%;
+  min-width: 100px;
+}
+
+.order-modal .el-form .el-form-item__label {
+  margin-bottom: 2px !important;
+}
+.order-modal .el-form-item {
+  margin-bottom: 12px;
+}
+
+.modal .el-form .el-form-item__content {
+  line-height: 20px;
+}
+
+.el-input-number {
+  width: 100%;
+}
+.el-input-number .el-input__inner {
+  text-align: left;
+}
+
+@media only screen and (max-width: 767px) {
+  .modal {
+    width: 90%;
+    min-width: 240px;
+  }
+
+  .el-form-item.submit .el-form-item__content {
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .modal .el-form .el-form-item {
+    width: 100%;
+  }
+}
