@@ -16,6 +16,7 @@
     "axios": "^1.6.8",
     "element-plus": "^2.6.3",
     "pinia": "^2.1.7",
+    "primevue": "^3.52.0",
     "vue": "^3.4.21",
     "vue-cookies": "^1.8.4",
     "vue-router": "^4.3.0"
