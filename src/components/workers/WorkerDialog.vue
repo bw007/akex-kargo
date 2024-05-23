@@ -65,7 +65,7 @@
         </el-form-item>
         <el-form-item class="submit">
           <el-button type="danger" @click="handleClose">Bekor qilish</el-button>
-          <el-button type="success" @click="addUser(form)">Qo'shish</el-button>
+          <el-button type="success" @click="addUser(form)">{{ editToggle ? "Saqlash" : "Qo'shish" }}</el-button>
         </el-form-item>
       </el-form>
     </template>
