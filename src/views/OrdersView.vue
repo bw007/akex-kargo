@@ -5,7 +5,7 @@
       <el-text>{{ $route.meta.title }} ro'yxati</el-text>
       <el-button @click="dialog_store.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
-    <OrdersTable />
+    <OrdersTable v-loading="loading" />
   </section>
 </template>
 
@@ -14,18 +14,36 @@
 import OrdersTable from "@/components/orders/OrdersTable.vue"
 import OrderDialog from "@/components/orders/OrderDialog.vue"
 import { dialogStore } from "@/stores/utils/dialog";
-import { watch } from "vue";
+import { onMounted, watch } from "vue";
 import { orderStore } from "@/stores/data/order";
 import { authStore } from "@/stores/auth/auth";
 import { storeToRefs } from "pinia";
+import { loadingStore } from "@/stores/utils/loading";
 
 const dialog_store = dialogStore()
+const loading_store = loadingStore()
+const { loading } = storeToRefs(loading_store)
 const order_store = orderStore()
 const auth_store = authStore()
 const { user } = storeToRefs(auth_store)
 
-watch(user, () => {
-  order_store.getAllOrders(user.value.id)
+onMounted(() => {
+  const fetchOrders = (userId) => {
+    if (userId) {
+      order_store.getAllOrders(userId);
+    }
+  };
+
+  const unwatch = watch(user, (newValue) => {
+    if (newValue.id) {
+      fetchOrders(newValue.id);
+      unwatch();
+    }
+  })
+
+  if (user.value.id) {
+    fetchOrders(user.value.id);
+  }
 })
 
 </script>
