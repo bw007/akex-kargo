@@ -83,16 +83,19 @@ import { storeToRefs } from 'pinia'
 import { orderStore } from '@/stores/data/order'
 import { url } from '@/stores/utils/env';
 import cookies from "vue-cookies";
+import { authStore } from '@/stores/auth/auth';
 // import { apiStore } from '@/stores/utils/api';
 
 // const props = defineProps(['id'])
 
+const auth_store = authStore()
 const order_store = orderStore()
-const token = cookies.get("token")
-// const api = apiStore()
 const dialog_store = dialogStore()
-const { toggle } = storeToRefs(dialog_store)
 
+// const api = apiStore()
+const { toggle } = storeToRefs(dialog_store)
+const { user } = storeToRefs(auth_store);
+const token = cookies.get("token")
 const form = ref()
 
 const order = ref({})
@@ -112,23 +115,23 @@ const rules = ref({
   lastName: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
   ],
-  link: [
-    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
+  phone: [
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
+    { min: 9, max: 9, message: 'Belgilar soni 9 ta', trigger: 'blur' }
+  ],
+  phoneReserve: [
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
+    { min: 9, max: 9, message: 'Belgilar soni 9 ta', trigger: 'blur' }
   ],
   name: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
   ],
+  link: [
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
+  ],
   price: [
-    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'change' }
+    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
   ],
-  phone: [
-    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
-    { min: 8, max: 8, message: 'Belgilar soni 9 ta', trigger: 'blur' }
-  ],
-  phoneReserve: [
-    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
-    { min: 8, max: 8, message: 'Belgilar soni 9 ta', trigger: 'blur' }
-  ]
 })
 
 const fileSuccess = (response, file) => {
@@ -151,7 +154,8 @@ const addOrder = async () => {
   if (!form.value) return
   await form.value.validate((valid, fields) => {
     if (valid) {
-      order_store.addOrder()
+      order_store.addOrder({ ...order.value, createdTime: new Date(), userId: user.value.id })
+      handleClose()
     } else {
       console.log('error submit!', fields)
     }
