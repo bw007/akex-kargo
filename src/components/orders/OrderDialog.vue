@@ -154,7 +154,7 @@ const addOrder = async () => {
   if (!form.value) return
   await form.value.validate((valid, fields) => {
     if (valid) {
-      order_store.addOrder({ ...order.value, createdTime: new Date(), userId: user.value.id })
+      order_store.addOrder({ ...order.value, status: 0, createdTime: new Date(), userId: user.value.id })
       handleClose()
     } else {
       console.log('error submit!', fields)
