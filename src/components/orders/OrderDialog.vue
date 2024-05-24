@@ -69,7 +69,7 @@
         </el-form-item>
         <el-form-item class="submit">
           <el-button type="danger" @click="handleClose">Bekor qilish</el-button>
-          <el-button type="success" @click="addOrder(form)">Qo'shish</el-button>
+          <el-button type="success" @click="addOrder(form)">{{ editToggle ? "Saqlash" : "Qo'shish" }}</el-button>
         </el-form-item>
       </el-form>
     </template>
@@ -77,23 +77,23 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { dialogStore } from '@/stores/utils/dialog'
 import { storeToRefs } from 'pinia'
 import { orderStore } from '@/stores/data/order'
 import { url } from '@/stores/utils/env';
 import cookies from "vue-cookies";
 import { authStore } from '@/stores/auth/auth';
-// import { apiStore } from '@/stores/utils/api';
+import { apiStore } from '@/stores/utils/api';
 
-// const props = defineProps(['id'])
+const props = defineProps(['id'])
 
 const auth_store = authStore()
 const order_store = orderStore()
 const dialog_store = dialogStore()
 
-// const api = apiStore()
-const { toggle } = storeToRefs(dialog_store)
+const api = apiStore()
+const { toggle, editToggle } = storeToRefs(dialog_store)
 const { user } = storeToRefs(auth_store);
 const token = cookies.get("token")
 const form = ref()
@@ -154,7 +154,11 @@ const addOrder = async () => {
   if (!form.value) return
   await form.value.validate((valid, fields) => {
     if (valid) {
-      order_store.addOrder({ ...order.value, status: 0, createdTime: new Date(), userId: user.value.id })
+      if (editToggle.value) {
+        order_store.updateOrder({ ...order.value })
+      } else {
+        order_store.addOrder({ ...order.value, status: 0, createdTime: new Date(), userId: user.value.id })
+      }
       handleClose()
     } else {
       console.log('error submit!', fields)
@@ -162,16 +166,17 @@ const addOrder = async () => {
   })
 }
 
-// watch(editToggle, async () => {
-//   if (editToggle.value && props.id) {
-//     let res = await api.get({ url: `orders/${props.id}` })
+watch(editToggle, async () => {
+  if (editToggle.value && props.id) {
+    let res = await api.get({ url: `orders/${props.id}` })
     
-//     if (res.status == 200) {
-//       order.value = { ...res.data, password: "" }
-//       dialog_store.setToggle(true)
-//     }
-//   }
-// })
+    if (res.status == 200) {
+      order.value = { ...res.data }
+      console.log(res.data);
+      dialog_store.setToggle(true)
+    }
+  }
+})
 
 const handleClose = () => {
   order.value = {}
