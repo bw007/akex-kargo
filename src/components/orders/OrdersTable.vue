@@ -1,29 +1,39 @@
 <template>
   <el-table empty-text="Ma'lumot yo'q" :data="filterOrderData" style="width: 100%; height: calc(100vh - 200px);">
-    <el-table-column fixed type="index" align="center" />
-    <el-table-column label="Buyurtmachi" min-width="160" prop="firstName">
+    <el-table-column fixed type="index" width="40" align="center" />
+    <el-table-column label="Buyurtmachi" min-width="140" prop="firstName">
       <template #default="list">
         <el-text tag="b">{{ list.row.firstName }} {{ list.row.lastName }}</el-text>
       </template>
     </el-table-column>
-    <el-table-column label="ID" prop="id">
+    <el-table-column label="ID" prop="id" width="75">
       <template #default="list">
         <el-text type="primary">#{{ list.row.phone.slice(4, 9) }}</el-text>
       </template>
     </el-table-column>
-    <el-table-column label="Mahsulot nomi" min-width="180" prop="name">
+    <el-table-column label="Mahsulot nomi" min-width="160" prop="name">
       <template #default="list">
         <el-text>{{ list.row.name }}</el-text>
       </template>
     </el-table-column>
-    <el-table-column label="Qabul sanasi" min-width="145" prop="createdTime">
+    <el-table-column label="Mahsulot havolasi" min-width="150" prop="name">
+      <template #default="list">
+        <el-link :href="list.row.link" class="link" target="_blank" type="primary">
+          Havola
+          <el-icon size="12">
+            <top-right />
+          </el-icon>
+        </el-link>
+      </template>
+    </el-table-column>
+    <el-table-column label="Qabul sanasi" min-width="140" prop="createdTime">
       <template #default="list">
         <el-text>{{ list.row.createdTime }}</el-text>
       </template>
     </el-table-column>
     <el-table-column label="Telefon raqami" min-width="130" prop="status">
       <template #default="list">
-        <el-text>
+        <el-text :title="'Zaxira: '+list.row.phoneReserve">
           ({{ list.row.phone.slice(0, 2) }})
           {{ list.row.phone.slice(2, 5) }}-{{ list.row.phone.slice(5, 7) }}-{{ list.row.phone.slice(7, 9) }}
         </el-text>
@@ -34,25 +44,21 @@
         <el-text>{{ list.row.price.toLocaleString() }}</el-text>          
       </template>
     </el-table-column>
-    <el-table-column label="Holati" min-width="125" prop="role">
+    <el-table-column label="Holati" min-width="115" prop="role">
       <template #default="list">
         <el-text v-if="list.row.status == 0">Yangi</el-text>
         <el-text v-if="list.row.status == 1">Jarayonda</el-text>
         <el-text v-if="list.row.status == 2">Bekor qilingan</el-text>
       </template>
     </el-table-column>
-    <el-table-column align="right" min-width="145">
+    <el-table-column align="right" min-width="120">
       <template #header>
         <el-input v-model="search" placeholder="Qidirish..." />
       </template>
-      <template #default="list">
-        <router-link class="profil-link" :to="{ name: 'workersProfile', params: { id: list.row.id } }">
-          <el-text type="primary">
-            Havola
-            <el-icon size="12">
-              <top-right />
-            </el-icon>
-          </el-text>
+      <template #default>
+        <el-button class="edit" size="small" title="Tahrirlash" icon="Edit" type="primary" plain />
+        <router-link class="profil-link" to="#">
+          <el-button size="small" title="Ko'rish" icon="View" type="success" plain />
         </router-link>
       </template>
     </el-table-column>
@@ -88,5 +94,5 @@ const ordersData = computed(() => {
 </script>
 
 <style lang="css" scoped>
-  
+  @import url("@/styles/components/orders/order-table.css");
 </style>
