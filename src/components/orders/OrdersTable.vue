@@ -55,8 +55,8 @@
       <template #header>
         <el-input v-model="search" placeholder="Qidirish..." />
       </template>
-      <template #default>
-        <el-button class="edit" size="small" title="Tahrirlash" icon="Edit" type="primary" plain />
+      <template #default="list">
+        <el-button class="edit" @click="edit(list.row.id)" size="small" title="Tahrirlash" icon="Edit" type="primary" plain />
         <router-link class="profil-link" to="#">
           <el-button size="small" title="Ko'rish" icon="View" type="success" plain />
         </router-link>
@@ -66,12 +66,15 @@
 </template>
 
 <script setup>
+const emit = defineEmits(["edit"]);
 import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { convertDate } from '@/stores/utils/helper';
 import { orderStore } from '@/stores/data/order';
+import { dialogStore } from '@/stores/utils/dialog';
 
 const order_store = orderStore()
+const dialog_store = dialogStore()
 const { orders } = storeToRefs(order_store)
 
 const search = ref('')
@@ -91,6 +94,11 @@ const ordersData = computed(() => {
     }
   })
 })
+
+const edit = (id) => {
+  emit("edit", id)
+  dialog_store.setEditToggle(true)
+}
 </script>
 
 <style lang="css" scoped>
