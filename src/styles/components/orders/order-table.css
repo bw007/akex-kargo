@@ -1,0 +1,10 @@
+.el-link {
+  line-height: normal;
+}
+.el-link {
+  display: inline-flex;
+  gap: 2px;
+}
+.edit {
+  margin-right: 8px;
+}
