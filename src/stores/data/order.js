@@ -37,12 +37,33 @@ export const orderStore = defineStore("orderStore", () => {
     loading_store.setLoading(false)
   }
 
+  // Update order
+  const updateOrder = async (payload) => {
+    let res = await api.put({ 
+      url: `orders/${payload.id}`,
+      data: { ...payload } 
+    })
+
+    if (res.status == 200) {
+      orders.value = [ ...orders.value.map((order) => {
+          if (order.id == payload.id) return { ...res.data }
+          return order
+        })
+      ]
+      ElMessage({
+        type: 'success',
+        message: "Muvaffaqiyatli saqlandi"
+      })
+    } 
+  }
+
   return {
     orders,
     order,
 
     addOrder,
-    getAllOrders
+    getAllOrders,
+    updateOrder
   }
 
 })
