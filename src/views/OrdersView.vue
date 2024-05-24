@@ -1,20 +1,19 @@
 <template>
   <section>
-    <OrderDialog />
+    <OrderDialog :id="id" />
     <el-row class="add-worker" justify="space-between">
       <el-text>{{ $route.meta.title }} ro'yxati</el-text>
       <el-button @click="dialog_store.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
-    <OrdersTable v-loading="loading" />
+    <OrdersTable v-loading="loading" @edit="handleEdit" />
   </section>
 </template>
 
 <script setup>
-
 import OrdersTable from "@/components/orders/OrdersTable.vue"
 import OrderDialog from "@/components/orders/OrderDialog.vue"
 import { dialogStore } from "@/stores/utils/dialog";
-import { onMounted, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { orderStore } from "@/stores/data/order";
 import { authStore } from "@/stores/auth/auth";
 import { storeToRefs } from "pinia";
@@ -45,6 +44,12 @@ onMounted(() => {
     fetchOrders(user.value.id);
   }
 })
+
+const id = ref('')
+
+const handleEdit = (_id) => {
+  id.value = _id
+}
 
 </script>
 
