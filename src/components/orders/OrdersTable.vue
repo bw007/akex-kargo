@@ -57,7 +57,7 @@
       </template>
       <template #default="list">
         <el-button class="edit" @click="edit(list.row.id)" size="small" title="Tahrirlash" icon="Edit" type="primary" plain />
-        <router-link class="profil-link" to="#">
+        <router-link class="profil-link" :to="{ name: 'ordersId', params: { id: list.row.id } }">
           <el-button size="small" title="Ko'rish" icon="View" type="success" plain />
         </router-link>
       </template>
