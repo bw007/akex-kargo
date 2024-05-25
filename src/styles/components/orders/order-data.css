@@ -1,0 +1,62 @@
+section {
+  padding: 10px;
+}
+
+.el-card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+  border: none;
+  width: 100%;
+}
+.card-header {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.el-row {
+  gap: 20px;
+}
+.el-row .el-col {
+  display: flex;
+  gap: 10px;
+}
+.avatar-uploader .el-icon {
+  width: 34px;
+  height: 32px;
+  text-align: center;
+  border: 1px dashed var(--el-border-color);
+  border-radius: 4px;
+}
+
+.label {
+  min-width: 135px;
+}
+.el-image {
+  width: 250px;
+  height: 250px;
+  margin-right: 10px;
+  border-radius: 6px;
+}
+
+.image-slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--el-color-primary-light-7);
+  font-size: 30px;
+  color: #00000090;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
