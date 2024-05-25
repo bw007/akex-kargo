@@ -57,13 +57,25 @@ export const orderStore = defineStore("orderStore", () => {
     } 
   }
 
+  // Get order
+  const getOrder = async (id) => {
+    loading_store.setLoading(true)
+    let res = await api.get({ url: `orders/${id}` })
+
+    if (res.status == 200) {
+      order.value = { ...res.data }
+    }
+    loading_store.setLoading(false)
+  }
+
   return {
     orders,
     order,
 
     addOrder,
     getAllOrders,
-    updateOrder
+    updateOrder,
+    getOrder
   }
 
 })
