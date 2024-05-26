@@ -4,7 +4,7 @@
     <PaymentDialog />
     <el-row class="add-order" justify="space-between">
       <el-text>{{ $route.meta.title }} ro'yxati</el-text>
-      <el-button @click="dialog_store.setPaymentToggle(true)" icon="Money" type="warning" plain>To'lov</el-button>
+      <el-button :disabled="!orders.length" @click="dialog_store.setPaymentToggle(true)" icon="Money" type="warning" plain>To'lov</el-button>
       <el-button @click="dialog_store.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
     <OrdersTable v-loading="loading" @edit="handleEdit" />
@@ -25,10 +25,11 @@ import { loadingStore } from "@/stores/utils/loading";
 
 const dialog_store = dialogStore()
 const loading_store = loadingStore()
-const { loading } = storeToRefs(loading_store)
 const order_store = orderStore()
 const auth_store = authStore()
 const { user } = storeToRefs(auth_store)
+const { loading } = storeToRefs(loading_store)
+const { orders } = storeToRefs(order_store)
 
 onMounted(() => {
   const fetchOrders = (userId) => {
