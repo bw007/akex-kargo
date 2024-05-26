@@ -1,5 +1,5 @@
 <template>
-  <el-table empty-text="Ma'lumot yo'q" :data="filterOrderData" style="width: 100%; height: calc(100vh - 200px);">
+  <el-table border empty-text="Ma'lumot yo'q" :data="filterOrderData" style="width: 100%; height: calc(100vh - 200px);">
     <el-table-column fixed type="index" width="40" align="center" />
     <el-table-column label="Buyurtmachi" min-width="140" prop="firstName">
       <template #default="list">
@@ -41,7 +41,14 @@
     </el-table-column>
     <el-table-column label="Narxi" prop="price" min-width="120">
       <template #default="list">
-        <el-text>{{ list.row.price.toLocaleString() }}</el-text>          
+        <el-popover effect="dark" trigger="hover" placement="left" width="auto">
+          <template #default>            
+            <p>To'langan: {{ list.row.payment.toLocaleString() }}</p>          
+          </template>
+          <template #reference>
+            <el-text>{{ list.row.price.toLocaleString() }}</el-text>          
+          </template>
+        </el-popover>
       </template>
     </el-table-column>
     <el-table-column label="Holati" min-width="115" prop="role">
@@ -51,7 +58,7 @@
         <el-text v-if="list.row.status == 2">Bekor qilingan</el-text>
       </template>
     </el-table-column>
-    <el-table-column align="right" min-width="120">
+    <el-table-column fixed="right" align="right" min-width="120">
       <template #header>
         <el-input v-model="search" placeholder="Qidirish..." />
       </template>
