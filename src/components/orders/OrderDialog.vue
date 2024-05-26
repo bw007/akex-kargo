@@ -39,10 +39,10 @@
         <el-form-item label="Narxi" prop="price">
           <el-input-number v-model="order.price" :min="1000" :step="10" controls-position="right" placeholder="Buyurtma narxini kiriting" />
         </el-form-item>
-        <el-form-item label="Oldindan to'lov">
-          <el-input-number v-model="order.payment" :min="1000" :step="10" controls-position="right" placeholder="Oldindan to'lov" />
+        <el-form-item :label="editToggle ? `To'langan miqdor` : `Oldindan to'lov`">
+          <el-input-number :disabled="editToggle" v-model="order.payment" :min="1000" :step="10" controls-position="right" placeholder="Oldindan to'lov" />
         </el-form-item>
-        
+
         <el-form-item label="Buyurtma rasmi">
 
           <el-upload 
