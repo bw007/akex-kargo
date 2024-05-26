@@ -34,8 +34,8 @@
     <el-table-column label="Telefon raqami" min-width="130" prop="status">
       <template #default="list">
         <el-text :title="'Zaxira: '+list.row.phoneReserve">
-          ({{ list.row.phone.slice(0, 2) }})
-          {{ list.row.phone.slice(2, 5) }}-{{ list.row.phone.slice(5, 7) }}-{{ list.row.phone.slice(7, 9) }}
+          ({{ list.row.phone?.slice(0, 2) }})
+          {{ list.row.phone?.slice(2, 5) }}-{{ list.row.phone?.slice(5, 7) }}-{{ list.row.phone.slice(7, 9) }}
         </el-text>
       </template>
     </el-table-column>
@@ -43,10 +43,10 @@
       <template #default="list">
         <el-popover effect="dark" trigger="hover" placement="left" width="auto">
           <template #default>            
-            <p>To'langan: {{ list.row.payment.toLocaleString() }}</p>          
+            <p>To'langan: {{ list.row.payment?.toLocaleString() }}</p>          
           </template>
           <template #reference>
-            <el-text>{{ list.row.price.toLocaleString() }}</el-text>          
+            <el-text>{{ list.row.price?.toLocaleString() }}</el-text>          
           </template>
         </el-popover>
       </template>
