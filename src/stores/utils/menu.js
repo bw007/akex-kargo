@@ -52,7 +52,7 @@ export const menu = [
     title: 'Tranzaksiyalar',
     icon: 'Money',
     meta: {
-      title: 'Tranzaksiyalar ro`yxati',
+      title: 'Tranzaksiyalar',
       secure: true,
       view: true
     },
