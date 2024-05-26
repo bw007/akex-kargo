@@ -43,7 +43,7 @@ const routes = [
           title: 'Sahifa topilmadi',
           secure: false
         },
-        component: () => import("@/views/ErrorView.vue")
+        component: () => import("@/views/error/ErrorView.vue")
       }
     ]
   },
