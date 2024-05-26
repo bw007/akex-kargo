@@ -1,8 +1,10 @@
 <template>
   <section>
     <OrderDialog :id="id" />
-    <el-row class="add-worker" justify="space-between">
+    <PaymentDialog />
+    <el-row class="add-order" justify="space-between">
       <el-text>{{ $route.meta.title }} ro'yxati</el-text>
+      <el-button @click="dialog_store.setPaymentToggle(true)" icon="Money" type="warning" plain>To'lov</el-button>
       <el-button @click="dialog_store.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
     <OrdersTable v-loading="loading" @edit="handleEdit" />
@@ -12,6 +14,8 @@
 <script setup>
 import OrdersTable from "@/components/orders/OrdersTable.vue"
 import OrderDialog from "@/components/orders/OrderDialog.vue"
+import PaymentDialog from "@/components/orders/PaymentDialog.vue"
+
 import { dialogStore } from "@/stores/utils/dialog";
 import { onMounted, ref, watch } from "vue";
 import { orderStore } from "@/stores/data/order";
