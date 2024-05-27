@@ -47,12 +47,12 @@ export const menu = [
     component: () => import("@/views/page/OrdersView.vue")
   },
   {
-    path: 'transactions',
-    name: 'transactions',
-    title: 'Tranzaksiyalar',
+    path: 'payments',
+    name: 'payments',
+    title: "Moliya",
     icon: 'Money',
     meta: {
-      title: 'Tranzaksiyalar',
+      title: "Moliyaviy operatsiyalar",
       secure: true,
       view: true
     },
