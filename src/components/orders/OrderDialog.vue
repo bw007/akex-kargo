@@ -37,14 +37,25 @@
           <el-input v-model="order.link" placeholder="Buyurtma havolasini kiriting" />
         </el-form-item>
         <el-form-item label="Narxi" prop="price">
-          <el-input-number v-model="order.price" :min="1000" :step="10" controls-position="right" placeholder="Buyurtma narxini kiriting" />
+          <el-input-number 
+            v-model="order.price" 
+            :min="1000" 
+            :step="10" 
+            controls-position="right" 
+            placeholder="Buyurtma narxini kiriting"
+          />
         </el-form-item>
         <el-form-item :label="editToggle ? `To'langan miqdor` : `Oldindan to'lov`">
-          <el-input-number :disabled="editToggle" v-model="order.payment" :min="1000" :step="10" controls-position="right" placeholder="Oldindan to'lov" />
+          <el-input-number 
+            :disabled="editToggle" 
+            v-model="order.payment"
+            :min="1000" 
+            :step="10" 
+            controls-position="right" 
+            :placeholder="editToggle && !order.payment ? '0' : `Oldindan to'lov`"
+          />
         </el-form-item>
-
         <el-form-item label="Buyurtma rasmi">
-
           <el-upload 
             v-model:file-list="order.avatar"
             :action="`${url}/avatars`"
@@ -65,11 +76,10 @@
               <div class="el-upload__tip">Hajmi 500 kb dan kam bo'lgan <b>jpg/png</b> fayllar</div>
             </template>
           </el-upload>
-
         </el-form-item>
         <el-form-item class="submit">
           <el-button type="danger" @click="handleClose">Bekor qilish</el-button>
-          <el-button type="success" @click="addOrder(form)">{{ editToggle ? "Saqlash" : "Qo'shish" }}</el-button>
+          <el-button type="success" @click="addOrder()">{{ editToggle ? "Saqlash" : "Qo'shish" }}</el-button>
         </el-form-item>
       </el-form>
     </template>
@@ -77,22 +87,23 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import { dialogStore } from '@/stores/utils/dialog'
-import { storeToRefs } from 'pinia'
-import { orderStore } from '@/stores/data/order'
+import { ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import { url } from '@/stores/utils/env';
 import cookies from "vue-cookies";
-import { authStore } from '@/stores/auth/auth';
+
 import { apiStore } from '@/stores/utils/api';
+import { authStore } from '@/stores/auth/auth';
+import { orderStore } from '@/stores/data/order';
+import { dialogStore } from '@/stores/utils/dialog';
 
 const props = defineProps(['id'])
 
+const api = apiStore()
 const auth_store = authStore()
 const order_store = orderStore()
 const dialog_store = dialogStore()
 
-const api = apiStore()
 const { toggle, editToggle } = storeToRefs(dialog_store)
 const { user } = storeToRefs(auth_store);
 const token = cookies.get("token")
@@ -102,9 +113,7 @@ const order = ref({})
 
 const resetForm = () => {
   if (!form.value) return
-  order.value = {
-    client: {}
-  }
+  order.value = {}
   form.value.resetFields()
 }
 
@@ -184,7 +193,6 @@ const handleClose = () => {
   dialog_store.setEditToggle(false)
   resetForm()
 }
-
 </script>
 
 <style lang="css">
