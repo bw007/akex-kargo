@@ -19,7 +19,7 @@
     >
       <el-form-item label="Mahsulot" prop="order">
         <el-select v-model="payment.order" placeholder="Mahsulotni tanlang" clearable>
-          <el-option v-for="(item, index) in orders" :key="index" :value="item.name">
+          <el-option v-for="(item, index) in orders" :key="index" :value="item.name" @click="handleChange(item)">
             <el-text size="default">{{ item.firstName + ' ' + item.lastName + ' | ' }}</el-text>
             <el-text type="warning" size="default">{{ item.name }}</el-text>
           </el-option>
@@ -39,6 +39,7 @@
 
 <script setup>
 import { orderStore } from '@/stores/data/order';
+import { paymentStore } from '@/stores/data/payment';
 import { dialogStore } from '@/stores/utils/dialog';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
@@ -46,18 +47,15 @@ import { ref } from 'vue';
 
 const dialog_store = dialogStore()
 const order_store = orderStore()
+const payment_store = paymentStore()
+
 const { orders } = storeToRefs(order_store)
 const { paymentToggle } = storeToRefs(dialog_store)
 
 const form = ref()
 
-const resetForm = () => {
-  if (!form.value) return
-  payment.value = {}
-  form.value.resetFields()
-}
-
 const payment = ref({})
+const order = ref({})
 
 const rules = ref({
   order: [
@@ -68,10 +66,38 @@ const rules = ref({
   ]
 })
 
+const handleChange = (value) => {
+  order.value = value
+}
+
+const handleClose = () => {
+  resetForm()
+  dialog_store.setPaymentToggle(false)
+}
+
+const resetForm = () => {
+  if (!form.value) return
+  payment.value = {}
+  order.value = {}
+  form.value.resetFields()
+}
+
 const addPayment = async () => {
   if (!form.value) return
   await form.value.validate((valid, fields) => {
     if (valid) {
+      order_store.updateOrder({ 
+        ...order.value,
+        payment: order.value.payment + payment.value.price
+      })
+      payment_store.addPayment({
+          order: order.value.name,
+          money: payment.value.price,
+          client: order.value.firstName + ' ' + order.value.lastName,
+          createdTime: new Date(), 
+          userId: order.value.userId,
+          orderId: order.value.id
+        })
       handleClose()
     } else {
       console.log('error submit!', fields)
@@ -79,10 +105,7 @@ const addPayment = async () => {
   })
 }
 
-const handleClose = () => {
-  resetForm()
-  dialog_store.setPaymentToggle(false)
-}
+
 </script>
 
 <style lang="css">
