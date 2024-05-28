@@ -1,13 +1,13 @@
 <template>
   <section>
     <OrderDialog :id="id" />
-    <PaymentDialog />
+    <PaymentDialog :id="orderId" />
     <el-row class="add-order" justify="space-between">
       <el-text>{{ $route.meta.title }} ro'yxati</el-text>
-      <el-button :disabled="!orders.length" @click="dialog_store.setPaymentToggle(true)" icon="Money" type="warning" plain>To'lov</el-button>
+      <el-button disabled @click="dialog_store.setPaymentToggle(true)" icon="Money" type="warning" plain>To'lov</el-button>
       <el-button @click="dialog_store.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
-    <OrdersTable v-loading="loading" @edit="handleEdit" />
+    <OrdersTable v-loading="loading" @addPayment="addPayment" @edit="handleEdit" />
   </section>
 </template>
 
@@ -29,7 +29,6 @@ const order_store = orderStore()
 const auth_store = authStore()
 const { user } = storeToRefs(auth_store)
 const { loading } = storeToRefs(loading_store)
-const { orders } = storeToRefs(order_store)
 
 onMounted(() => {
   const fetchOrders = (userId) => {
@@ -51,9 +50,14 @@ onMounted(() => {
 })
 
 const id = ref('')
+const orderId = ref('')
 
 const handleEdit = (_id) => {
   id.value = _id
+}
+
+const addPayment = (_id) => {
+  orderId.value = _id
 }
 
 </script>
