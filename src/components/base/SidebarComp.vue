@@ -63,5 +63,5 @@ const handleSelect = (index) => {
 </script>
 
 <style lang="css" scoped>
-@import url("@/styles/components/main/sidebar.css");
+@import url("@/styles/components/base/sidebar.css");
 </style>

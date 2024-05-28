@@ -95,5 +95,5 @@ onMounted(() => {
 </script>
 
 <style lang="css" scoped>
-@import url("@/styles/components/main/header.css");
+@import url("@/styles/components/base/header.css");
 </style>
