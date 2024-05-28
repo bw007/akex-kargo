@@ -14,7 +14,7 @@
 <script setup>
 import OrdersTable from "@/components/orders/OrdersTable.vue"
 import OrderDialog from "@/components/orders/OrderDialog.vue"
-import PaymentDialog from "@/components/orders/PaymentDialog.vue"
+import PaymentDialog from "@/components/payments/PaymentDialog.vue"
 
 import { dialogStore } from "@/stores/utils/dialog";
 import { onMounted, ref, watch } from "vue";
