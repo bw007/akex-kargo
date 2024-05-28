@@ -18,14 +18,15 @@
       :model="payment"
     >
       <el-form-item label="Mahsulot" prop="order">
-        <el-select v-model="payment.order" placeholder="Mahsulotni tanlang" clearable>
+        <!-- <el-select v-model="payment.order" placeholder="Mahsulotni tanlang" clearable>
           <el-option v-for="(item, index) in orders" :key="index" :value="item.name" @click="handleChange(item)">
             <el-text size="default">{{ item.firstName + ' ' + item.lastName + ' | ' }}</el-text>
             <el-text type="warning" size="default">{{ item.name }}</el-text>
-          </el-option>
-        </el-select>
+          </el-option> 
+        </el-select> -->
+        <el-input disabled v-model="payment.order" />
       </el-form-item>
-      <el-form-item v-if="payment.order" label="To'lov miqdori" prop="price">
+      <el-form-item label="To'lov miqdori" prop="price">
         <el-input-number v-model="payment.price" :min="1000" :step="10" controls-position="right" placeholder="To'lov miqdorini kiriting" />
       </el-form-item>
 
@@ -41,15 +42,18 @@
 import { orderStore } from '@/stores/data/order';
 import { paymentStore } from '@/stores/data/payment';
 import { dialogStore } from '@/stores/utils/dialog';
+import { apiStore } from '@/stores/utils/api';
+
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
+const props = defineProps(['id'])
 
+const api = apiStore()
 const dialog_store = dialogStore()
 const order_store = orderStore()
 const payment_store = paymentStore()
 
-const { orders } = storeToRefs(order_store)
 const { paymentToggle } = storeToRefs(dialog_store)
 
 const form = ref()
@@ -57,18 +61,32 @@ const form = ref()
 const payment = ref({})
 const order = ref({})
 
+const checkPrice = (rule, value, callback) => {
+  if (!value) {
+    return callback(new Error("Iltimos maydonni to'ldiring"))
+  }
+  setTimeout(() => {
+    if (order.value.price/(order.value.payment + value) < 1) {
+      console.log(order.value);
+      callback(new Error(`To'lovning maksimal miqdori ${(order.value.price - order.value.payment).toLocaleString()} so'm`))
+    } else {
+      callback()
+    }
+  }, 1000)
+}
+
 const rules = ref({
   order: [
     { required: true, message: "Iltimos mahsulotni tanlang", trigger: 'change' }
   ],
   price: [
-    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
+    { validator: checkPrice, trigger: 'blur' }
   ]
 })
 
-const handleChange = (value) => {
-  order.value = value
-}
+// const handleChange = (value) => {
+//   order.value = value
+// }
 
 const handleClose = () => {
   resetForm()
@@ -81,6 +99,18 @@ const resetForm = () => {
   order.value = {}
   form.value.resetFields()
 }
+
+watch(paymentToggle, async () => {
+  if (paymentToggle.value && props.id) {
+    let res = await api.get({ url: `orders/${props.id}` })
+    
+    if (res.status == 200) {
+      order.value = { ...res.data }
+      payment.value.order = res.data.name
+      dialog_store.setPaymentToggle(true)
+    }
+  }
+})
 
 const addPayment = async () => {
   if (!form.value) return
@@ -104,7 +134,6 @@ const addPayment = async () => {
     }
   })
 }
-
 
 </script>
 
