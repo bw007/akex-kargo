@@ -56,7 +56,7 @@ export const menu = [
       secure: true,
       view: true
     },
-    component: () => import("@/views/page/TransactionsView.vue")
+    component: () => import("@/views/page/PaymentsView.vue")
   },
   {
     path: 'settings',
