@@ -31,11 +31,22 @@ export const paymentStore = defineStore("paymentStore", () => {
     loading_store.setLoading(false)
   }
 
+  // Get order payments
+  const getOrderPayments = async (orderId) => {
+    let res = await api.get({ url: `payments?_sort=id&_order=desc&orderId=${orderId}` })
+    
+    if (res.status == 200) {
+      payments.value = [ ...res.data ]
+      console.log(payments.value);
+    }
+  }
+
   return {
     payments,
     payment,
 
     addPayment,
-    getAllpayments
+    getAllpayments,
+    getOrderPayments
   }
 })
