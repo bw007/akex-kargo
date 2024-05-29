@@ -19,21 +19,15 @@
           </el-col>
           <el-col>
             <el-text class="label">Telefon raqami:</el-text>
-            <el-text :title="list.row.phone">
-              ({{ list.row.phone?.slice(0, 2) }})
-              {{ list.row.phone?.slice(2, 5) }}-{{ list.row.phone?.slice(5, 7) }}-{{ list.row.phone.slice(7, 9) }}
-            </el-text>
+            <el-text>{{ list.row.phone }}</el-text>
           </el-col>
           <el-col>
             <el-text class="label">Zaxira raqam:</el-text>
-            <el-text :title="list.row.phoneReserve">
-              ({{ list.row.phone?.slice(0, 2) }})
-              {{ list.row.phone?.slice(2, 5) }}-{{ list.row.phone?.slice(5, 7) }}-{{ list.row.phone.slice(7, 9) }}
-            </el-text>
+            <el-text>{{ list.row.phoneReserve }}</el-text>
           </el-col>
           <el-col>
             <el-text class="label">To'lov holati:</el-text>
-            <el-text :type="list.row.payment == list.row.price ? 'success' : 'warning'" :title="list.row.phoneReserve">
+            <el-text :type="list.row.payment == list.row.price ? 'success' : 'warning'">
               {{ list.row.payment == list.row.price ? "To'langan" : ((list.row.payment/list.row.price * 100)?.toFixed(1) + "% | " + list.row.payment?.toLocaleString()) }}
             </el-text>
           </el-col>
@@ -47,19 +41,19 @@
         </el-row>
       </template>
     </el-table-column>
-    <el-table-column label="Buyurtmachi" min-width="140" prop="firstName">
+    <el-table-column label="Mahsulot nomi" min-width="160" prop="name">
       <template #default="list">
-        <el-text tag="b">{{ list.row.firstName }} {{ list.row.lastName }}</el-text>
+        <el-text>{{ list.row.name }}</el-text>
       </template>
     </el-table-column>
     <el-table-column label="ID" prop="id" width="75">
       <template #default="list">
-        <el-text type="primary">#{{ list.row.phone.slice(4, 9) }}</el-text>
+        <el-text type="primary">#{{ list.row.id.slice(7, 12) }}</el-text>
       </template>
     </el-table-column>
-    <el-table-column label="Mahsulot nomi" min-width="160" prop="name">
+    <el-table-column label="Buyurtmachi" min-width="160" prop="firstName">
       <template #default="list">
-        <el-text>{{ list.row.name }}</el-text>
+        <el-text>{{ list.row.firstName }} {{ list.row.lastName }}</el-text>
       </template>
     </el-table-column>
     <el-table-column label="Mahsulot havolasi" width="150" prop="name">
