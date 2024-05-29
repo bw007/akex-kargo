@@ -32,7 +32,17 @@
             </el-text>
           </el-col>
           <el-col>
-            <el-button @click="addPayment(list.row.id)" icon="Money" size="small" type="warning" plain>To'lov qo'shish</el-button>
+            <el-text class="label">To'lov holati:</el-text>
+            <el-text :type="list.row.payment == list.row.price ? 'success' : 'warning'" :title="list.row.phoneReserve">
+              {{ list.row.payment == list.row.price ? "To'langan" : ((list.row.payment/list.row.price * 100)?.toFixed(1) + "% | " + list.row.payment?.toLocaleString()) }}
+            </el-text>
+          </el-col>
+          <el-col>
+            <el-button :disabled="list.row.price == list.row.payment" @click="addPayment(list.row.id)" icon="Money" size="small" type="warning" plain>To'lov qo'shish</el-button>
+            <el-button class="edit" @click="edit(list.row.id)" size="small" title="Tahrirlash" icon="Edit" type="primary" plain>Tahrirlash</el-button>
+            <router-link :to="{ name: 'ordersId', params: { id: list.row.id } }">
+              <el-button size="small" title="Ko'rish" icon="View" type="success" plain>Ko'rish</el-button>
+            </router-link>
           </el-col>
         </el-row>
       </template>
@@ -86,7 +96,7 @@
         <el-input v-model="search" placeholder="Qidirish..." clearable />
       </template>
       <template #default="list">
-        <el-button icon="Money" @click="addPayment(list.row.id)" size="small" title="To'lov" type="warning" plain />
+        <el-button icon="Money" :disabled="list.row.price == list.row.payment" @click="addPayment(list.row.id)" size="small" title="To'lov" type="warning" plain />
         <el-button class="edit" @click="edit(list.row.id)" size="small" title="Tahrirlash" icon="Edit" type="primary" plain />
         <router-link class="profil-link" :to="{ name: 'ordersId', params: { id: list.row.id } }">
           <el-button size="small" title="Ko'rish" icon="View" type="success" plain />
