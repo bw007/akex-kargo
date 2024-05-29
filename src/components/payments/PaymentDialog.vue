@@ -29,7 +29,9 @@
       <el-form-item label="To'lov miqdori" prop="price">
         <el-input-number v-model="payment.price" :min="1000" :step="10" controls-position="right" placeholder="To'lov miqdorini kiriting" />
       </el-form-item>
-
+      <el-form-item>      
+        <el-text type="warning" size="small">Maksimal miqdor {{ (order.price - order.payment).toLocaleString() }} so'm</el-text>
+      </el-form-item>
       <el-form-item class="submit">
         <el-button type="danger" @click="handleClose">Bekor qilish</el-button>
         <el-button type="success" @click="addPayment(form)">Qo'shish</el-button>
@@ -65,14 +67,12 @@ const checkPrice = (rule, value, callback) => {
   if (!value) {
     return callback(new Error("Iltimos maydonni to'ldiring"))
   }
-  setTimeout(() => {
-    if (order.value.price/(order.value.payment + value) < 1) {
-      console.log(order.value);
-      callback(new Error(`To'lovning maksimal miqdori ${(order.value.price - order.value.payment).toLocaleString()} so'm`))
-    } else {
-      callback()
-    }
-  }, 1000)
+  if (order.value.price/(order.value.payment + value) < 1) {
+    console.log(order.value);
+    callback(new Error(`To'lovning maksimal miqdori ${(order.value.price - order.value.payment).toLocaleString()} so'm`))
+  } else {
+    callback()
+  }
 }
 
 const rules = ref({
@@ -123,6 +123,7 @@ const addPayment = async () => {
       payment_store.addPayment({
           order: order.value.name,
           money: payment.value.price,
+          price: order.value.price,
           client: order.value.firstName + ' ' + order.value.lastName,
           createdTime: new Date(), 
           userId: order.value.userId,
@@ -138,5 +139,5 @@ const addPayment = async () => {
 </script>
 
 <style lang="css">
-  @import url("@/styles/components/orders/payment-dialog.css");
+  @import url("@/styles/components/payments/payment-dialog.css");
 </style>
