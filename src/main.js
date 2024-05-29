@@ -3,6 +3,7 @@ import './styles/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import VueCookies from 'vue-cookies'
+import VueTheMask from 'vue-the-mask'
 
 import App from './App.vue'
 
@@ -18,6 +19,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
+app.use(VueTheMask)
 app.use(VueCookies, { expires: '1h' })
 app.use(createPinia())
 app.use(ElementPlus)
