@@ -4,7 +4,7 @@
     <PaymentDialog :id="orderId" />
     <el-row class="add-order" justify="space-between">
       <el-text>{{ $route.meta.title }} ro'yxati</el-text>
-      <el-button disabled @click="dialog_store.setPaymentToggle(true)" icon="Money" type="warning" plain>To'lov</el-button>
+      <!-- <el-button disabled @click="dialog_store.setPaymentToggle(true)" icon="Money" type="warning" plain>To'lov</el-button> -->
       <el-button @click="dialog_store.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
     <OrdersTable v-loading="loading" @addPayment="addPayment" @edit="handleEdit" />
