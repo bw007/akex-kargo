@@ -3,8 +3,9 @@
   margin-bottom: 12px;
 }
 
-.payment-modal .el-form-item.submit {
-  margin-top: 30px;
+.el-form-item .el-text {
+  line-height: 28px;
+  margin-top: 5px;
 }
 
 .el-form-item.submit .el-button {

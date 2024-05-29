@@ -25,3 +25,6 @@
 .expand-column .el-button {
   margin: 10px 0;
 }
+.el-col .el-button {
+  margin-right: 12px;
+}
