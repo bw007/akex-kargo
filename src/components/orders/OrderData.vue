@@ -63,6 +63,9 @@
           <el-text class="label" tag="b">To'langan:</el-text>
           <el-text>{{ order.payment?.toLocaleString() }} so'm</el-text>
         </el-col>
+        <el-col>
+          <OrderPayments />
+        </el-col>
       </el-row>
     </template>
   </el-card>
@@ -71,6 +74,8 @@
 </template>
 
 <script setup>
+import OrderPayments from "./OrderPayments.vue"
+
 import { orderStore } from "@/stores/data/order";
 import { loadingStore } from "@/stores/utils/loading";
 import { storeToRefs } from "pinia";
@@ -79,20 +84,25 @@ import { useRoute } from "vue-router"
 import OrderDialog from "./OrderDialog.vue";
 import { dialogStore } from "@/stores/utils/dialog";
 import { convertDate } from "@/stores/utils/helper";
+import { paymentStore } from "@/stores/data/payment";
 
 const route = useRoute()
 const dialog_store = dialogStore()
 const loading_store = loadingStore()
-const { loading } = storeToRefs(loading_store)
+const payment_store = paymentStore()
 const order_store = orderStore()
+
+const { loading } = storeToRefs(loading_store)
 const { order, orders } = storeToRefs(order_store)
 
 onMounted(() => {
   order_store.getOrder(route.params.id)
+  payment_store.getOrderPayments(route.params.id)
 })
 
 watch(orders, () => {
   order_store.getOrder(route.params.id)
+  payment_store.getOrderPayments(route.params.id)
 })
 
 const id = ref('')
