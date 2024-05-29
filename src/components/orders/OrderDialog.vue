@@ -25,10 +25,10 @@
           <el-input v-model="order.lastName" placeholder="Familiya" clearable />
         </el-form-item>
         <el-form-item label="Telefon raqami" prop="phone">
-          <el-input v-model="order.phone" type="number" placeholder="Telefon raqami" clearable />
+          <el-input v-model="order.phone" type="tel" v-mask="'+998 (##) ###-##-##'" placeholder="+998 (__) ___-__-__" clearable />
         </el-form-item>
         <el-form-item label="Zaxira telefon raqami" prop="phoneReserve">
-          <el-input v-model="order.phoneReserve" type="number" placeholder="Telefon raqami" clearable />
+          <el-input v-model="order.phoneReserve" type="tel" v-mask="'+998 (##) ###-##-##'" placeholder="+998 (__) ___-__-__" clearable />
         </el-form-item>
         <el-form-item label="Buyurtma nomi" prop="name">
           <el-input v-model="order.name" placeholder="Buyurtma nomini kiriting" />
@@ -117,6 +117,18 @@ const resetForm = () => {
   form.value.resetFields()
 }
 
+const checkPhone = (rule, value, cb) => {
+  if (!value) {
+    return cb(new Error("Iltimos maydonni to'ldiring"))
+  }
+  if (value.length != "+998 (##) ###-##-##".length) {
+    console.log(order.value);
+    cb(new Error(`Iltimos telefon to'liq kiriting`))
+  } else {
+    cb()
+  }
+}
+
 const rules = ref({
   firstName: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
@@ -125,12 +137,10 @@ const rules = ref({
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
   ],
   phone: [
-    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
-    { min: 9, max: 9, message: 'Belgilar soni 9 ta', trigger: 'blur' }
+    { validator: checkPhone, trigger: 'blur' }
   ],
   phoneReserve: [
-    { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' },
-    { min: 9, max: 9, message: 'Belgilar soni 9 ta', trigger: 'blur' }
+    { validator: checkPhone, trigger: 'blur' }
   ],
   name: [
     { required: true, message: "Iltimos maydonni to'ldiring", trigger: 'blur' }
@@ -166,7 +176,7 @@ const addOrder = async () => {
       if (editToggle.value) {
         order_store.updateOrder({ ...order.value })
       } else {
-        order_store.addOrder({ ...order.value, status: 0, createdTime: new Date(), userId: user.value.id })
+        order_store.addOrder({ ...order.value, status: 0, id: String(Date.now()), createdTime: new Date(), userId: user.value.id })
       }
       handleClose()
     } else {
