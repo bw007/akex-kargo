@@ -22,13 +22,13 @@ export const orderStore = defineStore("orderStore", () => {
         message: "Muvaffaqiyatli qo'shildi"
       })
       if (res.data.payment) {
-        console.log(res.data);
         payment_store.addPayment({
           order: res.data.name,
           price: res.data.price,
           money: res.data.payment,
           client: res.data.firstName + ' ' + res.data.lastName,
           createdTime: new Date(),
+          id: String(Date.now()),
           userId: res.data.userId,
           orderId: res.data.id
         })
