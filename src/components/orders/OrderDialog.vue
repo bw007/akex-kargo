@@ -123,7 +123,7 @@ const checkPhone = (rule, value, cb) => {
   }
   if (value.length != "+998 (##) ###-##-##".length) {
     console.log(order.value);
-    cb(new Error(`Iltimos telefon to'liq kiriting`))
+    cb(new Error(`Iltimos raqamni to'liq kiriting`))
   } else {
     cb()
   }
