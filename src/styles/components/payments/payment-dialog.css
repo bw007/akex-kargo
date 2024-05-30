@@ -1,0 +1,18 @@
+.payment-modal .el-form .el-form-item {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.el-form-item .el-text {
+  line-height: 28px;
+  margin-top: 5px;
+}
+
+.el-form-item.submit .el-button {
+  width: 25%;
+  min-width: 100px;
+}
+
+.payment-modal .el-form .el-form-item__label {
+  margin-bottom: 4px !important;
+}

@@ -28,13 +28,22 @@ const routes = [
         }
       },
       {
+        path: 'orders/:id',
+        name: 'ordersId',
+        meta: {
+          title: "Mahsulot haqida",
+          secure: true
+        },
+        component: () => import('@/components/orders/OrderData.vue'),
+      },
+      {
         path: '/:pathMatch(.*)*',
         name: 'error',
         meta: {
           title: 'Sahifa topilmadi',
           secure: false
         },
-        component: () => import("@/views/ErrorView.vue")
+        component: () => import("@/views/error/ErrorView.vue")
       }
     ]
   },

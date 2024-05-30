@@ -1,6 +1,9 @@
 section {
   padding: 10px;
 }
-.add-worker {
+.add-order {
   padding-bottom: 10px;
+}
+.add-order .el-button.el-button--warning {
+  margin-left: auto;
 }

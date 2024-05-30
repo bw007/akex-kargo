@@ -11,7 +11,7 @@
         <el-text>{{ list.row.email }}</el-text>
       </template>
     </el-table-column>
-    <el-table-column label="Qo'shilgan sana" min-width="145" prop="createdTime">
+    <el-table-column label="Qo'shilgan sana" min-width="160" prop="createdTime">
       <template #default="list">
         <el-text>{{ list.row.createdTime }}</el-text>
       </template>
@@ -39,12 +39,7 @@
       </template>
       <template #default="list">
         <router-link class="profil-link" :to="{ name: 'workersProfile', params: { id: list.row.id } }">
-          <el-text type="primary">
-            Profil
-            <el-icon size="12">
-              <top-right />
-            </el-icon>
-          </el-text>
+          <el-button icon="View" title="Profil" type="success" plain/>
         </router-link>
         <el-button @click="edit(list.row.id)" title="Tahrirlash" :icon="Edit" type="primary" plain />
         <el-button @click="user_store.removeUser(list.row.id)" :disabled="['@super_admin'].includes(list.row.role)" title="O'chirish" :icon="Delete" type="danger" plain />
@@ -81,7 +76,7 @@ const usersData = computed(() => {
   return users.value.map(user => {
     return {
       ...user,
-      createdTime: convertDate(user.createdTime)
+      createdTime: convertDate(user.createdTime, 'full')
     }
   })
 })

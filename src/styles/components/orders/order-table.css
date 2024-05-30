@@ -1,0 +1,30 @@
+.el-link {
+  line-height: normal;
+}
+.el-link {
+  display: inline-flex;
+  gap: 2px;
+}
+.profil-link {
+  margin-left: 12px;
+}
+.expand-column .el-text {
+  text-align: left;
+  display: inline-flex;
+  justify-content: flex-start;
+  line-height: 24px;
+}
+.expand-column {
+  padding: 0px 40px;
+}
+.expand-column .label {
+  display: inline-block;
+  width: 120px;
+  color: #000;
+}
+.expand-column .el-button {
+  margin: 10px 0;
+}
+.el-col .el-button {
+  margin-right: 12px;
+}

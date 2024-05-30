@@ -1,64 +1,115 @@
 <template>
-  <el-table empty-text="Ma'lumot yo'q" :data="filterOrderData" style="width: 100%; height: calc(100vh - 200px);">
-    <el-table-column fixed type="index" align="center" />
-    <el-table-column label="Ism, Familiya" min-width="180" prop="firstName">
-    </el-table-column>
-    <el-table-column label="Email" min-width="220" prop="email">
+  <el-table 
+    border 
+    :empty-text="ordersData.length ? `Ma'lumot topilmadi` : `Ma'lumot yo'q`" 
+    :data="filterOrderData" 
+    style="width: 100%; height: calc(100vh - 200px);"
+  >
+    <el-table-column fixed type="index" width="40" align="center" />
+    <el-table-column class="expand-column" type="expand">
       <template #default="list">
-        <el-text>{{ list.row.email }}</el-text>
+        <el-row class="expand-column">
+          <el-col>
+            <el-text class="label">Mahsulot nomi:</el-text>
+            <el-text>{{ list.row.name }}</el-text>
+          </el-col>
+          <el-col>
+            <el-text class="label">Qabul vaqti:</el-text>
+            <el-text>{{ list.row.createdTime }}</el-text>
+          </el-col>
+          <el-col>
+            <el-text class="label">Telefon raqami:</el-text>
+            <el-text>{{ list.row.phone }}</el-text>
+          </el-col>
+          <el-col>
+            <el-text class="label">Zaxira raqam:</el-text>
+            <el-text>{{ list.row.phoneReserve }}</el-text>
+          </el-col>
+          <el-col>
+            <el-text class="label">To'lov holati:</el-text>
+            <el-text :type="list.row.payment == list.row.price ? 'success' : 'warning'">
+              {{ list.row.payment == list.row.price ? "To'langan" : ((list.row.payment/list.row.price * 100)?.toFixed(1) + "% | " + list.row.payment?.toLocaleString()) }}
+            </el-text>
+          </el-col>
+          <el-col>
+            <el-button :disabled="list.row.price == list.row.payment" @click="addPayment(list.row.id)" icon="Money" size="small" type="warning" plain>To'lov qo'shish</el-button>
+            <el-button class="edit" @click="edit(list.row.id)" size="small" title="Tahrirlash" icon="Edit" type="primary" plain>Tahrirlash</el-button>
+            <router-link :to="{ name: 'ordersId', params: { id: list.row.id } }">
+              <el-button size="small" title="Ko'rish" icon="View" type="success" plain>Ko'rish</el-button>
+            </router-link>
+          </el-col>
+        </el-row>
       </template>
     </el-table-column>
-    <el-table-column label="Qo'shilgan sana" min-width="145" prop="createdTime">
+    <el-table-column label="Mahsulot nomi" min-width="160" prop="name">
       <template #default="list">
-        <el-text>{{ list.row.createdTime }}</el-text>
+        <el-text>{{ list.row.name }}</el-text>
       </template>
     </el-table-column>
-    <el-table-column label="Holati" min-width="72" prop="status">
+    <el-table-column label="ID" prop="id" width="75">
       <template #default="list">
-        <el-button @click="user_store.changeStatus(list.row)" :disabled="['@super_admin'].includes(list.row.role)" :type="list.row.status ? 'success' : 'warning'">
-          <el-icon :size="16">
-            <LockOpenIcon v-if="list.row.status" />
-            <LockClosedIcon v-else />
+        <el-text type="primary">#{{ list.row.id.slice(7, 12) }}</el-text>
+      </template>
+    </el-table-column>
+    <el-table-column label="Buyurtmachi" min-width="160" prop="firstName">
+      <template #default="list">
+        <el-text>{{ list.row.firstName }} {{ list.row.lastName }}</el-text>
+      </template>
+    </el-table-column>
+    <el-table-column label="Mahsulot havolasi" width="150" prop="name">
+      <template #default="list">
+        <el-link :href="list.row.link" class="link" target="_blank" type="primary">
+          Havola
+          <el-icon size="12">
+            <top-right />
           </el-icon>
-        </el-button>
+        </el-link>
       </template>
     </el-table-column>
-    <el-table-column label="Lavozim" min-width="125" prop="role">
+    <el-table-column label="Narxi" prop="price" min-width="120">
       <template #default="list">
-        <el-text type="success" v-if="list.row.role == '@super_admin'">Super admin</el-text>
-        <el-text v-else-if="list.row.role == 1">Operator</el-text>
-        <el-text v-else>Admin</el-text>
+        <el-popover effect="dark" trigger="hover" placement="left" width="auto">
+          <template #default>            
+            <p>To'langan: {{ list.row.payment?.toLocaleString() }}</p>          
+          </template>
+          <template #reference>
+            <el-text>{{ list.row.price?.toLocaleString() }}</el-text>          
+          </template>
+        </el-popover>
       </template>
     </el-table-column>
-    <el-table-column align="right" min-width="195">
+    <el-table-column label="Holati" min-width="95" prop="role">
+      <template #default="list">
+        <el-text type="success" v-if="list.row.status == 0">Yangi</el-text>
+        <el-text type="warning" v-if="list.row.status == 1">Jarayonda</el-text>
+        <el-text type="danger" v-if="list.row.status == 2">Bekor qilingan</el-text>
+      </template>
+    </el-table-column>
+    <el-table-column fixed="right" align="right" min-width="140">
       <template #header>
-        <el-input v-model="search" placeholder="Qidirish..." />
+        <el-input v-model="search" placeholder="Qidirish..." clearable />
       </template>
       <template #default="list">
-        <router-link class="profil-link" :to="{ name: 'workersProfile', params: { id: list.row.id } }">
-          <el-text type="primary">
-            Profil
-            <el-icon size="12">
-              <top-right />
-            </el-icon>
-          </el-text>
+        <el-button icon="Money" :disabled="list.row.price == list.row.payment" @click="addPayment(list.row.id)" size="small" title="To'lov" type="warning" plain />
+        <el-button class="edit" @click="edit(list.row.id)" size="small" title="Tahrirlash" icon="Edit" type="primary" plain />
+        <router-link class="profil-link" :to="{ name: 'ordersId', params: { id: list.row.id } }">
+          <el-button size="small" title="Ko'rish" icon="View" type="success" plain />
         </router-link>
-        <el-button @click="edit(list.row.id)" title="Tahrirlash" :icon="Edit" type="primary" plain />
-        <el-button @click="user_store.removeUser(list.row.id)" :disabled="['@super_admin'].includes(list.row.role)" title="O'chirish" :icon="Delete" type="danger" plain />
       </template>
     </el-table-column>
   </el-table>
 </template>
 
 <script setup>
+const emit = defineEmits(["edit", "addPayment"]);
 import { computed, ref } from 'vue';
-import { Delete, Edit } from '@element-plus/icons-vue';
-import { LockClosedIcon, LockOpenIcon } from "@heroicons/vue/24/outline";
 import { storeToRefs } from 'pinia';
 import { convertDate } from '@/stores/utils/helper';
 import { orderStore } from '@/stores/data/order';
+import { dialogStore } from '@/stores/utils/dialog';
 
 const order_store = orderStore()
+const dialog_store = dialogStore()
 const { orders } = storeToRefs(order_store)
 
 const search = ref('')
@@ -74,12 +125,22 @@ const ordersData = computed(() => {
   return orders.value.map(order => {
     return {
       ...order,
-      createdTime: convertDate(order.createdTime)
+      createdTime: convertDate(order.createdTime, 'full')
     }
   })
 })
+
+const edit = (id) => {
+  emit("edit", id)
+  dialog_store.setEditToggle(true)
+}
+const addPayment = (id) => {
+  emit("addPayment", id)
+  dialog_store.setPaymentToggle(true)
+}
+
 </script>
 
 <style lang="css" scoped>
-  
+  @import url("@/styles/components/orders/order-table.css");
 </style>

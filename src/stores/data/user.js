@@ -33,6 +33,7 @@ export const userStore = defineStore('userStore', () => {
 
   // Get all users
   const getAllUsers = async () => {
+    loading_store.setLoading(true)
     let res = await api.get({ url: 'users?_sort=id&_order=desc' })
 
     if (res.status == 200) {
@@ -41,6 +42,7 @@ export const userStore = defineStore('userStore', () => {
         ...res.data.filter((u) => u.role !== '@super_admin')
       ]
     }
+    loading_store.setLoading(false)
   }
 
   // Get user

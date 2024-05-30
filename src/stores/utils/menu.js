@@ -13,7 +13,7 @@ export const menu = [
       secure: true,
       view: true
     },
-    component: () => import('@/views/HomeView.vue')
+    component: () => import('@/views/page/HomeView.vue')
   },
   {
     path: 'workers',
@@ -25,7 +25,7 @@ export const menu = [
       secure: true,
       view: true
     },
-    component: () => import('@/views/WorkersView.vue'),
+    component: () => import('@/views/page/WorkersView.vue'),
     beforeEnter: () => {
       const auth_store = authStore();
       const { user } = storeToRefs(auth_store)
@@ -44,19 +44,19 @@ export const menu = [
       secure: true,
       view: true
     },
-    component: () => import("@/views/OrdersView.vue")
+    component: () => import("@/views/page/OrdersView.vue")
   },
   {
-    path: 'transactions',
-    name: 'transactions',
-    title: 'Tranzaksiyalar',
+    path: 'payments',
+    name: 'payments',
+    title: "Moliya",
     icon: 'Money',
     meta: {
-      title: 'Tranzaksiyalar ro`yxati',
+      title: "Moliyaviy operatsiyalar",
       secure: true,
-      view: false
-    }
-    // component: () => import("@/views/SettingView.vue")
+      view: true
+    },
+    component: () => import("@/views/page/PaymentsView.vue")
   },
   {
     path: 'settings',
@@ -68,7 +68,7 @@ export const menu = [
       secure: true,
       view: true
     },
-    component: () => import("@/views/SettingsView.vue"),
+    component: () => import("@/views/page/SettingsView.vue"),
     // children: [
     //   {
     //     path: 'setting/profile/:id',

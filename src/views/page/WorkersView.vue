@@ -5,7 +5,7 @@
       <el-text>{{ $route.meta.title }} ro'yxati</el-text>
       <el-button @click="dialog_store.setToggle(true)" icon="Plus" type="success">Yangi</el-button>
     </el-row>
-    <WorkersTable @edit="handleEdit" />
+    <WorkersTable v-loading="loading" @edit="handleEdit" />
   </section>
 </template>
 
@@ -17,8 +17,12 @@ import WorkersTable from '@/components/workers/WorkersTable.vue';
 
 import { dialogStore } from "@/stores/utils/dialog";
 import { userStore } from '@/stores/data/user';
+import { loadingStore } from '@/stores/utils/loading';
+import { storeToRefs } from 'pinia';
 
 const dialog_store = dialogStore();
+const loading_store = loadingStore()
+const { loading } = storeToRefs(loading_store)
 const user_store = userStore();
 
 onMounted(() => {

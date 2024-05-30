@@ -1,5 +1,5 @@
 .el-header {
-  /* box-shadow: var(--el-box-shadow-lighter); */
+  padding: 0 15px;
   border-bottom: 1px solid #F3F4F6;
 }
 
