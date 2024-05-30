@@ -66,7 +66,7 @@
         <el-form-item class="submit">
           <el-button type="danger" @click="handleClose">Bekor qilish</el-button>
           <el-button type="success" @click="addUser(form)">{{ editToggle ? "Saqlash" : "Qo'shish" }}</el-button>
-        </el-form-item>
+        </el-form-item> 
       </el-form>
     </template>
   </el-dialog>
@@ -89,12 +89,16 @@ const api = apiStore()
 const dialog_store = dialogStore()
 const { toggle, editToggle } = storeToRefs(dialog_store)
 
-const user = ref({})
+const user = ref({
+  avatar: []
+})
 const form = ref()
 
 const resetForm = () => {
   if (!form.value) return
-  user.value = {}
+  user.value = {
+    avatar: []
+  }
   form.value.resetFields()
 }
 
@@ -149,7 +153,7 @@ const addUser = async () => {
           })
       } else {
         // Add new user
-        user_store.addUser({ ...user.value, createdTime: new Date(), status: false })
+        user_store.addUser({ ...user.value, createdTime: new Date(), id: Date.now(), status: false })
           .then(() => {
             handleClose()
           })
@@ -172,7 +176,9 @@ watch(editToggle, async () => {
 })
 
 const handleClose = () => {
-  user.value = {}
+  user.value = {
+    avatar: []
+  }
   dialog_store.setToggle(false)
   dialog_store.setEditToggle(false)
   resetForm()
