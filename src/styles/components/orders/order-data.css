@@ -1,7 +1,6 @@
 section {
   padding: 10px;
 }
-
 .el-card {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
   border: none;
@@ -13,7 +12,7 @@ section {
   align-items: flex-end;
 }
 .el-row {
-  gap: 20px;
+  gap: 12px;
 }
 .el-row .el-col {
   display: flex;
@@ -29,6 +28,7 @@ section {
 
 .label {
   min-width: 135px;
+  color: #000;
 }
 .el-image {
   width: 250px;
