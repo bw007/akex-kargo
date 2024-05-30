@@ -23,45 +23,47 @@
     </template>
     <el-row>
       <el-col>
-        <el-text class="label" tag="b">Buyurtmachi:</el-text>
+        <el-text class="label">Buyurtmachi:</el-text>
         <el-text>{{ order.firstName }} {{ order.lastName }}</el-text>
       </el-col>
       <el-col>
-        <el-text class="label" tag="b">Mahsulot:</el-text>
+        <el-text class="label">Mahsulot:</el-text>
         <el-text>{{ order.name }}</el-text>
       </el-col>
       <el-col>
-        <el-text class="label" tag="b">Qabul vaqti:</el-text>
+        <el-text class="label">Qabul vaqti:</el-text>
         <el-text>{{ convertDate(order.createdTime, 'full') }}</el-text>
       </el-col>
       <el-col>
-        <el-text class="label" tag="b">Telefonlar:</el-text>
-        <el-text>
-          ({{ order.phone?.slice(0, 2) }})
-          {{ order.phone?.slice(2, 5) }}-{{ order.phone?.slice(5, 7) }}-{{ order.phone?.slice(7, 9) }} |
-          ({{ order.phoneReserve?.slice(0, 2) }})
-          {{ order.phoneReserve?.slice(2, 5) }}-{{ order.phoneReserve?.slice(5, 7) }}-{{ order.phoneReserve?.slice(7, 9) }}
-        </el-text>
+        <el-text class="label">Telefon raqami:</el-text>
+        <el-text>{{ order.phone }}</el-text>
       </el-col>
       <el-col>
-        <el-text class="label" tag="b">Buyurtma havolasi:</el-text>
+        <el-text class="label">Zaxira raqam:</el-text>
+        <el-text>{{ order.phoneReserve }}</el-text>
+      </el-col>
+      <el-col>
+        <el-text class="label">Buyurtma havolasi:</el-text>
         <el-link :href="order.link" type="primary">{{ order.link }}</el-link>
       </el-col>
       <el-col>
-        <el-text class="label" tag="b">Holati:</el-text>
+        <el-text class="label">Holati:</el-text>
         <el-text :type="order.status ? 'warning' : 'success'">{{ order.status ? '' : 'Yangi' }}</el-text>
       </el-col>
-      <el-button @click="dialog_store.setEditToggle(true), id = order.id" icon="Edit" type="primary" plain/>
+      <el-button @click="dialog_store.setPaymentToggle(true), id = order.id" icon="Money" size="small" title="To'lov" type="warning" plain>To'lov qo'shish</el-button>
+      <el-button @click="dialog_store.setEditToggle(true), id = order.id" icon="Edit" size="small" type="primary" plain>Tahrirlash</el-button>
     </el-row>
     <template #footer>
       <el-row>
         <el-col>
-          <el-text class="label" tag="b">Narxi:</el-text>
+          <el-text class="label">Narxi:</el-text>
           <el-text>{{ order.price?.toLocaleString() }} so'm</el-text>
         </el-col>
         <el-col>
-          <el-text class="label" tag="b">To'langan:</el-text>
-          <el-text>{{ order.payment?.toLocaleString() }} so'm</el-text>
+          <el-text class="label">To'lov holati:</el-text>
+          <el-text :type="order.payment == order.price ? 'success' : 'warning'">
+            {{ order.payment == order.price ? "To'langan" : ((order.payment/order.price * 100)?.toFixed(1) + "% | " + order.payment?.toLocaleString()) }} so'm
+          </el-text>
         </el-col>
         <el-col>
           <OrderPayments />
@@ -70,11 +72,13 @@
     </template>
   </el-card>
   <OrderDialog :id="id" />
+  <PaymentDialog :id="id" />
   </section>
 </template>
 
 <script setup>
 import OrderPayments from "./OrderPayments.vue"
+import PaymentDialog from "@/components/payments/PaymentDialog.vue"
 
 import { orderStore } from "@/stores/data/order";
 import { loadingStore } from "@/stores/utils/loading";
@@ -110,8 +114,4 @@ const id = ref('')
 
 <style lang="css" scoped>
 @import url("@/styles/components/orders/order-data.css");
-.el-button {
-  width: 34px;
-  height: 32px;
-}
 </style>
