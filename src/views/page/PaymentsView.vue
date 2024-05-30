@@ -42,9 +42,6 @@ onMounted(() => {
   }
 })
 
-onMounted(() => {
-  payment_store.getAllpayments(1)
-})
 </script>
 
 <style lang="css" scoped>
