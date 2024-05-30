@@ -121,14 +121,15 @@ const addPayment = async () => {
         payment: order.value.payment + payment.value.price
       })
       payment_store.addPayment({
-          order: order.value.name,
-          money: payment.value.price,
-          price: order.value.price,
-          client: order.value.firstName + ' ' + order.value.lastName,
-          createdTime: new Date(), 
-          userId: order.value.userId,
-          orderId: order.value.id
-        })
+        id: String(Date.now()),
+        order: order.value.name,
+        money: payment.value.price,
+        price: order.value.price,
+        client: order.value.firstName + ' ' + order.value.lastName,
+        createdTime: new Date(), 
+        userId: order.value.userId,
+        orderId: order.value.id
+      })
       handleClose()
     } else {
       console.log('error submit!', fields)
