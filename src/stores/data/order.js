@@ -11,6 +11,8 @@ export const orderStore = defineStore("orderStore", () => {
   const payment_store = paymentStore()
   
   const orders = ref([]);
+  const orders_count = ref(0)
+  const money = ref(0)
   const order = ref({});
 
   // Add order
@@ -44,6 +46,8 @@ export const orderStore = defineStore("orderStore", () => {
     orders.value = []
     if (res.status == 200) {
       orders.value = [ ...res.data ]
+      orders_count.value = [ ...res.data ].length
+      money.value = res.data.reduce((acc, item) => acc + item.payment, 0)
     }
     loading_store.setLoading(false)
   }
@@ -82,6 +86,8 @@ export const orderStore = defineStore("orderStore", () => {
   return {
     orders,
     order,
+    orders_count,
+    money,
 
     addOrder,
     getAllOrders,
