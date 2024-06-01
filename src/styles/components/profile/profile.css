@@ -9,7 +9,7 @@
   align-items: flex-end;
 }
 .el-row {
-  gap: 20px;
+  gap: 15px;
 }
 .el-row .el-col {
   display: flex;
