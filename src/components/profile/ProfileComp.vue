@@ -42,17 +42,19 @@
         <el-text class="label" tag="b">Holati:</el-text>
         <el-text :type="user.status ? 'success' : 'danger'">{{ user.status ? "Faol" : "Nofaol" }}</el-text>
       </el-col>
-      <el-button @click="dialog_store.setEditToggle(true), id = user.id" :icon="Edit" type="primary" plain/>
+      <el-col>
+        <el-button @click="dialog_store.setEditToggle(true), id = user.id" :icon="Edit" size="small" type="primary" plain>Tahrirlash</el-button>
+      </el-col>  
     </el-row>
     <template #footer>
       <el-row>
         <el-col>
           <el-text class="label" tag="b">Buyurtmalar soni:</el-text>
-          <el-text>0 ta</el-text>
+          <el-text>{{ orders_count }} ta</el-text>
         </el-col>
         <el-col>
           <el-text class="label" tag="b">Daromad:</el-text>
-          <el-text>0 so'm</el-text>
+          <el-text type="warning">{{ money.toLocaleString() }} so'm</el-text>
         </el-col>
       </el-row>
     </template>
@@ -72,13 +74,16 @@ import WorkerDialog from '@/components/workers/WorkerDialog.vue';
 
 import { dialogStore } from "@/stores/utils/dialog";
 import { loadingStore } from '@/stores/utils/loading';
+import { orderStore } from '@/stores/data/order';
 
 const route = useRoute()
 const loading_store = loadingStore()
-const { loading } = storeToRefs(loading_store)
 const dialog_store = dialogStore();
-
+const order_store = orderStore();
 const user_store = userStore();
+
+const { orders_count, money } = storeToRefs(order_store);
+const { loading } = storeToRefs(loading_store);
 const { user } = storeToRefs(user_store);
 
 // watch(user, (newValue, oldValue) => {
@@ -88,6 +93,7 @@ const { user } = storeToRefs(user_store);
 
 onMounted(() => {
   user_store.getUser(route.params.id || cookies.get("user-id"))
+  order_store.getAllOrders(route.params.id || cookies.get("user-id"))
 })
 
 const id = ref("")
@@ -96,8 +102,4 @@ const id = ref("")
 
 <style lang="css" scoped>
 @import url("@/styles/components/profile/profile.css");
-.el-button {
-  width: 34px;
-  height: 32px;
-}
 </style>
