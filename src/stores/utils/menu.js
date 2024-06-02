@@ -5,7 +5,7 @@ import { watch } from 'vue';
 export const menu = [
   {
     path: '',
-    name: 'home',
+    name: 'Home',
     title: 'Bosh sahifa',
     icon: 'pie-chart',
     meta: {
@@ -17,7 +17,7 @@ export const menu = [
   },
   {
     path: 'workers',
-    name: 'workers',
+    name: 'Workers',
     title: 'Xodimlar',
     icon: 'Service',
     meta: {
@@ -36,7 +36,7 @@ export const menu = [
   },
   {
     path: 'orders',
-    name: 'orders',
+    name: 'Orders',
     title: 'Buyurtmalar',
     icon: 'Goods',
     meta: {
@@ -48,7 +48,7 @@ export const menu = [
   },
   {
     path: 'payments',
-    name: 'payments',
+    name: 'Payments',
     title: "Moliya",
     icon: 'Money',
     meta: {
@@ -60,7 +60,7 @@ export const menu = [
   },
   {
     path: 'settings',
-    name: 'settings',
+    name: 'Settings',
     title: 'Sozlamalar',
     icon: 'Setting',
     meta: {

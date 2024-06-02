@@ -31,7 +31,7 @@ export const apiStore = defineStore("apiStore", () => {
         cookies.remove("token");
         cookies.remove("user");
         setTimeout(() => {
-          router.push({ name: "signin" })
+          router.push({ name: "SignIn" })
         }, 1000);
       }
       return e
@@ -109,7 +109,7 @@ export const apiStore = defineStore("apiStore", () => {
         cookies.remove("token");
         cookies.remove("user");
         setTimeout(() => {
-          router.push({ name: "signin" })
+          router.push({ name: "SignIn" })
         }, 1000);
       }
       console.log(e);

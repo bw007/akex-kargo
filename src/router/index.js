@@ -7,13 +7,13 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    name: "main-layout",
+    name: "MainLayout",
     component: () => import("@/layouts/BaseLayout.vue"),
     children: [
       ...menu,
       {
         path: 'workers/profile/:id',
-        name: 'workersProfile',
+        name: 'WorkersProfile',
         meta: {
           title: "Xodim ma'lumotlari",
           secure: true
@@ -29,7 +29,7 @@ const routes = [
       },
       {
         path: 'orders/:id',
-        name: 'ordersId',
+        name: 'OrdersItem',
         meta: {
           title: "Mahsulot haqida",
           secure: true
@@ -38,7 +38,7 @@ const routes = [
       },
       {
         path: '/:pathMatch(.*)*',
-        name: 'error',
+        name: 'Error',
         meta: {
           title: 'Sahifa topilmadi',
           secure: false
@@ -49,12 +49,12 @@ const routes = [
   },
   {
     path: "/auth",
-    name: "auth",
+    name: "Auth",
     component: () => import("@/layouts/AuthLayout.vue"),
     children: [
       {
         path: "/auth/signin",
-        name: "signin",
+        name: "SignIn",
         meta: {
           secure: false
         },
@@ -62,7 +62,7 @@ const routes = [
       },
       {
         path: "/auth/guide",
-        name: "guide",
+        name: "Guide",
         component: () => import("@/views/auth/GuideView.vue")
       }
     ]

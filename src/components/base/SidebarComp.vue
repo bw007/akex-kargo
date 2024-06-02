@@ -49,7 +49,7 @@ const { user } = storeToRefs(auth_store)
 
 const superMenu = computed(() => {
   if (user.value.role !== "@super_admin") {
-    return [ ...menu.filter(m => m.name !== "workers") ]
+    return [ ...menu.filter(m => m.name !== "Workers") ]
   } else {
     return [ ...menu ]
   }

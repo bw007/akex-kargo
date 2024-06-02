@@ -38,7 +38,7 @@
         <el-input v-model="search" placeholder="Qidirish..." />
       </template>
       <template #default="list">
-        <router-link class="profil-link" :to="{ name: 'workersProfile', params: { id: list.row.id } }">
+        <router-link class="profil-link" :to="{ name: 'WorkersProfile', params: { id: list.row.id } }">
           <el-button icon="View" title="Profil" type="success" plain/>
         </router-link>
         <el-button @click="edit(list.row.id)" title="Tahrirlash" :icon="Edit" type="primary" plain />

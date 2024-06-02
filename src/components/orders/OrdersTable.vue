@@ -92,7 +92,7 @@
       <template #default="list">
         <el-button icon="Money" :disabled="list.row.price == list.row.payment" @click="addPayment(list.row.id)" size="small" title="To'lov" type="warning" plain />
         <el-button class="edit" @click="edit(list.row.id)" size="small" title="Tahrirlash" icon="Edit" type="primary" plain />
-        <router-link class="profil-link" :to="{ name: 'ordersId', params: { id: list.row.id } }">
+        <router-link class="profil-link" :to="{ name: 'OrdersItem', params: { id: list.row.id } }">
           <el-button size="small" title="Ko'rish" icon="View" type="success" plain />
         </router-link>
       </template>
