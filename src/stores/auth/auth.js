@@ -22,6 +22,14 @@ export const authStore = defineStore("authStore", () => {
 
       let res = await api.get({ url: `users/${cookies.get("user-id")}`})
       
+      if (res.status == 200) {
+        if (!res.data.status) {
+          cookies.remove("token");
+          cookies.remove("user-id");
+          router.push({ name: "SignIn" })
+        }
+      }
+      
       if (type == "full") {
         if (res.status == 200 && res.data.role !== "@super_admin") {
           ElMessage({
@@ -31,7 +39,7 @@ export const authStore = defineStore("authStore", () => {
   
           cookies.remove("token");
           cookies.remove("user-id");
-          router.push({ name: "signin" })
+          router.push({ name: "SignIn" })
         }
       }
 
@@ -43,11 +51,11 @@ export const authStore = defineStore("authStore", () => {
 
         cookies.remove("token");
         cookies.remove("user-id");
-        router.push({ name: "signin" })
+        router.push({ name: "SignIn" })
       }
 
     } else {
-      router.push({ name: "signin" })
+      router.push({ name: "SignIn" })
     }
   }
   
@@ -56,23 +64,37 @@ export const authStore = defineStore("authStore", () => {
     let res = await api.post({ url: "signin", data });
 
     if (res.status == 200) {
-      cookies.set("user-id", res.data.user.id);
+      if (res.data.user.status) {
+        cookies.set("user-id", res.data.user.id);
       
-      if (data.remember) cookies.set("remember", data.remember);
+        if (data.remember) cookies.set("remember", data.remember);
 
-      token_store.setToken(res.data.accessToken.slice());
+        token_store.setToken(res.data.accessToken.slice());
 
-      setTimeout(() => {
-        ElMessage({
-          type: "success",
-          message: "Muvaffaqiyatli tizimga kirildi"
-        })
-        loading_store.setLoading(false)
-      }, 1000);
-      
-      setTimeout(() => {
-        router.push("/")
-      }, 1500);
+        setTimeout(() => {
+          ElMessage({
+            type: "success",
+            message: "Muvaffaqiyatli tizimga kirildi"
+          })
+          loading_store.setLoading(false)
+        }, 1000);
+        
+        setTimeout(() => {
+          router.push({ name: "Home" })
+        }, 1500);
+      } else {
+        setTimeout(() => {
+          ElMessage({
+            type: "warning",
+            message: "Tizimga kirish cheklangan"
+          })
+          loading_store.setLoading(false)
+        }, 1000);
+        
+        setTimeout(() => {
+          router.push({ name: "Home" })
+        }, 1500);
+      }
     }
   }
 
