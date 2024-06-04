@@ -5,6 +5,7 @@
 
 .el-header .el-row {
   height: 100%;
+  gap: 15px;
 }
 
 .el-row .el-col {
@@ -19,6 +20,7 @@
 #navbar-logo {
   display: inline-flex;
   align-items: center;
+  margin-right: auto;
 }
 
 #navbar-menu-icon,
@@ -72,8 +74,5 @@
   #navbar-menu-icon {
     display: flex !important;
     align-items: center;
-  }
-  #navbar-logo {
-    display: none !important;
   }
 }
