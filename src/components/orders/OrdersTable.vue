@@ -34,7 +34,7 @@
           <el-col>
             <el-button :disabled="list.row.price == list.row.payment" @click="addPayment(list.row.id)" icon="Money" size="small" type="warning" plain>To'lov qo'shish</el-button>
             <el-button class="edit" @click="edit(list.row.id)" size="small" title="Tahrirlash" icon="Edit" type="primary" plain>Tahrirlash</el-button>
-            <router-link :to="{ name: 'ordersId', params: { id: list.row.id } }">
+            <router-link :to="{ name: 'OrdersItem', params: { id: list.row.id } }">
               <el-button size="small" title="Ko'rish" icon="View" type="success" plain>Ko'rish</el-button>
             </router-link>
           </el-col>
