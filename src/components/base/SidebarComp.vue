@@ -20,7 +20,7 @@
         :index="item.name"
         :key="item.name"
         :route="{ name: item.name }"
-        :class="{ 'is-active': $route.name.toLowerCase().includes(item.name) }"
+        :class="{ 'is-active': $route.name.toLowerCase().includes(item.name.toLowerCase()) }"
         :disabled="!item.meta.view"
       >
         <el-divider direction="vertical" />
