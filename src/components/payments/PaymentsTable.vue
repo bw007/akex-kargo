@@ -7,7 +7,7 @@
       </template>
     </el-table-column>
     <el-table-column label="Mahsulot nomi" min-width="160" prop="order" />
-    <el-table-column label="To'lov vaqti" min-width="120" prop="createdTime" />
+    <el-table-column label="To'lov vaqti" min-width="150" prop="createdTime" />
     <el-table-column label="Buyurtmachi" min-width="140" prop="client" />
     <el-table-column align="right" min-width="120">
       <template #header>
