@@ -85,7 +85,7 @@
         <el-text type="danger" v-if="list.row.status == 2">Bekor qilingan</el-text>
       </template>
     </el-table-column>
-    <el-table-column fixed="right" align="right" min-width="165">
+    <el-table-column align="right" min-width="165">
       <template #header>
         <el-input v-model="search" placeholder="Qidirish..." clearable />
       </template>
